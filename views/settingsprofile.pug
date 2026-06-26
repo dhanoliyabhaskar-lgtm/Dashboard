@@ -1,0 +1,65 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Settings
+    link(rel="stylesheet" href="/static/settingsprofile.css")
+  body
+    .container
+
+      // Sidebar
+      aside.sidebar
+        .logo
+          h2 My Dashboard
+        ul.menu
+          li: a(href="/dashboard") Overview
+          li: a(href="/analyticsoverview") Analytics
+          li: a(href="/goals") Goals
+          li: a(href="/calendar") Calendar
+          li: a(href="/integration") Integrations
+          li: a(href="/insights") Insights
+          li: a(href="/reports") Reports
+          li: a(href="/achievements") Achievements
+          li.active: a(href="/settingsprofile") Settings
+
+      // Main Content
+      main.main-content
+
+        // header
+        header.settings-header
+          div
+            h2 Settings
+            p Manage your account preferences and application settings.
+
+        .settings-page
+          .settings-bar
+            ul
+              li.active: a(href="/settingsprofile") Profile
+              li: a(href="/settingsnotifications") Notifications
+              li: a(href="/settingsprivacy") Privacy & Security
+              li: a(href="/settingstheme") Theme
+              li: a(href="/settingshelp") Help & Feedback
+              li: a(href="/settingslogout") Log Out
+
+          .profile-page
+            h3 Profile Information
+            .profile-info
+              .profile-pic
+                img(src="static/photos/profile.png", alt="profile photo")
+              .personal-info
+                form(action="/settingsprofile" method="post")
+                  div
+                    | Name: 
+                    br
+                    p.box #{user.name}
+                  div
+                    | Email: 
+                    br
+                    p.box #{user.email}
+                  div
+                    | Bio: 
+                    br
+                    p.box About Yourself
+                  .save
+                    button Change
