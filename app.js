@@ -32,7 +32,7 @@ app.use(session({
     cookie: {
         secure : false ,
         samesite : 'lax',
-        maxAge: 1000 * 60 * 60 * 12  //1 day
+        maxAge: 1000 * 60 * 60 * 12  //  1/2 day
     }
 }));
 
@@ -49,11 +49,15 @@ var newuserSchema = new mongoose.Schema({
     email: String,
     password: String,
     dob: Date,
+    theme : {type : String , default : "1" } ,
     spotify : {
         accesstoken : String,
         refreshtoken : String,
         username : String,
         follow : String,
+        email : String,
+        id : String,
+        
         listeninghours : {type : String , default : "10"}
     } ,
     codeforces : {
@@ -75,6 +79,103 @@ app.use("/static", express.static('static'));
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
+
+
+//Functions
+
+//Daily
+
+async function fetchdatafromspotify(userId){
+    try {
+        if (userId) {
+            const user = await newUser.findById(userId);
+
+            let spotifyusername = null;
+            let spotifyemail = null;
+            let spotifyid = null;
+            let spotifyprofilepic = null;
+            let spotifyrecentlyplayed = null;
+            let spotifytopartist = null;
+
+            if (user.spotify.accesstoken) {
+                try {
+                    let spotifyresponse = await axios.get('https://api.spotify.com/v1/me', {
+                        headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
+                    });
+
+                    spotifyusername = spotifyresponse.data.display_name;
+                   
+                    spotifyemail = spotifyresponse.data.email;
+                  
+                    spotifyid = spotifyresponse.data.id;
+
+                    spotifyprofilepic = spotifyresponse.data.image[0].url;
+                    
+                    
+                    spotifyresponse = await axios.get('https://api.spotify.com/v1/me/player/recently_played', {
+                        headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
+                    });
+                    spotifyrecentlyplayed = spotifyresponse.data.track.name;
+                    
+                    
+                    spotifyresponse = await axios.get('https://api.spotify.com/v1/me/top/artist', {
+                        headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
+                    });
+                    spotifytopartist = spotifyresponse.data.items;
+
+
+                } catch (err) {
+                    if (err.response && err.response.status === 401) {
+                        try {
+                            const refreshresponse = await axios.post('http://accounts.spotify.com/api/token', {
+                                grant_type : 'refresh_token',
+                                refresh_token: user.spotifyrefreshtoken,
+                                client_id : process.env.SPOTIFY_CLIENT_ID,
+                                client_secret : process.env.SPOTIFY_CLIENT_SECRET
+                            }, {
+                                headers: { 'Content-Type': 'application/x/www-form-urlencoded' }
+                            });
+                            const newtoken = refreshresponse.data.access_token;
+                            await newUser.findByIdAndUpdate(userId, {
+                                spotifyaccesstoken: newtoken
+                            });
+
+                            fetchdatafromspotify();
+                            return;
+                        } catch (err) {
+                            console.error(err);
+                        }
+                    }
+                }
+            }
+            await findByIdAndUpdate(req.session.userId , {
+
+            });
+        }
+    }catch(err){
+        console.error(err);
+    }
+};
+
+async function fetchdatafromcalender(){
+
+};
+
+async function fetchdatafromleetcode(){
+
+};
+
+async function fetchdatafromgithub(){
+
+};
+
+
+
+// Node Cron (for live fetching)
+
+
+
+// Setinterval (live sync)
 
 
 
@@ -116,40 +217,8 @@ app.get('/dashboards', async (req, res) => {
     try {
         if (req.session.userId) {
             const user = await newUser.findById(req.session.userId);
-            let spotifydata = null;
-            let calenderdata = null;
-            let githubdata = null;
-            let codeforcesdata = null;
-            let leetcodedata = null;
-            if (user.spotify.accesstoken) {
-                try {
-                    const spotifyresponse = await axios.get('https://api.spotify.com/v1/me', {
-                        headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
-                    });
-                    spotifydata = spotifyresponse.data;
-
-                } catch (err) {
-                    if (err.response && err.response.status === 401) {
-                        try {
-                            const refreshresponse = await axios.post('http://accounts.spotify.com/api/token', {
-                                grant_type : 'refresh_token',
-                                refresh_token: user.spotifyrefreshtoken,
-                                client_id : process.env.SPOTIFY_CLIENT_ID,
-                                client_secret : process.env.SPOTIFY_CLIENT_SECRET
-                            }, {
-                                headers: { 'Content-Type': 'application/x/www-form-urlencoded' }
-                            });
-                            const newtoken = refreshresponse.data.access_token;
-                            await newUser.findByIdAndUpdate(req.session.userId, {
-                                spotifyaccesstoken: newtoken
-                            });
-                            return res.redirect('/dashboard');
-                        } catch (err) {
-                            console.error(err);
-                        }
-                    }
-                }
-            }
+            
+            fetchdatafromspotify(req.session.userId);
 
             if (user.calenderaccesstoken) {
                 try {
@@ -214,14 +283,7 @@ app.get('/dashboards', async (req, res) => {
                 }
             }
 
-            res.status(200).render('dashboard', {
-                user: user,
-                spotifyuser: spotifydata,
-                calenderuser: calenderdata,
-                githubuser: githubdata,
-                leetcodeuser: leetcodedata,
-                codeforcesuser: codeforcesdata
-            })
+            res.status(200).render('dashboard', { user: user });
         } else {
             res.status(401).redirect('/');
         }
@@ -231,16 +293,57 @@ app.get('/dashboards', async (req, res) => {
     }
 });
 
-app.get('/analytics', (req, res) => {
-    res.status(200).render('analytics');
+app.get('/analyticsoverview', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('analyticsoverview');
+    }else{
+        res.status(500).redirect('/');
+    }
 });
+
+app.get('/analyticsspotify', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('analyticsspotify');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/analyticsleetcode', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('analyticsleetcode');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/analyticsgithub', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('analyticsgithub');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/analyticscalender', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('analyticscalender');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
 
 app.get('/goals', (req, res) => {
     res.status(200).render('goals');
 });
 
-app.get('/integrations', (req, res) => {
-    res.status(200).render('integrations');
+app.get('/integration', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('integration');
+    }else{
+        res.status(500).redirect('/');
+    }
 });
 
 app.get('/calender', (req, res) => {
@@ -255,8 +358,71 @@ app.get('/achievements', (req, res) => {
     res.status(200).render('achievements');
 });
 
-app.get('/settings', (req, res) => {
-    res.status(200).render('settings');
+app.get('/settingsprofile', async(req, res) => {
+    let user ="";
+    if(req.session.userId){
+        const User = await newUser.findById(req.session.userId);
+        user = User;
+        res.status(200).render('settingsprofile' , {user:user} );
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/settingsprivacy', async(req, res) => {
+    if(req.session.userId){
+        res.status(200).render('settingsprivacy');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/settingsnotifications', async(req, res) => {
+    if(req.session.userId){
+        res.status(200).render('settingsnotifications');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/settingslogout', async(req, res) => {
+    if(req.session.userId){
+        res.status(200).render('settingslogout');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/settingshelp', async(req, res) => {
+    if(req.session.userId){
+        res.status(200).render('settingshelp');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/settingstheme', async (req, res) => {
+    let user = '';
+    if (req.session.userId) {
+        try {
+            const USER = await newUser.findById(req.session.userId);
+            user = USER;
+            res.status(200).render('settingstheme', { user: user });
+        } catch (err) {
+            console.error("Terminal Log -> Database query me error:", err);
+        }
+    } else {
+        console.log("Terminal Log -> Session me userId nahi mili, redirecting...");
+        res.redirect('/');
+    }
+});
+
+app.get('/invaliddetailsforrepassword', async(req, res) => {
+    if(req.session.userId){
+        res.status(200).render('invaliddetailsforrepassword');
+    }else{
+        res.status(500).redirect('/');
+    }
 });
 
 app.get('/api/check-username', async (req, res) => {
@@ -374,6 +540,7 @@ app.get('/spotifycallback', async (req, res) => {
     } catch (err) {
         console.error(err);
     }
+    fetchdatafromspotify();
     res.status(200).redirect("/integrations");
 });
 
@@ -459,6 +626,7 @@ app.post('/', async (req, res) => {
         console.error(err);
         res.status(500).send('Error occurred while fetching user data');
     }
+
 });
 
 app.post('/register', (req, res) => {
@@ -477,6 +645,45 @@ app.post('/register', (req, res) => {
             console.error(err);
             res.status(500).send('Error occurred while saving user data');
         });
+});
+
+app.post('/settingsprivacy', async (req, res) => {
+    let user ='';
+    const { current , newpassword , repassword } = req.body;
+    try {
+        const user = await newUser.findOne({ password : current });
+        if (user) {
+            await newUser.findByIdAndUpdate(req.session.userId , {
+                password : newpassword
+            });
+            res.status(200).render('settingsprivacy');
+        } else {
+            res.status(401).redirect('/invaliddetailsforrepassword');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error occurred while updating the password!');
+    }
+
+});
+
+app.post('/settingstheme' , async(req,res) =>{
+    let user ='';
+    const THEME = req.body.theme;
+    try{
+        if (req.session.userId) {
+            await newUser.findByIdAndUpdate(req.session.userId , {
+                theme : THEME
+            });
+            const USER = await newUser.findById(req.session.userId);
+            user = USER;
+            res.status(200).render('settingstheme', {user : user});
+        }else {
+            res.status(401).send("Error while changing the theme");
+        };
+    }catch(err){
+        console.error(err);
+    };
 });
 
 
