@@ -1,0 +1,90 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Settings
+    link(rel="stylesheet", href="/static/settingsnotifications.css")
+  body
+    .container
+
+      // Sidebar
+      aside.sidebar
+        .logo
+          h2 My Dashboard
+        ul.menu
+          li: a(href="/dashboard") Overview
+          li: a(href="/analyticsoverview") Analytics
+          li: a(href="/goals") Goals
+          li: a(href="/calendar") Calendar
+          li: a(href="/integration") Integrations
+          li: a(href="/insights") Insights
+          li: a(href="/reports") Reports
+          li: a(href="/achievements") Achievements
+          li.active: a(href="") Settings
+
+      // Main Content
+      main.main-content
+
+        // header
+        header.settings-header
+          div
+            h2 Settings
+            p Manage your account preferences and application settings.
+
+        .settings-page
+          .settings-bar
+            ul
+              li: a(href="/settingsprofile") Profile
+              li.active: a(href="/settingsnotifications") Notifications
+              li: a(href="/settingsprivacy") Privacy & Security
+              li: a(href="/settingstheme") Theme
+              li: a(href="/settingshelp") Help & Feedback
+              li: a(href="/settingslogout") Log Out
+
+          .notifications-page
+            h3 Notifications
+            
+            .items-container
+
+              .notification-item
+                div
+                  h4 Email Notifications
+                  p Receive updates through email.
+                label.switch
+                  input(type="checkbox", checked)
+                  span.slider
+
+              .notification-item
+                div
+                  h4 Goal Reminders
+                  p Get reminders for your goals.
+                label.switch
+                  input(type="checkbox", checked)
+                  span.slider
+
+              .notification-item
+                div
+                  h4 Weekly Summary
+                  p Receive weekly progress reports.
+                label.switch
+                  input(type="checkbox")
+                  span.slider
+
+              .notification-item
+                div
+                  h4 Product Updates
+                  p Receive updates about new features.
+                label.switch
+                  input(type="checkbox", checked)
+                  span.slider
+
+              .notification-item
+                div
+                  h4 Push Notifications
+                  p Enable notifications on this device.
+                label.switch
+                  input(type="checkbox")
+                  span.slider
+
+              button.save-btn Save Changes

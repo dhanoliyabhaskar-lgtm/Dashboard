@@ -1,0 +1,64 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Settings
+    link(rel="stylesheet" href="/static/settingsprivacy.css")
+  body
+    .container
+
+      // Sidebar
+      aside.sidebar
+        .logo
+          h2 My Dashboard
+        ul.menu
+          li: a(href="/dashboard") Overview
+          li: a(href="/analyticsoverview") Analytics
+          li: a(href="/goals") Goals
+          li: a(href="/calendar") Calendar
+          li: a(href="/integration") Integrations
+          li: a(href="/insights") Insights
+          li: a(href="/reports") Reports
+          li: a(href="/achievements") Achievements
+          li.active: a(href="") Settings
+
+      // Main Content
+      main.main-content
+
+        // header
+        header.settings-header
+          div
+            h2 Settings
+            p Manage your account preferences and application settings.
+
+        .settings-page
+          .settings-bar
+            ul
+              li: a(href="/settingsprofile") Profile
+              li: a(href="/settingsnotifications") Notifications
+              li.active: a(href="/settingsprivacy") Privacy & Security
+              li: a(href="/settingstheme") Theme
+              li: a(href="/settingshelp") Help & Feedback
+              li: a(href="/settingslogout") Log Out
+
+          .privacyandsecurity-page
+            h3 Privacy and Security
+            
+            .privacyandsecurity-set
+              h4 Change Password
+              
+              form.set-password#formid(action="/settingsprivacy" method="post")
+                label(for="current-pass") Current Password: 
+                input#current-pass(type="password", name="current", required)
+                
+                label(for="new-pass") New Password: 
+                input#new-pass(type="password",name="newpassword", required)
+                
+                p#error_message
+
+                label#confirm(for="confirm-pass") Confirm New Password: 
+                input#confirm-pass(type="password",name="confirm_password", required)
+                
+                button#submitbtn(type="submit") Update Password
+    script(src="/static/settingsprivacy.js")

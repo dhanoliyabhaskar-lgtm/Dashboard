@@ -1,0 +1,66 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Settings
+    link(rel="stylesheet" href="/static/settingstheme.css")
+
+  body(data-theme=user.theme)
+    .container
+
+      // Sidebar
+      aside.sidebar
+        .logo
+          h2 My Dashboard
+        ul.menu
+          li: a(href="/dashboard") Overview
+          li: a(href="/analyticsoverview") Analytics
+          li: a(href="/goals") Goals
+          li: a(href="/calendar") Calendar
+          li: a(href="/integration") Integrations
+          li: a(href="/insights") Insights
+          li: a(href="/reports") Reports
+          li: a(href="/achievements") Achievements
+          li.active: a(href="") Settings
+        
+      // Main Content
+      main.main-content
+
+        // header
+        header.settings-header
+          div
+            h2 Settings
+            p Manage your account preferences and application settings.
+
+        .settings-page
+          .settings-bar
+            ul
+              li: a(href="/settingsprofile") Profile
+              li: a(href="/settingsnotifications") Notifications
+              li: a(href="/settingsprivacy") Privacy & Security
+              li.active: a(href="/settingstheme") Theme
+              li: a(href="/settingshelp") Help & Feedback
+              li: a(href="/settingslogout") Log Out
+
+          .privacyandsecurity-page
+            h3 Theme Change
+            
+            .privacyandsecurity-set
+              h4 Please Select the corressponding Number for specific colour combination
+
+              p 1. Light Theme (default (Alice Blue and White))
+              p 2. Dark Theme (Jet Black and Dark Obsidian)
+              p 3. -------
+              p 4. -------
+              p 5. -------
+              p 6. -------
+              p 7. -------
+              
+              form.set-theme(action="/settingstheme" method="post")
+                label(for="current-pass") Your Colour Theme number: 
+                input#current-pass(type="text",name="theme", required , placeholder="1")
+                
+                button(type="submit") Update Theme
+    
+    script(src="/static/settingstheme.js")
