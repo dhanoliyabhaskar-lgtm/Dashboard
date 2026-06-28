@@ -1,0 +1,125 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Project01
+        link(rel="stylesheet", href="/static/integrations.css")
+    body
+        div.container
+            
+            // Sidebar
+            aside.sidebar
+                div.logo
+                    h2 MyDashboard
+                ul.menu
+                    li: a(href="/dashboard") Overview
+                    li: a(href="/analyticsoverview") Analytics
+                    li: a(href="/goals") Goals
+                    li: a(href="/calendar") Calendar
+                    li.active: a(href="/integration") Integrations
+                    li: a(href="/insights") Insights
+                    li: a(href="/reports") Reports
+                    li: a(href="/achievements") Achievements
+                    li: a(href="/settingsprofile") Settings
+            
+            div.main-content
+                
+                // header
+                header.integrations-header
+                    div
+                        h2 Integrations
+                        p Connect your favorite platforms and sync your data.
+                
+                div.integrations-card
+                    
+                    // Third Party Apps
+                    h3 Third Party Apps
+                    
+                    div.integrations-item
+                        div.left
+                            div.icon 📅
+                            span Google Calendar
+                        div.status-box
+                            button.connect-btn(onclick="window.location.href='/auth/calender'") Connect 
+                            span.status-connected Connected 
+                        div.right
+                            span Last synced 3 mins ago
+                            button.wholedata ›
+                    
+                    div.integrations-item
+                        div.left
+                            div.icon 🎵
+                            span Spotify
+                        div.status-box
+                            button.connect-btn(onclick="window.location.href='/auth/spotify'") Connect 
+                            span.status-connected Connected 
+                        div.right
+                            span Last synced 1 min ago
+                            button.wholedata ›
+                    
+                    div.integrations-item
+                        div.left
+                            div.icon 🐱
+                            span GitHub
+                        div.status-box
+                            button.connect-btn(onclick="window.location.href='/auth/github'") Connect 
+                            span.status-connected Connected 
+                        div.right
+                            span Last synced 2 mins ago
+                            button.wholedata ›
+                    
+                    div.integrations-item
+                        div.left
+                            div.icon 💻
+                            span LeetCode
+                        div.status-box
+                            button.connect-btn(onclick="window.location.href='/auth/leetcode'") Connect 
+                            span.status-connected Connected 
+                        div.right
+                            span Last synced 5 mins ago
+                            button.wholedata ›
+                    
+                    div.integrations-item
+                        div.left
+                            div.icon 🐱
+                            span Twitter
+                        div.status-box
+                            button.connect-btn(onclick="window.location.href='/auth/twitter'") Connect 
+                            span.status-connected Connected 
+                        div.right
+                            span Last synced 2 mins ago
+                            button.wholedata ›
+                    
+                    div.integrations-item
+                        div.left
+                            div.icon 🐱
+                            span Discord
+                        div.status-box
+                            button.connect-btn(onclick="window.location.href='/auth/discord'") Connect 
+                            span.status-connected Connected 
+                        div.right
+                            span Last synced 2 mins ago
+                            button.wholedata ›
+                    
+                    div.integrations-item
+                        div.left
+                            div.icon 🐱
+                            span Notion
+                        div.status-box
+                            button.connect-btn(onclick="window.location.href='/auth/notion'") Connect 
+                            span.status-connected Connected 
+                        div.right
+                            span Last synced 2 mins ago
+                            button.wholedata ›
+                    
+                    div.integrations-item
+                        div.left
+                            div.icon 🐱
+                            span LinkdIn
+                        div.status-box
+                            button.connect-btn(onclick="window.location.href='/auth/linkedin'") Connect 
+                            span.status-connected Connected 
+                        div.right
+                            span Last synced 2 mins ago
+                            button.wholedata ›
