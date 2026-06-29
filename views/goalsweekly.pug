@@ -1,0 +1,54 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Project01
+    link(rel="stylesheet" href="/static/goalsweekly.css")
+  body
+    .container
+
+      // Sidebar
+      aside.sidebar
+        .logo
+          h2 MyDashboard
+        ul.menu
+          li: a(href="/dashboard") Overview
+          li: a(href="/analyticsoverview") Analytics
+          li.active: a(href="/goals") Goals
+          li: a(href="/calendar") Calendar
+          li: a(href="/integration") Integrations
+          li: a(href="/insights") Insights
+          li: a(href="/reports") Reports
+          li: a(href="/achievements") Achievements
+          li: a(href="/settingsprofile") Settings
+
+      // main content
+      .main-content
+
+        // Header
+        header.goals-header
+          .header-left
+            h2 Goals
+            p Set goals, track progress and achieve more 
+          .header-right
+            button.goal-btn + New Goal
+
+        // Tabs
+        .goal-tabs
+          button.tab(onclick="window.location.href='/goals'") All Goals
+          button.tab.active(onclick="window.location.href='/goalsweekly'") Weekly Goals
+          button.tab(onclick="window.location.href='/goalsmonthly'") Monthly Goals
+          button.tab(onclick="window.location.href='/goalscustom'") Custom Goals
+        // Goal Cards
+        .goal-card
+          .goal-icon 💻
+          .goal-content
+            .goal-top
+              h3 Solve 100 LeetCode Problems
+              span 36 / 100
+            .progress-bar
+              .progress(style="width:36%;")
+            .goal-bottom
+              p Target: July 31, 2026
+              span 31 days left
