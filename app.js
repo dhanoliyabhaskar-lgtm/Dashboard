@@ -65,6 +65,98 @@ var newuserSchema = new mongoose.Schema({
         refreshtoken : String,
         username : { type : String , default : "user_abc"},
         problemsolved : { type : String , default : "50"}
+    },
+    newgoal : {
+        goal1:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal2:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal3:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal4:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal5:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal6:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal7:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal8:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal9:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal10:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal11:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal12:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal13:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal14:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        },
+        goal15:{
+            type:{type:String , default: null},
+            goal:{type:String , default: ""},
+            target:{type:Number , default: null},
+            deadline:{type:Date , default: null}
+        }
     }
 });
 var newUser = mongoose.model('newUser', newuserSchema);
@@ -295,7 +387,7 @@ app.get('/dashboards', async (req, res) => {
 
 app.get('/analyticsoverview', (req, res) => {
     if(req.session.userId){
-        res.status(200).render('analyticsoverview');
+        res.status(200).redirect('/analyticsspotify');
     }else{
         res.status(500).redirect('/');
     }
@@ -335,7 +427,43 @@ app.get('/analyticscalender', (req, res) => {
 
 
 app.get('/goals', (req, res) => {
-    res.status(200).render('goals');
+    if(req.session.userId){
+        res.status(200).render('goals');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/goalsweekly', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('goalsweekly');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/goalscustom', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('goalscustom');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/goalsmonthly', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('goalsmonthly');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/newgoals', (req, res) => {
+    if(req.session.userId){
+        res.status(200).render('newgoals');
+    }else{
+        res.status(500).redirect('/');
+    }
 });
 
 app.get('/integration', (req, res) => {
@@ -396,6 +524,14 @@ app.get('/settingslogout', async(req, res) => {
 app.get('/settingshelp', async(req, res) => {
     if(req.session.userId){
         res.status(200).render('settingshelp');
+    }else{
+        res.status(500).redirect('/');
+    }
+});
+
+app.get('/contact', async(req, res) => {
+    if(req.session.userId){
+        res.status(200).render('contact');
     }else{
         res.status(500).redirect('/');
     }
@@ -679,11 +815,175 @@ app.post('/settingstheme' , async(req,res) =>{
             user = USER;
             res.status(200).render('settingstheme', {user : user});
         }else {
-            res.status(401).send("Error while changing the theme");
+            res.status(401).redirect('/');
         };
     }catch(err){
         console.error(err);
     };
+});
+
+app.post('/newgoals' , async(req,res)=>{
+    const {type, goal, target, deadline}= req.body;
+    try{
+        if(req.session.userId){
+            const user = await newUser.findById(req.session.userId);
+            if(!user.newgoal.goal15.goal){
+                if(!user.newgoal.goal14.goal){
+                    if(!user.newgoal.goal13.goal){
+                        if(!user.newgoal.goal12.goal){
+                            if(!user.newgoal.goal11.goal){
+                                if(!user.newgoal.goal10.goal){
+                                    if(!user.newgoal.goal9.goal){
+                                        if(!user.newgoal.goal8.goal){
+                                            if(!user.newgoal.goal7.goal){
+                                                if(!user.newgoal.goal6.goal){
+                                                    if(!user.newgoal.goal5.goal){
+                                                        if(!user.newgoal.goal4.goal){
+                                                            if(!user.newgoal.goal3.goal){
+                                                                if(!user.newgoal.goal2.goal){
+                                                                    if(!user.newgoal.goal1.goal){
+                                                                        await newUser.findByIdAndUpdate(req.session.userId , {
+                                                                            $set : {
+                                                                                'newgoal.goal1.type' : type,
+                                                                                'newgoal.goal1.goal' : goal,
+                                                                                'newgoal.goal1.target' : target,
+                                                                                'newgoal.goal1.deadline' : deadline
+                                                                            }
+                                                                        });
+                                                                    };
+                                                                    await newUser.findByIdAndUpdate(req.session.userId , {
+                                                                        $set : {
+                                                                            'newgoal.goal2.type' : type,
+                                                                            'newgoal.goal2.goal' : goal,
+                                                                            'newgoal.goal2.target' : target,
+                                                                            'newgoal.goal2.deadline' : deadline
+                                                                        }
+                                                                    });
+                                                                };
+                                                                await newUser.findByIdAndUpdate(req.session.userId , {
+                                                                    $set : {
+                                                                        'newgoal.goal3.type' : type,
+                                                                        'newgoal.goal3.goal' : goal,
+                                                                        'newgoal.goal3.target' : target,
+                                                                        'newgoal.goal3.deadline' : deadline
+                                                                    }
+                                                                });
+                                                            };
+                                                            await newUser.findByIdAndUpdate(req.session.userId , {
+                                                                $set : {
+                                                                    'newgoal.goal4.type' : type,
+                                                                    'newgoal.goal4.goal' : goal,
+                                                                    'newgoal.goal4.target' : target,
+                                                                    'newgoal.goal4.deadline' : deadline
+                                                                }
+                                                            });
+                                                        };
+                                                        await newUser.findByIdAndUpdate(req.session.userId , {
+                                                            $set : {
+                                                                'newgoal.goal5.type' : type,
+                                                                'newgoal.goal5.goal' : goal,
+                                                                'newgoal.goal5.target' : target,
+                                                                'newgoal.goal5.deadline' : deadline
+                                                            }
+                                                        });
+                                                    };
+                                                    await newUser.findByIdAndUpdate(req.session.userId , {
+                                                        $set : {
+                                                            'newgoal.goal6.type' : type,
+                                                            'newgoal.goal6.goal' : goal,
+                                                            'newgoal.goal6.target' : target,
+                                                            'newgoal.goal6.deadline' : deadline
+                                                        }
+                                                    });
+                                                };
+                                                await newUser.findByIdAndUpdate(req.session.userId , {
+                                                    $set : {
+                                                        'newgoal.goal7.type' : type,
+                                                        'newgoal.goal7.goal' : goal,
+                                                        'newgoal.goal7.target' : target,
+                                                        'newgoal.goal7.deadline' : deadline
+                                                    }
+                                                });
+                                            };
+                                            await newUser.findByIdAndUpdate(req.session.userId , {
+                                                $set : {
+                                                    'newgoal.goal8.type' : type,
+                                                    'newgoal.goal8.goal' : goal,
+                                                    'newgoal.goal8.target' : target,
+                                                    'newgoal.goal8.deadline' : deadline
+                                                }
+                                            });
+                                        };
+                                        await newUser.findByIdAndUpdate(req.session.userId , {
+                                            $set : {
+                                                'newgoal.goal9.type' : type,
+                                                'newgoal.goal9.goal' : goal,
+                                                'newgoal.goal9.target' : target,
+                                                'newgoal.goal9.deadline' : deadline
+                                            }
+                                        });
+                                    };
+                                    await newUser.findByIdAndUpdate(req.session.userId , {
+                                        $set : {
+                                            'newgoal.goal10.type' : type,
+                                            'newgoal.goal10.goal' : goal,
+                                            'newgoal.goal10.target' : target,
+                                            'newgoal.goal10.deadline' : deadline
+                                        }
+                                    });
+                                };
+                                await newUser.findByIdAndUpdate(req.session.userId , {
+                                    $set : {
+                                        'newgoal.goal11.type' : type,
+                                        'newgoal.goal11.goal' : goal,
+                                        'newgoal.goal11.target' : target,
+                                        'newgoal.goal11.deadline' : deadline
+                                    }
+                                });
+                            };
+                            await newUser.findByIdAndUpdate(req.session.userId , {
+                                $set : {
+                                    'newgoal.goal12.type' : type,
+                                    'newgoal.goal12.goal' : goal,
+                                    'newgoal.goal12.target' : target,
+                                    'newgoal.goal12.deadline' : deadline
+                                }
+                            });
+                        };
+                        await newUser.findByIdAndUpdate(req.session.userId , {
+                            $set : {
+                                'newgoal.goal13.type' : type,
+                                'newgoal.goal13.goal' : goal,
+                                'newgoal.goal13.target' : target,
+                                'newgoal.goal13.deadline' : deadline
+                            }
+                        });
+                    };
+                    await newUser.findByIdAndUpdate(req.session.userId , {
+                        $set : {
+                            'newgoal.goal14.type' : type,
+                            'newgoal.goal14.goal' : goal,
+                            'newgoal.goal14.target' : target,
+                            'newgoal.goal14.deadline' : deadline
+                        }
+                    });
+                };
+                await newUser.findByIdAndUpdate(req.session.userId , {
+                    $set : {
+                        'newgoal.goal15.type' : type,
+                        'newgoal.goal15.goal' : goal,
+                        'newgoal.goal15.target' : target,
+                        'newgoal.goal15.deadline' : deadline
+                    }
+                });
+            }
+            else{
+                res.status(200).redirect('/extragoals');
+            }
+        };
+    }catch(err){
+        console.error(err);
+    }
 });
 
 
@@ -693,4 +993,3 @@ app.post('/settingstheme' , async(req,res) =>{
 app.listen(port, () => {
     console.log(`Server is running on http://127.0.0.1:${port}`);
 });
-
