@@ -1,56 +1,242 @@
 doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Analytics
-    link(rel="stylesheet" href="/static/analyticsspotify.css")
-  body
-    .container
-      // Sidebar Navigation
-      aside.sidebar
-        .logo
-          h2 MyDashboard
-        ul.menu
-          li: a(href="/dashboard") Overview
-          li.active: a(href="/analyticsoverview") Analytics
-          li: a(href="/goals") Goals
-          li: a(href="/calendar") Calendar
-          li: a(href="/integration") Integrations
-          li: a(href="/insights") Insights
-          li: a(href="/reports") Reports
-          li: a(href="/achievements") Achievements
-          li: a(href="/settingsprofile") Settings
-
-      // Main Content Area
-      .main-content
-        header.analytics-header
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Analytics
+  link(rel='stylesheet' href='/static/analyticsspotify.css')
+.container
+  aside.sidebar
+    .logo
+      h2 MyDashboard
+    ul.menu
+      li: a(href="/dashboard") Overview
+      li.active: a(href="/analyticsoverview") Analytics
+      li: a(href="/goals") Goals
+      li: a(href="/calendar") Calendar
+      li: a(href="/integration") Integrations
+      li: a(href="/reports") Reports
+      li: a(href="/achievements") Achievements
+      li: a(href="/settingsprofile") Settings
+  .main-content
+    // Header
+    header.analytics-header
+      div
+        h2 Analytics
+        p  Deep dive into your productivity 
+    .tabs
+      button(onclick="window.location.href='/analyticsoverview'") Overview
+      button(onclick="window.location.href='/analyticsgithub'") Github
+      button(onclick="window.location.href='/analyticsleetcode'") Leetcode
+      button(onclick="window.location.href='/analyticsspotify'"  class="active") Spotify
+      button(onclick="window.location.href='/analyticscalender'") Calendar
+    section.analytics-cards
+      .card
+        .left &#x1F3B5;
+        .right
+          h4 Total Listening Time
           div
-            h2 Analytics
-            p Deep dive into your productivity
-
-        // Sub-tabs Navigation
-        .tabs
-          button(onclick="window.location.href='/analyticsoverview'") Overview
-          button(onclick="window.location.href='/analyticsgithub'") Github
-          button(onclick="window.location.href='/analyticsleetcode'") Leetcode
-          button(onclick="window.location.href='/analyticsspotify'"  class="active") Spotify
-          button(onclick="window.location.href='/analyticscalender'") Calendar
-
-        // Dashboard Grid Widgets
-        .analytics-grid
-          .card
-            h3 Commits Over Time
-            canvas#commitChart
-
-          .card
-            h3 Problems Solved
-            canvas#problemChart
-
-          .card
-            h3 Time Distribution
-            canvas#pieChart
-
-          .card
-            h3 Productive Hours Heatmap
-            canvas#ProductivehrsChart
+            b 18h 42m
+          span &uarr; 22% vs last 7 days 
+      .card
+        .left &#x1F3B5;
+        .right
+          h4 Songs Played
+          div
+            b 230
+          span &uarr; 15% vs last 7 days 
+      .card
+        .left &#x1F3B5;
+        .right
+          h4 Unique Artists
+          div
+            b 27
+          span &uarr; 12% vs last 7 days 
+      .card
+        .left &#x1F3B5;
+        .right
+          h4 Avg. Track Duration
+          div
+            b 3m 40s
+          span &darr; 4% vs last 7 days 
+    section.top-widgets
+      .widget
+        h4  Listening Time Over Time 
+        canvas#chart1
+      .widget
+        .header
+          h4  Recently Played 
+          a(href='#') View All
+        table.recentsongs
+          thead
+            tr
+              th Songs
+              th Last Played
+          tbody
+            tr
+              td.recent
+                img(src='/static/photos/1st rank icon.jpeg' alt='')
+                span  Shape of You 
+              td 3 min ago
+            tr
+              td.recent
+                img(src='/static/photos/2nd rank icon.jpeg' alt='')
+                span  Dil Diyan Gallan 
+              td 8 min ago
+            tr
+              td.recent
+                img(src='/static/photos/3rd rank icon.jpeg' alt='')
+                span  Sapphire 
+              td 12 min ago
+            tr
+              td.recent
+                img(src='/static/photos/4th rank icon.jpeg' alt='')
+                span  Channa Mereya 
+              td 23 min ago
+            tr
+              td.recent
+                img(src='/static/photos/5th rank icon.jpeg' alt='')
+                span  O Maahi 
+              td 28 min ago
+      .widget
+        .header
+          h4  Top Artists
+          a(href='#') View All
+        table.artists
+          thead
+            tr
+              th #
+              th Artists
+              th Worldwide Popularity
+          tbody
+            tr
+              td 1
+              td.singer
+                img(src='/static/photos/artist logo.jpeg' alt='')
+                span  Arijit Singh 
+              td 90/100
+            tr
+              td 2
+              td.singer
+                img(src='/static/photos/artist logo.jpeg' alt='')
+                span Atif Aslam
+              td 90/100
+            tr
+              td 3
+              td.singer
+                img(src='/static/photos/artist logo.jpeg' alt='')
+                span  Ed Sheeran 
+              td 90/100
+            tr
+              td 4
+              td.singer
+                img(src='/static/photos/artist logo.jpeg' alt='')
+                span  Rahat F. Ali Khan 
+              td 90/100
+            tr
+              td 5
+              td.singer
+                img(src='/static/photos/artist logo.jpeg' alt='')
+                span  Shreya Ghosal 
+              td 90/100
+    section.bottom-widgets
+      .widget
+        .header
+          h4  Top Tracks 
+          a(href='#') View All
+        table.tracks
+          thead
+            tr
+              th #
+              th Track
+              th Artists
+          tbody
+            tr
+              td 1
+              td.song
+                img(src='/static/photos/album logo.jpeg' alt='logo')
+                span Sapphire
+              td Ed Sheeran
+            tr
+              td 2
+              td.song
+                img(src='/static/photos/album logo.jpeg' alt='logo')
+                span Ik vari aa
+              td Arijit singh
+            tr
+              td 3
+              td.song
+                img(src='/static/photos/album logo.jpeg' alt='logo')
+                span Besabariyaan
+              td Arijit Singh
+            tr
+              td 4
+              td.song
+                img(src='/static/photos/album logo.jpeg' alt='logo')
+                span Dil Diyan Gallan
+              td Atif Aslam
+            tr
+              td 5
+              td.song
+                img(src='/static/photos/album logo.jpeg' alt='logo')
+                span Afreen Afreen
+              td Rahat F.Ali khan
+      .widget
+        .header
+          h4  Top Playlists 
+          a(href='#') View All
+        table.playlists
+          thead
+            tr
+              th #
+              th Playlists
+              th No. of Songs
+          tbody
+            tr
+              td 1
+              td.playlist
+                img(src='/static/photos/playlist icon.jpeg' alt='')
+                span Chill Vibes
+              td 26
+            tr
+              td 2
+              td.playlist
+                img(src='/static/photos/playlist icon.jpeg' alt='')
+                span Lofi Version
+              td 22
+            tr
+              td 3
+              td.playlist
+                img(src='/static/photos/playlist icon.jpeg' alt='')
+                span Road Trip
+              td 14
+            tr
+              td 4
+              td.playlist
+                img(src='/static/photos/playlist icon.jpeg' alt='')
+                span Happy Hits
+              td 18
+            tr
+              td 5
+              td.playlist
+                img(src='/static/photos/playlist icon.jpeg' alt='')
+                span Party Songs
+              td 19
+      #insights.widget
+        h4  Insights 
+        .items
+          .left &#x1F525;
+          .right
+            p You&apos;re most active on Sunday.
+            p Your listening time peaks on the weekend.
+        .items
+          .left &#x1F3B5;
+          .right
+            p Arijit Singh is your top Artist.
+            p Your 2/5 top songs is of Arijit Singh. 
+        .items
+          .left &#x2B50;
+          .right
+            p Sapphire is your top track.
+            p You listened 34 times this track.
+script(src='https://cdn.jsdelivr.net/npm/chart.js')
+script(src='/static/analyticsspotify.js')
