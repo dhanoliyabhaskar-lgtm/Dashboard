@@ -9,6 +9,8 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const { configDotenv } = require('dotenv');
 const { default: axios } = require('axios');
+const { type } = require('os');
+const { url } = require('inspector');
 const MongoStore = require('connect-mongo').default;
 const app = express();
 const port = 3000;
@@ -54,11 +56,65 @@ var newuserSchema = new mongoose.Schema({
         accesstoken : String,
         refreshtoken : String,
         username : String,
-        follow : String,
         email : String,
         id : String,
+
+        recentlyplayed : [{
+            song : {type : String},
+            time : {type : Date} , 
+            duaration : {type : Number}
+        }],
         
-        listeninghours : {type : String , default : "10"}
+        recentlyplyedtime : [{
+            type : String
+        }],
+
+        lastsong : {
+            type : Date
+        },
+
+        totallisteningtime : [{
+            type : Number
+        }],
+
+        songplayed : [{
+            type : Number
+        }],
+
+        totallisteningtimeforweek : {
+            type : String 
+        },
+
+        totalsongforweek : {
+            type : Number 
+        },
+
+        avgtrack : {
+            type : String 
+        },
+
+        topartist : [{
+            name : {type : String},
+            popularity : {type : Number},
+            logo : {type : String}
+        }],
+
+        toptrack : [{
+            name : {type : String},
+            artist : {type : String},
+            logo : {type : String}
+        }],
+
+        topplaylist : [{
+            name : {type : String},
+            track : {type : Number},
+            logo : {type : String}
+        }],
+
+        newartist : [{
+            type : Number
+        }]
+
     } ,
     codeforces : {
         accesstoken : String,
@@ -66,98 +122,13 @@ var newuserSchema = new mongoose.Schema({
         username : { type : String , default : "user_abc"},
         problemsolved : { type : String , default : "50"}
     },
-    newgoal : {
-        goal1:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal2:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal3:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal4:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal5:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal6:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal7:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal8:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal9:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal10:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal11:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal12:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal13:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal14:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        },
-        goal15:{
-            type:{type:String , default: null},
-            goal:{type:String , default: ""},
-            target:{type:Number , default: null},
-            deadline:{type:Date , default: null}
-        }
-    }
+    newgoal : [{
+        type : {type:String , default: null},
+        goal : {type:String , default: ""},
+        target : {type:Number , default: null},
+        deadline : {type:Date , default: null},
+        done : {type : Number}
+    }]
 });
 var newUser = mongoose.model('newUser', newuserSchema);
 
@@ -175,46 +146,223 @@ app.set('views', path.join(__dirname, 'views'));
 
 //Functions
 
+// to be called
+
+async function addtimeandsong(userId , addtime , songcount) {
+    const user = await newUser.findById(userId);
+
+    let newtotaltime = 0;
+    let newtotalsong = 0;
+
+    newtotaltime = addtime + user.spotify.totallisteningtime[0];
+    newtotalsong = songcount + user.spotify.songplayed[0];
+
+    await newUser.findByIdAndUpdate(userId , {
+        $set : {
+            [`spotify.totallisteningtime.${0}`] : newtotaltime ,
+            [`spotify.songplayed.${0}`] : newtotalsong
+        }
+    },
+    {new : true})
+};
+
+async function timeandsongaddforweek(userId) {
+    const user = await newUser.findById(userId);
+
+    let totaltime = 0;
+    let totaltime1 = 0;
+    let totalsong = 0;
+    let hour = 0;
+    let min = 0;
+
+    for (let i=0 ; i<7 ; i++){
+        totaltime = totaltime + user.spotify.totallisteningtime[i];
+        totalsong = totaltime + user.spotify.songplayed[i];
+    }
+
+    totaltime1 = totaltime;
+    totaltime = totaltime1/(1000*60); // time converted to minutes
+    totaltime1 = totaltime;
+    totaltime = Math.floor(totaltime1); //removing the fractional part 
+    totaltime1 = totaltime;
+    hour = Math.floor(totaltime1/60); // Making it into hour
+    min = totaltime - (hour*60);
+
+    await newUser.findByIdAndUpdate(userID ,{
+        $set : {
+            'spotify.totallisteningtimeforweek' : `${hour}h ${min}m` ,
+            'spotify.totalsongforweek' : totalsong 
+        }
+    },
+    {new : true})
+};
+
+async function avgtrack(userId) {
+    const user = await newUser.findById(userId);
+
+    let avg = 0 ;
+    let avg1 = 0 ;
+    let min = 0 ;
+    
+    for (let i=0 ; i<50 ; i++){
+        avg = avg + user.spotify.recentlyplayed[i].duaration;
+    }
+
+    avg1 = avg ;
+    avg = avg1/(1000); // Converted to second
+    avg1 = avg ;
+    min = Math.floor(avg/(60));
+    avg = avg1 - (min*60);
+
+    await newUser.findByIdAndUpdate(userID , {
+        $set : {
+            'spotify.avgtrack' : `${min}m ${avg}s`
+        }
+    },
+    {new : true}
+    )
+};
+
+function gettime(time) {
+    const playedAt = new Date(time); 
+    const now = new Date();          
+
+    const diff = now - playedAt;
+    const min = Math.floor(diff / (1000 * 60));
+
+    if (min < 1) {
+        return '1 min ago' ;
+    } else if (min < 60) {
+        return `${min} min ago`;
+    } else {
+        const hour = Math.floor(min / 60);
+        return `${hour} hour ago`;
+    }
+};
+
+async function gettimeago(userId) {
+    const user = await newUser.findById(userId);
+
+    let timeago = [];
+
+    for (let i=0 ; i<50 ; i++){
+        timeago[i]=gettime(user.spotify.recentlyplayed[i].time)
+    }
+
+    await newUser.findByIdAndUpdate(userId , {
+        $set : {
+            [`spotify.recentlyplayedtime`] : timeago
+        }
+    },
+    { new : true }
+    )
+
+};
+
 //Daily
+
+
+
+// For apps
 
 async function fetchdatafromspotify(userId){
     try {
         if (userId) {
             const user = await newUser.findById(userId);
 
-            let spotifyusername = null;
-            let spotifyemail = null;
-            let spotifyid = null;
-            let spotifyprofilepic = null;
-            let spotifyrecentlyplayed = null;
-            let spotifytopartist = null;
-
             if (user.spotify.accesstoken) {
                 try {
+                    const user = await newUser.findById(userId);
                     let spotifyresponse = await axios.get('https://api.spotify.com/v1/me', {
                         headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
                     });
 
-                    spotifyusername = spotifyresponse.data.display_name;
-                   
-                    spotifyemail = spotifyresponse.data.email;
-                  
-                    spotifyid = spotifyresponse.data.id;
-
-                    spotifyprofilepic = spotifyresponse.data.image[0].url;
                     
                     
                     spotifyresponse = await axios.get('https://api.spotify.com/v1/me/player/recently_played', {
                         headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
                     });
-                    spotifyrecentlyplayed = spotifyresponse.data.track.name;
+
+                    let recently = {};
+                    let recentlyfortime = 0;
+                    let songcount = 0;
+
+                    for(let i=0; i<50 ; i++){
+                        recently[`spotify.recentlyplayed.${i}.song`] = spotifyresponse.data.item[i].track.name;
+                        recently[`spotify.recentlyplayed.${i}.time`] = spotifyresponse.data.item[i].played_at;
+                        recently[`spotify.recentlyplayed.${i}.duration`] = spotifyresponse.data.item[i].track.duartion_ms;
+                    };
+
+                    let latestsong = spotifyresponse.data.item[0].played_at;
+
+                    for (let i=0 ; i<50 ; i++){
+                        if(user.spotify.lastsong == spotifyresponse.data.item[i].played_at){
+                            break;
+                        }else{
+                            recentlyfortime = recentlyfortime + spotifyresponse.data.item[i].track.duartion_ms;
+                            songcount = songcount + 1 ;
+                        }
+                    };
                     
+                    addtimeandsong(userId , recentlyfortime , songcount);
+                    timeandsongaddforweek(userId);
+                    avgtrack(userId);
+                    gettimeago(userId);   // isko har min me run karana hai 
                     
-                    spotifyresponse = await axios.get('https://api.spotify.com/v1/me/top/artist', {
+                    spotifyresponse = await axios.get('https://api.spotify.com/v1/me/top/artists', {
                         headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
                     });
-                    spotifytopartist = spotifyresponse.data.items;
 
+                    let artist ={};
+                    
+                    for(let i=0; i<50 ; i++){
+                        artist[`spotify.topartist.${i}.name`] = spotifyresponse.data.item[i].name;
+                        artist[`spotify.topartist.${i}.popularity`] = spotifyresponse.data.item[i].popularity;
+                        artist[`spotify.topartist.${i}.logo`] = spotifyresponse.data.item[i].images[0].url;
+                    };
+
+                    spotifyresponse = await axios.get('https://api.spotify.com/v1/me/top/tracks', {
+                        headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
+                    });
+
+                    let track = {};
+
+                    for(let i=0; i<50 ; i++){
+                        track[`spotify.toptrack.${i}.name`] = spotifyresponse.data.item[i].name;
+                        track[`spotify.toptrack.${i}.artist`] = spotifyresponse.data.item[i].artist[0].name;
+                        track[`spotify.toptrack.${i}.logo`] = spotifyresponse.data.item[i].album.images[0].url;
+                    };
+
+                    spotifyresponse = await axios.get('https://api.spotify.com/v1/me/top/tracks', {
+                        headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
+                    });
+
+                    let playlist = {};
+
+                    for(let i=0; i<50 ; i++){
+                        playlist[`spotify.topplaylist.${i}.name`] = spotifyresponse.data.item[i].name;
+                        playlist[`spotify.topplaylist.${i}.track`] = spotifyresponse.data.item[i].tracks.total;
+                        playlist[`spotify.topplaylist.${i}.logo`] = spotifyresponse.data.item[i].images[0].url;
+                    };
+
+                    spotifyresponse = await axios.get('https://api.spotify.com/v1/me/following', {
+                        headers: { 'Authorization': `Bearer ${user.spotifyaccesstoken}` }
+                    });
+
+                    let totalartist = spotifyresponse.data.artists.total;
+
+                    // Saving the data
+
+                    await newUser.findByIdAndUpdate(req.session.userId , {
+                        $set : {
+                            recently ,
+                            'spotify.lastsong' : latestsong ,
+                            artist , 
+                            track ,
+                            playlist , 
+                            [`spotify.newartist.0`] : totalartist
+                        }
+                    })
 
                 } catch (err) {
                     if (err.response && err.response.status === 401) {
@@ -232,7 +380,7 @@ async function fetchdatafromspotify(userId){
                                 spotifyaccesstoken: newtoken
                             });
 
-                            fetchdatafromspotify();
+                            fetchdatafromspotify(userId);
                             return;
                         } catch (err) {
                             console.error(err);
@@ -248,6 +396,8 @@ async function fetchdatafromspotify(userId){
         console.error(err);
     }
 };
+
+
 
 async function fetchdatafromcalender(){
 
@@ -290,10 +440,6 @@ app.get('/basic', (req, res) => {
     res.status(200).render('basic');
 });
 
-app.get('/profile', (req, res) => {
-    res.status(200).render('profile');
-});
-
 app.get('/dashboard', async(req, res) => {
     let user = " ";
     if(req.session.userId){
@@ -308,7 +454,7 @@ app.get('/dashboard', async(req, res) => {
 app.get('/dashboards', async (req, res) => {
     try {
         if (req.session.userId) {
-            const user = await newUser.findById(req.session.userId);
+            
             
             fetchdatafromspotify(req.session.userId);
 
@@ -375,6 +521,7 @@ app.get('/dashboards', async (req, res) => {
                 }
             }
 
+            const user = await newUser.findById(req.session.userId);
             res.status(200).render('dashboard', { user: user });
         } else {
             res.status(401).redirect('/');
@@ -827,158 +974,26 @@ app.post('/newgoals' , async(req,res)=>{
     try{
         if(req.session.userId){
             const user = await newUser.findById(req.session.userId);
-            if(!user.newgoal.goal15.goal){
-                if(!user.newgoal.goal14.goal){
-                    if(!user.newgoal.goal13.goal){
-                        if(!user.newgoal.goal12.goal){
-                            if(!user.newgoal.goal11.goal){
-                                if(!user.newgoal.goal10.goal){
-                                    if(!user.newgoal.goal9.goal){
-                                        if(!user.newgoal.goal8.goal){
-                                            if(!user.newgoal.goal7.goal){
-                                                if(!user.newgoal.goal6.goal){
-                                                    if(!user.newgoal.goal5.goal){
-                                                        if(!user.newgoal.goal4.goal){
-                                                            if(!user.newgoal.goal3.goal){
-                                                                if(!user.newgoal.goal2.goal){
-                                                                    if(!user.newgoal.goal1.goal){
-                                                                        await newUser.findByIdAndUpdate(req.session.userId , {
-                                                                            $set : {
-                                                                                'newgoal.goal1.type' : type,
-                                                                                'newgoal.goal1.goal' : goal,
-                                                                                'newgoal.goal1.target' : target,
-                                                                                'newgoal.goal1.deadline' : deadline
-                                                                            }
-                                                                        });
-                                                                    };
-                                                                    await newUser.findByIdAndUpdate(req.session.userId , {
-                                                                        $set : {
-                                                                            'newgoal.goal2.type' : type,
-                                                                            'newgoal.goal2.goal' : goal,
-                                                                            'newgoal.goal2.target' : target,
-                                                                            'newgoal.goal2.deadline' : deadline
-                                                                        }
-                                                                    });
-                                                                };
-                                                                await newUser.findByIdAndUpdate(req.session.userId , {
-                                                                    $set : {
-                                                                        'newgoal.goal3.type' : type,
-                                                                        'newgoal.goal3.goal' : goal,
-                                                                        'newgoal.goal3.target' : target,
-                                                                        'newgoal.goal3.deadline' : deadline
-                                                                    }
-                                                                });
-                                                            };
-                                                            await newUser.findByIdAndUpdate(req.session.userId , {
-                                                                $set : {
-                                                                    'newgoal.goal4.type' : type,
-                                                                    'newgoal.goal4.goal' : goal,
-                                                                    'newgoal.goal4.target' : target,
-                                                                    'newgoal.goal4.deadline' : deadline
-                                                                }
-                                                            });
-                                                        };
-                                                        await newUser.findByIdAndUpdate(req.session.userId , {
-                                                            $set : {
-                                                                'newgoal.goal5.type' : type,
-                                                                'newgoal.goal5.goal' : goal,
-                                                                'newgoal.goal5.target' : target,
-                                                                'newgoal.goal5.deadline' : deadline
-                                                            }
-                                                        });
-                                                    };
-                                                    await newUser.findByIdAndUpdate(req.session.userId , {
-                                                        $set : {
-                                                            'newgoal.goal6.type' : type,
-                                                            'newgoal.goal6.goal' : goal,
-                                                            'newgoal.goal6.target' : target,
-                                                            'newgoal.goal6.deadline' : deadline
-                                                        }
-                                                    });
-                                                };
-                                                await newUser.findByIdAndUpdate(req.session.userId , {
-                                                    $set : {
-                                                        'newgoal.goal7.type' : type,
-                                                        'newgoal.goal7.goal' : goal,
-                                                        'newgoal.goal7.target' : target,
-                                                        'newgoal.goal7.deadline' : deadline
-                                                    }
-                                                });
-                                            };
-                                            await newUser.findByIdAndUpdate(req.session.userId , {
-                                                $set : {
-                                                    'newgoal.goal8.type' : type,
-                                                    'newgoal.goal8.goal' : goal,
-                                                    'newgoal.goal8.target' : target,
-                                                    'newgoal.goal8.deadline' : deadline
-                                                }
-                                            });
-                                        };
-                                        await newUser.findByIdAndUpdate(req.session.userId , {
-                                            $set : {
-                                                'newgoal.goal9.type' : type,
-                                                'newgoal.goal9.goal' : goal,
-                                                'newgoal.goal9.target' : target,
-                                                'newgoal.goal9.deadline' : deadline
-                                            }
-                                        });
-                                    };
-                                    await newUser.findByIdAndUpdate(req.session.userId , {
-                                        $set : {
-                                            'newgoal.goal10.type' : type,
-                                            'newgoal.goal10.goal' : goal,
-                                            'newgoal.goal10.target' : target,
-                                            'newgoal.goal10.deadline' : deadline
-                                        }
-                                    });
-                                };
-                                await newUser.findByIdAndUpdate(req.session.userId , {
-                                    $set : {
-                                        'newgoal.goal11.type' : type,
-                                        'newgoal.goal11.goal' : goal,
-                                        'newgoal.goal11.target' : target,
-                                        'newgoal.goal11.deadline' : deadline
-                                    }
-                                });
-                            };
-                            await newUser.findByIdAndUpdate(req.session.userId , {
-                                $set : {
-                                    'newgoal.goal12.type' : type,
-                                    'newgoal.goal12.goal' : goal,
-                                    'newgoal.goal12.target' : target,
-                                    'newgoal.goal12.deadline' : deadline
-                                }
-                            });
-                        };
-                        await newUser.findByIdAndUpdate(req.session.userId , {
-                            $set : {
-                                'newgoal.goal13.type' : type,
-                                'newgoal.goal13.goal' : goal,
-                                'newgoal.goal13.target' : target,
-                                'newgoal.goal13.deadline' : deadline
-                            }
-                        });
-                    };
+            let a=1 ;
+            let i=0 ;
+            while(a){
+                if(user.newgoals[i].goal){
+                    i++;
+                    continue;
+                }else{
+                    a=0;
                     await newUser.findByIdAndUpdate(req.session.userId , {
                         $set : {
-                            'newgoal.goal14.type' : type,
-                            'newgoal.goal14.goal' : goal,
-                            'newgoal.goal14.target' : target,
-                            'newgoal.goal14.deadline' : deadline
+                            [`newgoal.${i}.type`] : type,
+                            [`newgoal.${i}.goal`] : goal,
+                            [`newgoal.${i}.target`] : target,
+                            [`newgoal.${i}.deadline`] : deadline
                         }
-                    });
-                };
-                await newUser.findByIdAndUpdate(req.session.userId , {
-                    $set : {
-                        'newgoal.goal15.type' : type,
-                        'newgoal.goal15.goal' : goal,
-                        'newgoal.goal15.target' : target,
-                        'newgoal.goal15.deadline' : deadline
-                    }
-                });
-            }
-            else{
-                res.status(200).redirect('/extragoals');
+                    },
+                    {new : true}
+                    )
+                    break ;
+                }
             }
         };
     }catch(err){
