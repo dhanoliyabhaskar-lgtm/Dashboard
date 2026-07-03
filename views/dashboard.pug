@@ -1,86 +1,109 @@
 doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Dashboard
-    link(rel="stylesheet", href="/static/dashboard.css")
-  body
-    .container
-
-      // Sidebar
-      aside.sidebar
-        .logo
-          h2 MyDashboard
-        ul.menu
-          li.active: a(href="/dashboard") Overview
-          li: a(href="analytics") Analytics
-          li: a(href="/goals") Goals
-          li: a(href="/calendar") Calendar
-          li: a(href="/integration") Integrations
-          li: a(href="/insights") Insights
-          li: a(href="/reports") Reports
-          li: a(href="/achievements") Achievements
-          li: a(href="/settingsprofile") Settings
-
-      // Main Content
-      main.main-content
-
-        // Header
-        header.overview-header
-          .header-left
-            h2 Hi, #{user.name} 👋
-            p Here's your productivity overview.
-          .header-right
-            img(src="static/photos/profile.png", alt="profile photo")
-
-        // Stats Cards
-        section.stats-cards
-          .card
-            h3 GitHub
-            p Commits this week
-            .number 42
-            span.growth ▲ 16% vs last week
-
-          .card
-            h3 LeetCode
-            p Problems Solved
-            .number #{user.codeforces.problemsolved}
-            span.growth ▲ 23% vs last week
-
-          .card
-            h3 Spotify
-            p Listening Time
-            .number #{user.spotify.listeninghours} 
-              | hrs
-            span.growth ▲ 8% vs last week
-
-          .card
-            h3 Calendar
-            p Events this week
-            .number 18
-            span.growth ▲ 5% vs last week
-
-        // Dashboard Row (Charts & Score)
-        section.dashboard-row
-          .weekly-activity
-            h3 Weekly Activity Overview
-            canvas#activityChart
-          .productivity-score
-            h3 Productivity Score
-            .score-circle
-              span 28 / 100
-            p Great job! You're more productive than 76% users.
-
-        // Bottom Widgets
-        section.bottom-widgets
-          .events
-            h3 Upcoming Events
-            .event-card
-              .date-box 24
-              div
-                h4 DSA Study Session
-                p 10:00 AM - 12:00 PM
-          .insight
-            h3 Top Insight
-            p You solved 24% more problems compared to last week.
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Project01
+  link(rel='stylesheet' href='/static/dashboard.css')
+.container
+  // Sidebar
+  aside.sidebar
+    .logo
+      h2 MyDashboard
+    ul.menu
+        li.active: a(href="/dashboard") Overview
+        li: a(href="/analyticsoverview") Analytics
+        li: a(href="/goals") Goals
+        li: a(href="/calendar") Calendar
+        li: a(href="/integration") Integrations
+        li: a(href="/reports") Reports
+        li: a(href="/achievements") Achievements
+        li: a(href="/settingsprofile") Settings
+  // Main Content
+  main.main-content
+    // Header
+    header.overview-header
+      .header-left
+        h2 Hi, #{user.name} &#x1F44B;
+        p Here&apos;s your productivity overview.
+      .header-right
+        img.notification-bar(src='/static/photos/notification.jpeg' alt='notification' class="notification-icon")
+        img(src='/static/photos/profile.png' alt='profile photo' class="profile-logo")
+    section.stats-cards
+      .card
+        h3 GitHub
+        p Commits this week
+        .number 42
+        span.growth &#x25B2; 16% vs last week
+      .card
+        h3 LeetCode
+        p Problems Solved
+        .number 76
+        span.growth &#x25B2; 23% vs last week
+      .card
+        h3 Spotify
+        p Listening Time
+        .number 12.4 hrs
+        span.growth &#x25B2; 8% vs last week
+      .card
+        h3 Calendar
+        p Events this week
+        .number 18
+        span.growth &#x25B2; 5% vs last week
+    section.dashboard-row
+      .weekly-activity
+        .left
+          h3 Weekly Activity Overview
+          canvas#activityChart  
+        .right
+          .summary
+            .box
+              .left
+                div &#x1F4C8;
+              .right
+                div Total Hours
+                h4 63h 54m
+                span Across all platforms
+            .box
+              .left
+                div &#x1F525;
+              .right
+                div Peak Day
+                h4 Friday
+                span Most productive day
+            .box
+              .left
+                div &#x2B50;
+              .right
+                div Growth
+                h4 +15.3%
+                span Vs last week
+            .box
+              .left
+                div &#x1F3B5;
+              .right
+                div Most Active
+                h4 Spotify
+                span 38h 18m this week
+      .productivity-score
+        h3 Productivity Score
+        .score-circle
+          span 28 / 100
+        p  Great job! You&apos;re more productive than 76% users.
+    section.bottom-widgets
+      .events
+        h3 Upcoming Events
+        .event-card
+          .date-box
+            div 24
+            div July
+          .event-time
+            | 10:00 AM - 12:00 PM
+          .event-details
+            h4 DSA Study Session
+            p Seminar Hall
+          span.status Ongoing
+      .insight
+        h3 Top Insight
+        p You solved 24% more problems compared to last week.
+script(src='https://cdn.jsdelivr.net/npm/chart.js')
+script(src='/static/dashboard.js')
