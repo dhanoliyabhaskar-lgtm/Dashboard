@@ -19,7 +19,6 @@ html(lang="en")
           li: a(href="/goals") Goals
           li: a(href="/calendar") Calendar
           li: a(href="/integration") Integrations
-          li: a(href="/insights") Insights
           li: a(href="/reports") Reports
           li: a(href="/achievements") Achievements
           li.active: a(href="") Settings
@@ -35,13 +34,12 @@ html(lang="en")
 
         .settings-page
           .settings-bar
-            ul
-              li: a(href="/settingsprofile") Profile
-              li: a(href="/settingsnotifications") Notifications
-              li: a(href="/settingsprivacy") Privacy & Security
-              li.active: a(href="/settingstheme") Theme
-              li: a(href="/settingshelp") Help & Feedback
-              li: a(href="/settingslogout") Log Out
+            button(onclick="window.location.href='/settingsprofile' ") Profile
+            button(onclick="window.location.href='/settingsnotifications' ") Notifications
+            button(onclick="window.location.href='/settingsprivacy' ") Privacy &amp; Security
+            button.active(onclick="window.location.href='/settingstheme' ") Theme
+            button(onclick="window.location.href='/settingshelp' ") Help &amp; Feedback
+            button(onclick="window.location.href='/settingslogout' ") Log Out
 
           .privacyandsecurity-page
             h3 Theme Change
@@ -51,11 +49,8 @@ html(lang="en")
 
               p 1. Light Theme (default (Alice Blue and White))
               p 2. Dark Theme (Jet Black and Dark Obsidian)
-              p 3. -------
-              p 4. -------
-              p 5. -------
-              p 6. -------
-              p 7. -------
+              p 3. Slate Theme (Deep Slate and Charcoal Blue)
+              p 4. Midnight Theme (Midnight Navy and Deep Indigo)
               
               form.set-theme(action="/settingstheme" method="post")
                 label(for="current-pass") Your Colour Theme number: 
