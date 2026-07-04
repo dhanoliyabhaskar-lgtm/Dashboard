@@ -18,7 +18,6 @@ html(lang="en")
           li: a(href="/goals") Goals
           li: a(href="/calendar") Calendar
           li: a(href="/integration") Integrations
-          li: a(href="/insights") Insights
           li: a(href="/reports") Reports
           li: a(href="/achievements") Achievements
           li.active: a(href="/settingsprofile") Settings
@@ -34,13 +33,12 @@ html(lang="en")
 
         .settings-page
           .settings-bar
-            ul
-              li.active: a(href="/settingsprofile") Profile
-              li: a(href="/settingsnotifications") Notifications
-              li: a(href="/settingsprivacy") Privacy & Security
-              li: a(href="/settingstheme") Theme
-              li: a(href="/settingshelp") Help & Feedback
-              li: a(href="/settingslogout") Log Out
+            button.active(onclick="window.location.href='/settingsprofile' ") Profile
+            button(onclick="window.location.href='/settingsnotifications' ") Notifications
+            button(onclick="window.location.href='/settingsprivacy' ") Privacy &amp; Security
+            button(onclick="window.location.href='/settingstheme' ") Theme
+            button(onclick="window.location.href='/settingshelp' ") Help &amp; Feedback
+            button(onclick="window.location.href='/settingslogout' ") Log Out
 
           .profile-page
             h3 Profile Information
