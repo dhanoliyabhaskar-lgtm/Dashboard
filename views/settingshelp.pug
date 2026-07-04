@@ -1,62 +1,50 @@
 doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Settings
-    link(rel="stylesheet" href="/static/settingshelp.css")
-  body
-    .container
-
-      // Sidebar
-      aside.sidebar
-        .logo
-          h2 My Dashboard
-        ul.menu
-          li: a(href="/dashboard") Overview
-          li: a(href="/analyticsoverview") Analytics
-          li: a(href="/goals") Goals
-          li: a(href="/calendar") Calendar
-          li: a(href="/integration") Integrations
-          li: a(href="/insights") Insights
-          li: a(href="/reports") Reports
-          li: a(href="/achievements") Achievements
-          li.active: a(href="") Settings
-
-      // Main Content
-      main.main-content
-
-        // header
-        header.settings-header
-          div
-            h2 Settings
-            p Manage your account preferences and application settings.
-
-        .settings-page
-          .settings-bar
-            ul
-              li: a(href="/settingsprofile") Profile
-              li: a(href="/settingsnotifications") Notifications
-              li: a(href="/settingsprivacy") Privacy & Security
-              li: a(href="/settingstheme") Theme
-              li.active: a(href="/settingshelp") Help & Feedback
-              li: a(href="/settingslogout") Log Out
-
-          .helpandfeedback-page
-            h3 Help and Feedback
-            
-            .hfc-page
-              #help
-                h4 Help Center
-                p Browse articles and guides to learn more.
-                button Visit Help Center
-                
-              #contact
-                h4 Contact Support
-                p Can't find what you need ? Contact our support team.
-                button(onclick='window.location.href="/contact"') Contact Support
-                
-              #feedback
-                h4 Send Feedback
-                p We value your feedback to improve our product.
-                button Send Feedback
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Settings
+  link(rel='stylesheet' href='/static/settingshelp.css')
+.container
+  // Sidebar
+  aside.sidebar
+    .logo
+      h2 My Dashboard
+    ul.menu
+        li: a(href="/dashboard") Overview
+        li: a(href="/analyticsoverview") Analytics
+        li: a(href="/goals") Goals
+        li: a(href="/calendar") Calendar
+        li: a(href="/integration") Integrations
+        li: a(href="/reports") Reports
+        li: a(href="/achievements") Achievements
+        li.active: a(href="") Settings
+  // Main Content
+  main.main-content
+    // header
+    header.settings-header
+      div
+        h2  Settings 
+        p  Manage your account preferences and application settings. 
+    .settings-page
+      .settings-bar
+        button(onclick="window.location.href='/settingsprofile' ") Profile
+        button(onclick="window.location.href='/settingsnotifications' ") Notifications
+        button(onclick="window.location.href='/settingsprivacy' ") Privacy &amp; Security
+        button(onclick="window.location.href='/settingstheme' ") Theme
+        button.active(onclick="window.location.href='/settingshelp' ") Help &amp; Feedback
+        button(onclick="window.location.href='/settingslogout' ") Log Out
+      .helpandfeedback-page
+        h3 Help and Feedback
+        .hfc-page
+          #help
+            h4  Help Center 
+            p  Browse articles and guides to learn more.
+            button  Visit Help Center 
+          #contact
+            h4  Contact Support 
+            p  Can&apos;t find what you need ? Contact our support team.
+            button(onclick="window.location.href='/contact'")  Contact Support 
+          #feedback
+            h4  Send Feedback 
+            p  We value your feedback to improve our product.
+            button  Send Feedback 
