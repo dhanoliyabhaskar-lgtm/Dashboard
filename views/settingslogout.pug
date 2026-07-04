@@ -1,51 +1,41 @@
 doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Settings
-    link(rel="stylesheet" href="/static/settingslogout.css")
-  body
-    .container
-
-      // Sidebar
-      aside.sidebar
-        .logo
-          h2 My Dashboard
-        ul.menu
-          li: a(href="/dashboard") Overview
-          li: a(href="/analyticsoverview") Analytics
-          li: a(href="/goals") Goals
-          li: a(href="/calendar") Calendar
-          li: a(href="/integration") Integrations
-          li: a(href="/insights") Insights
-          li: a(href="/reports") Reports
-          li: a(href="/achievements") Achievements
-          li.active: a(href="") Settings
-
-      // Main Content
-      main.main-content
-
-        // header
-        header.settings-header
-          div
-            h2 Settings
-            p Manage your account preferences and application settings.
-
-        .settings-page
-          .settings-bar
-            ul
-              li: a(href="/settingsprofile") Profile
-              li: a(href="/settingsnotifications") Notifications
-              li: a(href="/settingsprivacy") Privacy & Security
-              li: a(href="/settingstheme") Theme
-              li: a(href="/settingshelp") Help & Feedback
-              li.active: a(href="/settingslogout") Log Out
-
-          .logout-page
-            h3 Log Out
-            
-            .logout
-              img(src="/static/photos/logout.jpeg", alt="logout")
-              p You will be signed out of your account on this device.
-              button(onclick="window.location.href='/logout'") Log Out
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Settings
+  link(rel='stylesheet' href='/static/settingslogout.css')
+.container
+  // Sidebar
+  aside.sidebar
+    .logo
+      h2 My Dashboard
+    ul.menu
+        li: a(href="/dashboard") Overview
+        li: a(href="/analyticsoverview") Analytics
+        li: a(href="/goals") Goals
+        li: a(href="/calendar") Calendar
+        li: a(href="/integration") Integrations
+        li: a(href="/reports") Reports
+        li: a(href="/achievements") Achievements
+        li.active: a(href="") Settings
+  // Main Content
+  main.main-content
+    // header
+    header.settings-header
+      div
+        h2  Settings 
+        p  Manage your account preferences and application settings. 
+    .settings-page
+      .settings-bar
+        button(onclick="window.location.href='/settingsprofile' ") Profile
+        button(onclick="window.location.href='/settingsnotifications' ") Notifications
+        button(onclick="window.location.href='/settingsprivacy' ") Privacy &amp; Security
+        button(onclick="window.location.href='/settingstheme' ") Theme
+        button(onclick="window.location.href='/settingshelp' ") Help &amp; Feedback
+        button.active(onclick="window.location.href='/settingslogout' ") Log Out
+      .logout-page
+        h3 Log Out
+        .logout
+          img(src='/static/photos/logout.jpeg' alt='logout')
+          p You will be signed out of your account on this device.
+          button(onclick="window.location.href='/logout'") Log Out
