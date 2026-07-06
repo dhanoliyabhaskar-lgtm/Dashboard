@@ -1,0 +1,234 @@
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: Arial, Helvetica, sans-serif;
+ }
+
+ .container {
+     display: flex;
+     min-height: 100vh;
+ }
+
+ /* sidebar css */
+
+ .sidebar ul li {
+     margin: 12px 0;
+ }
+
+ .sidebar ul li a {
+     text-decoration: none;
+     color: #222;
+     border-radius: 50px;
+     font-weight: 400;
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     padding: 5px 15px;
+     gap: 10px;
+ }
+
+ .sidebar ul li.active a {
+     background: #3a4ccd;
+     color: white;
+     font-weight: 600;
+ }
+
+ .sidebar {
+     width: 260px;
+     background: white;
+     padding: 20px;
+     border-right: 1px solid #ddd;
+ }
+
+ .logo {
+     display: flex;
+     margin-bottom: 40px;
+ }
+
+ .logo img {
+     width: 70px;
+     height: 155px;
+     margin: -55px 0px -50px -5px;
+ }
+
+ .logo h2 {
+     color: rgb(46, 46, 230)
+ }
+
+ .menu {
+     list-style: none;
+ }
+
+ .menu img {
+     width: 40px;
+     height: 40px;
+ }
+
+ .menu a:hover {
+     border-radius: 50px;
+     background: hsl(234, 100%, 69%);
+     color: white;
+     font-weight: 600;
+ }
+
+ /* .main-content */
+ .main-content {
+     flex: 1;
+     padding: 20px;
+     background-color: rgb(219, 237, 245);
+ }
+
+
+ /* header */
+ .achievements-header {
+     background: white;
+     padding: 20px;
+     border-radius: 15px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+ }
+
+ .achievements-header h2 {
+     margin-bottom: 5px;
+ }
+
+ .achievements-header p {
+     color: #777;
+ }
+
+ /* Achievements cards */
+ .achievements-cards {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     gap: 15px;
+     background-color: white;
+     margin-top: 25px;
+     padding: 15px;
+     border-radius: 15px;
+ }
+
+ .heading {
+     margin: 10px 0px 0px 10px;
+     font-size: 20px;
+ }
+
+ .cards {
+     display: flex;
+     /*justify-content: center;*/
+     /*align-items: center;*/
+     flex-wrap: wrap;
+     background-color: white;
+ }
+
+ .card1,
+ .card2 {
+     display: flex;
+     height: 265px;
+     width: 269px;
+     margin: 10px 13px;
+     padding: 10px 15px;
+     border-radius: 15px;
+     border: 1px solid rgb(168, 165, 165);
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+ }
+
+ .card1 .top {
+     display: flex;
+     justify-content: space-between;
+     margin-bottom: 5px;
+ }
+
+ .top .level {
+     padding: 10px;
+     width: 100px;
+     height: 30px;
+     border: 1px solid black;
+     border-radius: 10px;
+     background-color: rgb(37, 95, 254);
+     font-weight: bold;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-bottom: 15px;
+ }
+
+ .top .left div {
+     display: flex;
+     flex-direction: column;
+     gap: 5px;
+     justify-content: center;
+     align-items: center;
+     margin-top: 20px;
+ }
+
+ .card1 .top .left div h3:first-child {
+     font-size: 35px;
+ }
+
+ .card1 img {
+     margin-top: -15px;
+     width: 160px;
+     height: 175px;
+ }
+
+ .middle {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     margin-bottom: 10px;
+ }
+
+ .bottom {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .bottom .dot {
+     width: 7px;
+     height: 7px;
+     border-radius: 50%;
+     border: 1px solid black;
+ }
+
+ .bottom .level-dots {
+     display: flex;
+     gap: 5px;
+     margin-bottom: 3px;
+ }
+
+ .bottom-progress {
+     display: flex;
+     align-items: center;
+     gap: 7px;
+ }
+
+ .progress-bar {
+     width: 120px;
+     height: 7px;
+     border: 1px solid black;
+     border-radius: 10px;
+     background-color: rgb(209, 207, 207);
+ }
+
+ .progress {
+     height: 100%;
+     background-color: rgb(40, 40, 252);
+     border-radius: 10px;
+ }
+
+ .card2 .top {
+     display: flex;
+     justify-content: center;
+ }
+
+ .card2 img {
+     width: 190px;
+     height: 190px;
+     margin-top: -25px;
+ }
