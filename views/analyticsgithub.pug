@@ -1,56 +1,138 @@
 doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Analytics
-    link(rel="stylesheet" href="/static/analyticsgithub.css")
-  body
-    .container
-      // Sidebar Navigation
-      aside.sidebar
-        .logo
-          h2 MyDashboard
-        ul.menu
-          li: a(href="/dashboard") Overview
-          li.active: a(href="/analyticsoverview") Analytics
-          li: a(href="/goals") Goals
-          li: a(href="/calendar") Calendar
-          li: a(href="/integration") Integrations
-          li: a(href="/insights") Insights
-          li: a(href="/reports") Reports
-          li: a(href="/achievements") Achievements
-          li: a(href="/settingsprofile") Settings
-
-      // Main Dashboard Area
-      .main-content
-        header.analytics-header
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Analytics
+  link(rel='stylesheet' href='/static/analyticsgithub.css')
+.container
+  aside.sidebar
+    .logo
+      img(src='/static/photos/dashboard logo.png' alt='')
+      h2 Dashboard
+    ul.menu
+      li
+        a(href='/dashboard')
+          img(src='/static/photos/overview icon.png' alt='')
+          span  Overview 
+      li.active
+        a(href='/analyticsgithub')
+          img(src='/static/photos/analytics icon.png' alt='')
+          span Analytics
+      li
+        a(href='/goals')
+          img(src='/static/photos/goals icon.png' alt='')
+          span Goals
+      li
+        a(href='/integration')
+          img(src='/static/photos/integrations icon.png' alt='')
+          span Integrations
+      li
+        a(href='/reports')
+          img(src='/static/photos/reports icon.png' alt='')
+          span Reports
+      li
+        a(href='/achievements')
+          img(src='/static/photos/achievements icon.png' alt='')
+          span Achievements
+      li
+        a(href='/settingsprofile')
+          img(src='/static/photos/settings icon.png' alt='')
+          span Settings
+  .main-content
+    // Header
+    header.analytics-header
+      div
+        h2 Analytics
+        p  Deep dive into your productivity 
+    .tabs
+      button(onclick="window.location.href='/analyticsgithub'"  class="active") Github
+      button(onclick="window.location.href='/analyticsleetcode'") Leetcode
+      button(onclick="window.location.href='/analyticsspotify'") Spotify
+      button(onclick="window.location.href='/analyticscalender'") Calendar
+    section.analytics-cards
+      .card
+        .left &#x1F525;
+        .right
+          h4 Today&apos;s Commits
           div
-            h2 Analytics
-            p Deep dive into your productivity
-
-        // Sub-tabs navigation
-        .tabs
-          button(onclick="window.location.href='/analyticsoverview'") Overview
-          button(onclick="window.location.href='/analyticsgithub'"  class="active") Github
-          button(onclick="window.location.href='/analyticsleetcode'") Leetcode
-          button(onclick="window.location.href='/analyticsspotify'") Spotify
-          button(onclick="window.location.href='/analyticscalender'") Calendar
-
-        // Dashboard Grid Widgets
-        .analytics-grid
-          .card
-            h3 Commits Over Time
-            canvas#commitChart
-
-          .card
-            h3 Problems Solved
-            canvas#problemChart
-
-          .card
-            h3 Time Distribution
-            canvas#pieChart
-
-          .card
-            h3 Productive Hours Heatmap
-            canvas#ProductivehrsChart
+            b 12
+          span &uarr; 22% vs last 7 days 
+      .card
+        .left &#x2708;&#xFE0F;
+        .right
+          h4 Total Public Repos
+          div
+            b 16
+          span &uarr; 15% vs last 7 days 
+      .card
+        .left &#x2B50;
+        .right
+          h4 Total Stars Earned
+          div
+            b 345
+          span &uarr; 12% vs last 7 days 
+      .card
+        .left &#x1F465;
+        .right
+          h4 Followers
+          div
+            b 1024
+          span &darr; 4% vs last 7 days 
+    section.chart-section
+      #commitChart
+      #languageChart
+    section.table-section
+      h3  Repository Information Table 
+      table
+        thead
+          tr
+            th Repo Name
+            th Created At
+            th Stars
+            th Watchers
+            th Language
+            th Forks
+            th Project Size
+        tbody
+          tr
+            td Project-A
+            td 2026-04-06
+            td 87
+            td 23
+            td JavaScript
+            td 8
+            td 234KB
+          tr
+            td Project-B
+            td 2026-04-09
+            td 116
+            td 12
+            td Python
+            td 12
+            td 425KB
+          tr
+            td Project-C
+            td 2026-08-06
+            td 93
+            td 16
+            td Cpp
+            td 21
+            td 754KB
+          tr
+            td Project-D
+            td 2026-06-06
+            td 67
+            td 8
+            td Python
+            td 32
+            td 176KB
+          tr
+            td Project-E
+            td 2025-04-06
+            td 157
+            td 19
+            td Cpp
+            td 19
+            td 134KB
+script(src='https://cdn.jsdelivr.net/npm/apexcharts')
+script(src='/static/analyticsgithub.js')
