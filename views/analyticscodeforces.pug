@@ -1,0 +1,171 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Analytics
+  link(rel='stylesheet' href='/static/analyticscodeforces.css')
+.container
+  aside.sidebar
+    .logo
+      img(src='/static/photos/dashboard logo.png' alt='')
+      h2 Dashboard
+    ul.menu
+      li
+        a(href='/dashboard')
+          img(src='/static/photos/overview icon.png' alt='')
+          span  Overview 
+      li.active
+        a(href='/analyticsgithub')
+          img(src='/static/photos/analytics icon.png' alt='')
+          span Analytics
+      li
+        a(href='/goals')
+          img(src='/static/photos/goals icon.png' alt='')
+          span Goals
+      li
+        a(href='/integration')
+          img(src='/static/photos/integrations icon.png' alt='')
+          span Integrations
+      li
+        a(href='/reports')
+          img(src='/static/photos/reports icon.png' alt='')
+          span Reports
+      li
+        a(href='/achievements')
+          img(src='/static/photos/achievements icon.png' alt='')
+          span Achievements
+      li
+        a(href='/settingsprofile')
+          img(src='/static/photos/settings icon.png' alt='')
+          span Settings
+  .main-content
+    // Header
+    header.analytics-header
+      div
+        h2 Analytics
+        p  Deep dive into your productivity 
+    .tabs
+      button(onclick="window.location.href='/analyticsgithub'") Github
+      button(onclick="window.location.href='/analyticscodeforces'"  class="active") Leetcode
+      button(onclick="window.location.href='/analyticsspotify'") Spotify
+      button(onclick="window.location.href='/analyticscalender'") Calendar
+    section.analytics-cards
+      .card
+        .left &#x2B50;
+        .right
+          h4 Current Rating
+          div
+            b 1420
+          span &uarr; 22% vs last 7 days 
+      .card
+        .left &#x1F525;
+        .right
+          h4 Max Rank
+          div
+            b SPECIALIST
+          span &uarr; 15% vs last 7 days 
+      .card
+        .left &#x2708;&#xFE0F;
+        .right
+          h4 Problem Solved
+          div
+            b 87
+          span &darr; 12% vs last 7 days 
+      .card
+        .left &#x1F465;
+        .right
+          h4 Friends
+          div
+            b 463
+          span &uarr; 4% vs last 7 days 
+    section.top-widgets
+      #box-1.box
+      #box-2.box
+      #box-3.box
+    .bottom-widgets
+      .filter
+        h4 Wrong Answeres Filter
+        .wrong-answers
+          .wrong
+            .left
+              b &bull;
+              .name Count Pairs
+            .right
+              .language  GNU C++20 |
+              .verdict(style='color:red')  WRONG ANSWER 
+              .time | 11ms 
+          .wrong
+            .left
+              b &bull;
+              .name Count Pairs
+            .right
+              .language  GNU C++20 |
+              .verdict(style='color:red')  WRONG ANSWER 
+              .time | 11ms 
+          .wrong
+            .left
+              b &bull;
+              .name Count Pairs
+            .right
+              .language  GNU C++20 |
+              .verdict(style='color:rgb(242, 201, 140)')  T_LIMIT_EXCEDED
+              .time | 11ms 
+          .wrong
+            .left
+              b &bull;
+              .name Count Pairs;ldg,fglkljbhjhvjnjkdfk
+            .right
+              .language  GNU C++20 |
+              .verdict(style='color:rgb(242, 201, 140)')  T_LIMIT_EXCEDED
+              .time | 11ms 
+          .wrong
+            .left
+              b &bull;
+              .name Count Pairs
+            .right
+              .language  GNU C++20 |
+              .verdict(style='color:red')  WRONG ANSWER 
+              .time | 11ms 
+      .table
+        h4 Recent Submissions Table
+        table
+          thead
+            tr
+              th Problem Name
+              th Language
+              th Verdict
+              th Time(ms)
+              th Memory(MB)
+          tbody
+            tr
+              td 1800B-Count Pairs
+              td GNU C++20
+              td(style='color:red') WRONG ANSWER
+              td 11.3ms
+              td 1MB
+            tr
+              td 1765C-Matrix
+              td GNU C++17
+              td(style='color: rgb(2, 152, 2);') OK
+              td 15ms
+              td 1.3MB
+            tr
+              td 1804D-Data Structurejjhggfghbhjhbhbhhgffghvgf
+              td PyPy 3
+              td(style='color:rgb(242, 201, 140)') T_LIMIT_EXCEDED
+              td 100ms
+              td 0.8MB
+            tr
+              td 1800B-Graph
+              td GNU JAVA 17
+              td(style='color:red') WRONG ANSWER
+              td 8ms
+              td 2.1MB
+            tr
+              td 1799A-Math
+              td GNU C++20
+              td(style='color: rgb(188, 188, 188);') COMPILATION ERROR
+              td 32ms
+              td 1.7MB
+script(src='https://cdn.jsdelivr.net/npm/apexcharts')
+script(src='/static/analyticscodeforces.js')
