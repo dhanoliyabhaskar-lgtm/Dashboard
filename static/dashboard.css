@@ -9,6 +9,7 @@
 .container {
     display: flex;
     min-height: 100vh;
+    z-index: 10;
 }
 
 /* sidebar css */
@@ -18,13 +19,17 @@
 }
 
 .sidebar ul li a {
-    display: block;
-    padding: 12px 16px;
     text-decoration: none;
     color: #222;
     border-radius: 50px;
     font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px 15px;
+    gap: 10px;
 }
+
 
 .sidebar ul li.active a {
     background: #3a4ccd;
@@ -40,7 +45,14 @@
 }
 
 .logo {
+    display: flex;
     margin-bottom: 40px;
+}
+
+.logo img {
+    width: 70px;
+    height: 115px;
+    margin: -40px 0px -50px -5px;
 }
 
 .logo h2 {
@@ -51,10 +63,14 @@
     list-style: none;
 }
 
+.menu img {
+    width: 40px;
+    height: 40px;
+}
+
 .menu a:hover {
-    display: block;
     border-radius: 50px;
-    background: #727edb;
+    background: hsl(234, 100%, 69%);
     color: white;
     font-weight: 600;
 }
@@ -70,6 +86,11 @@
 
 
 /* header css */
+
+.responsive-header {
+    display: none;
+}
+
 .overview-header {
     display: flex;
     justify-content: space-between;
@@ -88,34 +109,40 @@
     color: #777;
 }
 
-.header-right {
+.overview-header .header-right {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 15px;
 }
 
-.header-right img {
-    margin-left: -20px;
-    
-    border-radius: 50%;
-}
-
-.profile-logo{
+.overview-header .profile-logo {
     margin-left: -30px;
-    width: 60px;
-    height: 45px;
+    width: 95px;
+    height: 55px;
     border-radius: 50%;
 }
 
-.notification-icon{
-    width: 40px;
-    height: 30px;
+.overview-header .notifications-icon {
+    width: 47px;
+    height: 35px;
 }
-/*.header-right input {
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}*/
 
+.notification-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+}
 
 /* Common Card */
 .stats-cards {
@@ -131,7 +158,6 @@
     border-radius: 15px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     transition: 0.3s;
-
 }
 
 .card:hover {
@@ -172,8 +198,8 @@
     grid-template-columns: 2fr 1fr;
     background: white;
     border-radius: 20px;
-    padding: 20px;
-    height: 337px;
+    padding: 13px 5px;
+    height: auto;
 }
 
 .weekly-activity .left h3 {
@@ -206,10 +232,10 @@
 }
 
 .box .right {
-  font-size: 14px;  
+    font-size: 14px;
 }
 
-.box .right h4{
+.box .right h4 {
     margin: 3px 0px;
     font-size: 17px;
 }
@@ -296,4 +322,144 @@
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 12px;
+}
+
+
+/* CSS FOR RESPONSIVENESS */
+
+/* Large Tablets */
+@media (max-width: 1200px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .overview-header .header-right {
+        display: none;
+    }
+
+    .responsive-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 15px;
+        position: sticky;
+        top: 10px;
+        z-index: 15;
+    }
+
+    .responsive-header .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .responsive-header .menu-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #222;
+        padding: 0;
+    }
+
+    .responsive-header h2 {
+        font-size: 22px;
+        color: #3a4ccd;
+        font-weight: 700;
+    }
+
+    .responsive-header .header-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .responsive-header .profile-logo {
+        margin-left: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: #e2e8f0;
+    }
+
+    .responsive-header .notifications-icon {
+        width: 35px;
+        height: 30px;
+    }
+
+    .stats-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .weekly-activity {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .summary {
+        background: white;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .dashboard-row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bottom-widgets {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* Tablets */
+@media (max-width: 1600px) and (min-width: 1200px) {
+   
+}
+
+/* Mobile */
+@media (max-width: 370px) {
+    .container {
+        font-size: 0.8rem;
+    }
+
+    .stats-cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .card p {
+        font-size: 12px;
+    }
+
+    .number {
+        font-size: 22px;
+        margin: 5px 0px;
+    }
+
+    .card h3 {
+        margin-bottom: 3px;
+    }
+
 }
