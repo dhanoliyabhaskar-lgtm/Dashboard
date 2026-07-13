@@ -8,102 +8,134 @@ head
   // Sidebar
   aside.sidebar
     .logo
-      h2 MyDashboard
+      img(src='/static/photos/dashboard logo.png' alt='')
+      h2 Dashboard
     ul.menu
-        li.active: a(href="/dashboard") Overview
-        li: a(href="/analyticsoverview") Analytics
-        li: a(href="/goals") Goals
-        li: a(href="/calendar") Calendar
-        li: a(href="/integration") Integrations
-        li: a(href="/reports") Reports
-        li: a(href="/achievements") Achievements
-        li: a(href="/settingsprofile") Settings
+      li.active
+        a(href='/dashboard')
+          img(src='/static/photos/overview icon.png' alt='')
+          span  Overview 
+      li
+        a(href='/analyticsgithub')
+          img(src='/static/photos/analytics icon.png' alt='')
+          span Analytics
+      li
+        a(href='/goals')
+          img(src='/static/photos/goals icon.png' alt='')
+          span Goals
+      li
+        a(href='/integration')
+          img(src='/static/photos/integrations icon.png' alt='')
+          span Integrations
+      li
+        a(href='/reports')
+          img(src='/static/photos/reports icon.png' alt='')
+          span Reports
+      li
+        a(href='/achievements')
+          img(src='/static/photos/achievements icon.png' alt='')
+          span Achievements
+      li
+        a(href='/settingsprofile')
+          img(src='/static/photos/settings icon.png' alt='')
+          span Settings
   // Main Content
   main.main-content
-    // Header
-    header.overview-header
+    // responsive header
+    header.responsive-header
       .header-left
-        h2 Hi, #{user.name} &#x1F44B;
-        p Here&apos;s your productivity overview.
+        button.menu-btn(onclick='roggle()')  &#x2630; 
+        h2 Dashboard
       .header-right
-        img.notification-bar(src='/static/photos/notification.jpeg' alt='notification' class="notification-icon")
-        img(src='/static/photos/profile.png' alt='profile photo' class="profile-logo")
-    section.stats-cards
-      .card
-        h3 GitHub
-        p Commits this week
-        .number 42
-        span.growth &#x25B2; 16% vs last week
-      .card
-        h3 LeetCode
-        p Problems Solved
-        .number 76
-        span.growth &#x25B2; 23% vs last week
-      .card
-        h3 Spotify
-        p Listening Time
-        .number 12.4 hrs
-        span.growth &#x25B2; 8% vs last week
-      .card
-        h3 Calendar
-        p Events this week
-        .number 18
-        span.growth &#x25B2; 5% vs last week
-    section.dashboard-row
-      .weekly-activity
-        .left
-          h3 Weekly Activity Overview
-          canvas#activityChart  
-        .right
-          .summary
-            .box
-              .left
-                div &#x1F4C8;
-              .right
-                div Total Hours
-                h4 63h 54m
-                span Across all platforms
-            .box
-              .left
-                div &#x1F525;
-              .right
-                div Peak Day
-                h4 Friday
-                span Most productive day
-            .box
-              .left
-                div &#x2B50;
-              .right
-                div Growth
-                h4 +15.3%
-                span Vs last week
-            .box
-              .left
-                div &#x1F3B5;
-              .right
-                div Most Active
-                h4 Spotify
-                span 38h 18m this week
-      .productivity-score
-        h3 Productivity Score
-        .score-circle
-          span 28 / 100
-        p  Great job! You&apos;re more productive than 76% users.
-    section.bottom-widgets
-      .events
-        h3 Upcoming Events
-        .event-card
-          .date-box
-            div 24
-            div July
-          .event-time
-            | 10:00 AM - 12:00 PM
-          .event-details
-            h4 DSA Study Session
-            p Seminar Hall
-          span.status Ongoing
-      .insight
-        h3 Top Insight
-        p You solved 24% more problems compared to last week.
-script(src='https://cdn.jsdelivr.net/npm/chart.js')
+        .notification-wrapper
+          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
+          span.badge 3
+        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+    .content(onclick='moggle()')
+      // Header
+      header.overview-header
+        .header-left
+          h2 Hi, Ajeet &#x1F44B;
+          p Here&apos;s your productivity overview.
+        .header-right
+          .notification-wrapper
+            img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
+            span.badge 3
+          img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+      section.stats-cards
+        .card
+          h3 GitHub
+          p Commits this week
+          .number 42
+          span.growth &#x25B2; 16% vs last week
+        .card
+          h3 LeetCode
+          p Problems Solved
+          .number 76
+          span.growth &#x25B2; 23% vs last week
+        .card
+          h3 Spotify
+          p Listening Time
+          .number 12.4 hrs
+          span.growth &#x25B2; 8% vs last week
+        .card
+          h3 Calendar
+          p Events this week
+          .number 18
+          span.growth &#x25B2; 5% vs last week
+      section.dashboard-row
+        .weekly-activity
+          #activityChart.left  
+          .right
+            .summary
+              .box
+                .left
+                  div &#x1F4C8;
+                .right
+                  div Total Hours
+                  h4 63h 54m
+                  span Across all platforms
+              .box
+                .left
+                  div &#x1F525;
+                .right
+                  div Peak Day
+                  h4 Friday
+                  span Most productive day
+              .box
+                .left
+                  div &#x2B50;
+                .right
+                  div Growth
+                  h4 +15.3%
+                  span Vs last week
+              .box
+                .left
+                  div &#x1F3B5;
+                .right
+                  div Most Active
+                  h4 Spotify
+                  span 38h 18m this week
+        .productivity-score
+          h3 Productivity Score
+          .score-circle
+            span 28 / 100
+          p  Great job! You&apos;re more productive than 76% users.
+      section.bottom-widgets
+        .events
+          h3 Upcoming Events
+          .event-card
+            .date-box
+              div 24
+              div July
+            .event-time
+              | 10:00 AM - 12:00 PM
+            .event-details
+              h4 DSA Study Session
+              p Seminar Hall
+            span.status Ongoing
+        .insight
+          h3 Top Insight
+          p You solved 24% more problems compared to last week.
+script(src='https://cdn.jsdelivr.net/npm/apexcharts')
 script(src='/static/dashboard.js')
