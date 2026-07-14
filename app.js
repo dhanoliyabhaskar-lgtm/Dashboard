@@ -94,7 +94,7 @@ var newuserSchema = new mongoose.Schema({
             duaration: { type: Number }
         }],
 
-        recentlyplyedtime: [{
+        recentlyplayedtime: [{
             type: String
         }],
 
@@ -208,7 +208,8 @@ var newuserSchema = new mongoose.Schema({
 
         commitsovertime : [{
             value : {type : Number},
-            at : {type : String}
+            at : {type : String},
+            realdt : {type : String}
         }],
 
         // isme bhi codeforces vala logic lagana padega topics : {
@@ -278,7 +279,8 @@ var newuserSchema = new mongoose.Schema({
             language : {type : String},
             type : {type : String},
             duration : {type : Number},
-            memory : {type : Number}
+            memory : {type : Number},
+            date : {type : String}
         }]
     },
 
@@ -395,33 +397,12 @@ app.set('views', path.join(__dirname, 'views'));
 //all rounder
 
 function datecalculater(value) {
-    let a = new Date();
+    let a = new Date(value);
     let dt = 0;
     let mth = '';
 
-    let diff = new Date(value) - a;
-    if (diff <= 86400000) {
-        dt = a.getDate();
-        mth = a.toLocaleString('en-US', { month: 'short' });
-    } else if (diff <= (86400000 * 2) && diff > (86400000)) {
-        dt = a.getDate();
-        mth = a.toLocaleString('en-US', { month: 'short' });
-    } else if (diff <= (86400000 * 3) && diff > (86400000 * 2)) {
-        dt = a.getDate();
-        mth = a.toLocaleString('en-US', { month: 'short' });
-    } else if (diff <= (86400000 * 4) && diff > (86400000 * 3)) {
-        dt = a.getDate();
-        mth = a.toLocaleString('en-US', { month: 'short' });
-    } else if (diff <= (86400000 * 5) && diff > (86400000 * 4)) {
-        dt = a.getDate();
-        mth = a.toLocaleString('en-US', { month: 'short' });
-    } else if (diff <= (86400000 * 6) && diff > (86400000 * 5)) {
-        dt = a.getDate();
-        mth = a.toLocaleString('en-US', { month: 'short' });
-    } else if (diff <= (86400000 * 7) && diff > (86400000 * 6)) {
-        dt = a.getDate();
-        mth = a.toLocaleString('en-US', { month: 'short' });
-    }
+    dt = a.getDate();
+    mth = a.toLocaleString('en-US', { month: 'short' });
 
     return `${mth} ${dt}`;
 }
@@ -462,6 +443,7 @@ function dayfetch(value){
 
     return `${dt}/${mth}/${yr}`;
 };
+
 
 function daysfetch(){
     let a= new Date();
@@ -560,7 +542,7 @@ async function hoursschedule(userId) {
 
 
 
-//spotify (300-325)
+//spotify 
 
 async function noon(userId) {
     const user = await newUser.findById(userId);
@@ -570,12 +552,19 @@ async function noon(userId) {
     let totalartist = [];
 
     let j = 1
-    for (let i = 0; i < 30; i++) {
+
+    let limit = Math.min(30,user.spotify.totallisteningtime.length);
+
+    for (let i = 0; i < limit; i++) {
         totaltime[j] = user.spotify.totallisteningtime[i];
         totalsong[j] = user.spotify.songplayed[i];
         totalartist[j] = user.spotify.newartist[i];
         j++;
     };
+
+    totaltime[0] = 0;
+    totalsong[0] = 0;
+    totalartist[0] = 0;
 
     await newuserSchema.findByIdAndUpdate(userId, {
         $set: {
@@ -589,7 +578,7 @@ async function noon(userId) {
 
 // to be called
 
-//spotify (330-460)
+//spotify 
 
 async function addtimeandsong(userId, addtime, songcount) {
     const user = await newUser.findById(userId);
@@ -1360,13 +1349,14 @@ async function fetchdatafromcodeforces(userId) {
 
                             //for the table of all the data
 
-                            if(response.data.result.length > 200){
-                                if(k<200){
+                            if(response.data.result.length > 1000){
+                                if(k<1000){
                                     obj[`codeforces.content.${k}.name`] = response.data.result[i].problem.name ;
                                     obj[`codeforces.content.${k}.language`]=response.data.result[i].programmingLanguage;
                                     obj[`codeforces.content.${k}.type`]=response.data.result[i].verdict;
                                     obj[`codeforces.content.${k}.duration`]=response.data.result[i].timeConsumedMillis;
                                     obj[`codeforces.content.${k}.memory`]=response.data.result[i].memoryConsumedBytes;
+                                    obj[`codeforces.content.${k}.date`]=datecalculater(response.data.result[i].creationTimeSeconds);
                                     k++;
                                 }
                             }else{
@@ -1375,6 +1365,7 @@ async function fetchdatafromcodeforces(userId) {
                                 obj[`codeforces.content.${i}.type`]=response.data.result[i].verdict;
                                 obj[`codeforces.content.${i}.duration`]=response.data.result[i].timeConsumedMillis;
                                 obj[`codeforces.content.${i}.memory`]=response.data.result[i].memoryConsumedBytes;
+                                obj[`codeforces.content.${k}.date`]=datecalculater(response.data.result[i].creationTimeSeconds);
                             }
                             
                         }
@@ -1431,7 +1422,7 @@ async function fetchdatafromgithub(userId) {
                         obj[`github.repolist.${i}.language`] = response.data[i].language ;
                         obj[`github.repolist.${i}.forks`] = response.data[i].forks_count ;
                         obj[`github.repolist.${i}.size`] = resizer(response.data[i].size) ;
-                        obj[`github.repolist.${i}.createdat`] = dayfetch(response.data[i].created_at);
+                        obj[`github.repolist.${i}.createdat`] = datecalculater(response.data[i].created_at);
                         starcount = starcount + response.data[i].stargazers_count ;
                     };
 
@@ -1439,53 +1430,39 @@ async function fetchdatafromgithub(userId) {
                     let dt=[];
                     let a=0;
 
-                    if(response.data.length < 10){
-                        a=response.data.length;
-                        for (let i =0 ; i<a ; i++){
-                            response = await axios.get(`https://api.github.com/repos/${name}/${obj[`github.repolist.${i}.name`]}/stats/commit_activity` ,{
-                                headers : {
-                                    'Authorization': `Bearer ${user.github.accesstoken}`  ,
-                                    'Accept': 'application/vnd.github+json'
+                    
+                    a=response.data.length;
+                    for (let i =0 ; i<a ; i++){
+                        response = await axios.get(`https://api.github.com/repos/${name}/${obj[`github.repolist.${i}.name`]}/stats/commit_activity` ,{
+                            headers : {
+                                'Authorization': `Bearer ${user.github.accesstoken}`  ,
+                                'Accept': 'application/vnd.github+json'
+                            }
+                        });
+                        let data3 = response.data.reverse();
+                        let data4 = [];
+                        for(let j=0 ; j<5 ;j++){
+                            data4 = data3[j].days.reverse();
+                            for(let k=0 ; k<7 ; k++){
+                                if(j=4 && k>2){
+                                }else{
+                                    len[k+(j*7)]=len[k+(j*7)] + days4[k];
                                 }
-                            });
-                            let data3 = response.data.reverse();
-                            let data4 = [];
-                            for(let j=0 ; j<5 ;j++){
-                                data4 = data3[j].days.reverse();
-                                for(let k=0 ; k<7 ; k++){
-                                    if(j=4 && k>2){
-                                    }else{
-                                        len[k+(j*7)]=len[k+(j*7)] + days4[k];
-                                    }
-                                };
                             };
                         };
-                    }else{
-                        for(let i=0 ; i<10 ; i++){
-                            response = await axios.get(`https://api.github.com/repos/${name}/${obj[`github.repolist.${i}.name`]}/stats/commit_activity` ,{
-                                headers : {
-                                    'Authorization': `Bearer ${user.github.accesstoken}`  ,
-                                    'Accept': 'application/vnd.github+json'
-                                }
-                            });
-                            let data3 = response.data.reverse();
-                            let data4 = [];
-                            for(let j=0 ; j<5 ;j++){
-                                data4 = data3[j].days.reverse();
-                                for(let k=0 ; k<7 ; k++){
-                                    if(j=4 && k>2){
-                                    }else{
-                                        len[k+(j*7)]=len[k+(j*7)] + days4[k];
-                                    }
-                                };
-                            };
-                        };
+                    };
+
+                    let realdt = [];
+                    let realdate = new Date();
+                    for(let i=0 ; i<30 ; i++){
+                        realdt[i] = datecalculater(realdate + (1000*60*60*24)*i);
                     }
 
                     dt = daysfetch();
                     for(let i = 0 ; i<30 ; i++){
                         obj[`github.commitsovertime.${i}.value`] = len[i];
                         obj[`github.commitsovertime.${i}.at`] = dt[i];
+                        obj[`github.commitsovertime.${i}.realdate`] = realdt[i];
                     };
                     
 
@@ -1663,6 +1640,184 @@ async function weeklypdf(userId , dt) {
     doc.rect(45, 470, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
     doc.rect(45, 550, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
     doc.rect(45, 630, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
+
+    let realdate = new Date();
+
+    let diff = realdate - dt;
+
+    diff = Math.floor(diff/(1000*60*60*24));
+
+    let datearr = [];
+    
+    for (let i = 0 ; i<7 ; i++){
+        datearr[i] = datecalculater(dt + (1000*60*60*24)*i);
+    }
+
+    let daybefore = datecalculater(dt - (1000*60*60*24))
+    
+    let spotifyhours = [];
+    let spotifysong = [];
+    let spotifyartist = [];
+    
+    let ind = 0;
+    
+    for (let i=diff ; i>Math.min(diff-7 , -1) ; i--){
+        spotifyhours[ind]= user.spotify.spotify.totallisteningtime[i];
+        spotifysong[ind]= user.spotify.spotify.songplayed[i];
+        spotifyartist[ind]= user.spotify.spotify.newartist[i];
+        ind++ ;
+    };
+
+    let calenderhours = [];
+    let calendereventsname = [];
+    let calendereventstime = [];
+    let calendereventsdate = [];
+    ind = 0;
+    let ind1 = 0;
+
+    for (let i=diff ; i>Math.min(diff-7 , -1) ; i--){
+        calenderhours[ind] = user.calender.scheduletime[i].value;
+        ind++;
+    };
+
+    let check = true;
+
+    ind = 0;
+
+    while(check){
+        if(daybefore == user.calender.events[ind].date){
+            check = false;
+        }
+        ind++;
+    }
+
+    ind--;
+    ind--;
+
+    check = true;
+
+    while(check){
+        if(datearr[7] == user.calender.events[ind1].date){
+            check = false;
+        }
+        ind1++;
+    }
+
+    ind1--;
+
+    let ind2 = ind;
+    ind = 0;
+
+    for(let i=ind2 ; i>ind1+1 ; i++){
+        calendereventsname[ind] = user.calender.events[ind2].name;
+        calendereventsdate[ind] = user.calender.events[ind2].date;
+        calendereventstime[ind] = user.calender.events[ind2].time;
+        ind++;
+    };
+    
+    ind1 = 0 ;
+    
+    check = true;
+    
+    ind = 0;
+    
+    while(check){
+        if(daybefore == user.codeforces.content[ind].date){
+            check = false;
+        }
+        ind++;
+    }
+    
+    ind--;
+    ind--;
+    
+    check = true;
+    
+    while(check){
+        if(datearr[7] == user.codeforces.content[ind1].date){
+            check = false;
+        }
+        ind1++;
+    }
+    
+    ind1--;
+    
+    let ind2 = ind;
+    ind = 0;
+    
+    let codeforcesname = [];
+    let codeforcesverdict = [];
+    let codeforceslanguage = [];
+    let codeforcestime = [];
+    let codeforcessize = [];
+
+    for(let i=ind2 ; i>ind1+1 ; i++){
+        codeforcesname[ind] = user.codeforces.content[i].name;
+        codeforcesverdict[ind] = user.codeforces.content[i].type;
+        codeforceslanguage[ind] = user.codeforces.content[i].language;
+        codeforcestime[ind] = user.codeforces.content[i].duration;
+        codeforcessize[ind] = user.codeforces.content[i].memory;
+    };
+
+    ind1 = 0 ;
+    
+    check = true;
+    
+    ind = 0;
+    
+    while(check){
+        if(daybefore == user.github.repolist[ind].createdat){
+            check = false;
+        }
+        ind++;
+    }
+    
+    ind--;
+    ind--;
+    
+    check = true;
+    
+    while(check){
+        if(datearr[7] == user.github.repolist[ind1].createdat){
+            check = false;
+        }
+        ind1++;
+    }
+    
+    ind1--;
+    
+    let ind2 = ind;
+    ind = 0;
+
+    let githubcommit = [];
+    let githubreponame = [];
+    let githubrepostar = [];
+    let githubrepowatcher = [];
+    let githubrepolanguage = [];
+    let githubrepofork = [];
+    let githubreposize = [];
+    let githbufollow = 0;
+    let githubstars = 0;
+
+    for(let i=ind2 ; i>ind1+1 ; i++){
+        githubreponame[ind] = user.github.repolist[i].name;
+        githubrepostar[ind] = user.github.repolist[i].stars;
+        githubrepowatcher[ind] = user.github.repolist[i].watchers;
+        githubrepolanguage[ind] = user.github.repolist[i].language;
+        githubrepofork[ind] = user.github.repolist[i].forks;
+        githubreposize[ind] = user.github.repolist[i].size;
+    };
+
+    ind = 0;
+
+    if(diff>30){
+        githubcommit[0] = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
+    }else{
+        for(let i=diff ; i>Math.min(diff-7 , -1) ; i--){
+            githubcommit[ind] = user.github.commitsovertime[i].value;
+            ind++;
+        };
+    };
 
     doc.fontSize(20).font('Helvetica-Bold').fillColor('#2b2a2a').text("Github Commits this Week : 60", 50, 235, {
         width: 500,
