@@ -39,100 +39,112 @@ head
           img(src='/static/photos/settings icon.png' alt='')
           span Settings
   .main-content
-    // Header
-    header.analytics-header
-      div
-        h2 Analytics
-        p  Deep dive into your productivity 
-    .tabs
-      button(onclick="window.location.href='/analyticsgithub'"  class="active") Github
-      button(onclick="window.location.href='/analyticsleetcode'") Leetcode
-      button(onclick="window.location.href='/analyticsspotify'") Spotify
-      button(onclick="window.location.href='/analyticscalender'") Calendar
-    section.analytics-cards
-      .card
-        .left &#x1F525;
-        .right
-          h4 Today&apos;s Commits
-          div
-            b 12
-          span &uarr; 22% vs last 7 days 
-      .card
-        .left &#x2708;&#xFE0F;
-        .right
-          h4 Total Public Repos
-          div
-            b 16
-          span &uarr; 15% vs last 7 days 
-      .card
-        .left &#x2B50;
-        .right
-          h4 Total Stars Earned
-          div
-            b 345
-          span &uarr; 12% vs last 7 days 
-      .card
-        .left &#x1F465;
-        .right
-          h4 Followers
-          div
-            b 1024
-          span &darr; 4% vs last 7 days 
-    section.chart-section
-      #commitChart
-      #languageChart
-    section.table-section
-      h3  Repository Information Table 
-      table
-        thead
-          tr
-            th Repo Name
-            th Created At
-            th Stars
-            th Watchers
-            th Language
-            th Forks
-            th Project Size
-        tbody
-          tr
-            td Project-A
-            td 2026-04-06
-            td 87
-            td 23
-            td JavaScript
-            td 8
-            td 234KB
-          tr
-            td Project-B
-            td 2026-04-09
-            td 116
-            td 12
-            td Python
-            td 12
-            td 425KB
-          tr
-            td Project-C
-            td 2026-08-06
-            td 93
-            td 16
-            td Cpp
-            td 21
-            td 754KB
-          tr
-            td Project-D
-            td 2026-06-06
-            td 67
-            td 8
-            td Python
-            td 32
-            td 176KB
-          tr
-            td Project-E
-            td 2025-04-06
-            td 157
-            td 19
-            td Cpp
-            td 19
-            td 134KB
+    // responsive header
+    header.responsive-header
+      .header-left
+        button.menu-btn(onclick='roggle()')  &#x2630; 
+        h2 Dashboard
+      .header-right
+        .notification-wrapper
+          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
+          span.badge 3
+        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+    .content(onclick='moggle()')
+      // Header
+      header.analytics-header
+        div
+          h2 Analytics
+          p  Deep dive into your productivity 
+      .tabs
+        button(onclick="window.location.href='/analyticsgithub'"  class="active") Github
+        button(onclick="window.location.href='/analyticscodeforces'") Codeforeces
+        button(onclick="window.location.href='/analyticsspotify'") Spotify
+        button(onclick="window.location.href='/analyticscalender'") Calendar
+      section.analytics-cards
+        .card
+          .left &#x1F525;
+          .right
+            h4 Today&apos;s Commits
+            div
+              b 12
+            span &uarr; 22% vs last 7 days 
+        .card
+          .left &#x2708;&#xFE0F;
+          .right
+            h4 Total Public Repos
+            div
+              b 16
+            span &uarr; 15% vs last 7 days 
+        .card
+          .left &#x2B50;
+          .right
+            h4 Total Stars Earned
+            div
+              b 345
+            span &uarr; 12% vs last 7 days 
+        .card
+          .left &#x1F465;
+          .right
+            h4 Followers
+            div
+              b 1024
+            span &darr; 4% vs last 7 days 
+      section.chart-section
+        #commitChart
+        #languageChart
+      section.table-section
+        p.scroll-hint &larr; Swipe horizontally to view all columns &rarr;
+        h3  Repository Information Table 
+        table
+          thead
+            tr
+              th Repo Name
+              th Created At
+              th Stars
+              th Watchers
+              th Language
+              th Forks
+              th Project Size
+          tbody
+            tr
+              td Project-A
+              td 2026-04-06
+              td 87
+              td 23
+              td JavaScript
+              td 8
+              td 234KB
+            tr
+              td Project-B
+              td 2026-04-09
+              td 116
+              td 12
+              td Python
+              td 12
+              td 425KB
+            tr
+              td Project-C
+              td 2026-08-06
+              td 93
+              td 16
+              td Cpp
+              td 21
+              td 754KB
+            tr
+              td Project-D
+              td 2026-06-06
+              td 67
+              td 8
+              td Python
+              td 32
+              td 176KB
+            tr
+              td Project-E
+              td 2025-04-06
+              td 157
+              td 19
+              td Cpp
+              td 19
+              td 134KB
 script(src='https://cdn.jsdelivr.net/npm/apexcharts')
 script(src='/static/analyticsgithub.js')
