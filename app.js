@@ -1634,13 +1634,6 @@ async function weeklypdf(userId , dt) {
                 align : 'center'
             });
 
-    doc.rect(45, 230, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
-    doc.rect(45, 310, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
-    doc.rect(45, 390, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
-    doc.rect(45, 470, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
-    doc.rect(45, 550, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
-    doc.rect(45, 630, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
-
     let realdate = new Date();
 
     let diff = realdate - dt;
@@ -1662,11 +1655,21 @@ async function weeklypdf(userId , dt) {
     let ind = 0;
     
     for (let i=diff ; i>Math.min(diff-7 , -1) ; i--){
-        spotifyhours[ind]= user.spotify.spotify.totallisteningtime[i];
-        spotifysong[ind]= user.spotify.spotify.songplayed[i];
-        spotifyartist[ind]= user.spotify.spotify.newartist[i];
+        spotifyhours[ind]= user.spotify.totallisteningtime[i];
+        spotifysong[ind]= user.spotify.songplayed[i];
+        spotifyartist[ind]= user.spotify.newartist[i];
         ind++ ;
     };
+
+    let totalhours = 0;
+    let totalsongs = 0;
+    let taotalartist = 0;
+
+    for( let i=0 ; i<spotifyhours.length ; i++){
+        totalhours = totalhours + spotifyhours[i];
+        totalsongs = totalsongs + spotifysong[i];
+        totalartist = totalartist[i];
+    }
 
     let calenderhours = [];
     let calendereventsname = [];
@@ -1708,10 +1711,13 @@ async function weeklypdf(userId , dt) {
     let ind2 = ind;
     ind = 0;
 
+    let eventscount = 0;
+
     for(let i=ind2 ; i>ind1+1 ; i++){
         calendereventsname[ind] = user.calender.events[ind2].name;
         calendereventsdate[ind] = user.calender.events[ind2].date;
         calendereventstime[ind] = user.calender.events[ind2].time;
+        eventscount ++;
         ind++;
     };
     
@@ -1796,8 +1802,8 @@ async function weeklypdf(userId , dt) {
     let githubrepolanguage = [];
     let githubrepofork = [];
     let githubreposize = [];
-    let githbufollow = 0;
-    let githubstars = 0;
+    let githbufollow = user.github.totalstar;
+    let githubstars = user.github.totalfollow;
 
     for(let i=ind2 ; i>ind1+1 ; i++){
         githubreponame[ind] = user.github.repolist[i].name;
@@ -1819,19 +1825,33 @@ async function weeklypdf(userId , dt) {
         };
     };
 
-    doc.fontSize(20).font('Helvetica-Bold').fillColor('#2b2a2a').text("Github Commits this Week : 60", 50, 235, {
+    let totalcommit = 0;
+    if(diff > 30){
+
+    }else{
+        for (let i=0 ; i<githubcommit.length ;i++){
+            totalcommit = totalcommit + githubcommit[i];
+        }
+    };
+    
+    doc.rect(45, 230, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
+    doc.rect(45, 310, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
+    doc.rect(45, 390, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
+    doc.rect(45, 470, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
+
+    doc.fontSize(20).font('Helvetica-Bold').fillColor('#2b2a2a').text(`Github Commits this Week : ${totalcommit}`, 50, 235, {
         width: 500,
         align: 'justify'
     });
-    doc.fontSize(20).font('Helvetica-Bold').fillColor('#000000').text("Codeforces Current Rating : 1890 , Rank : 'Specialist'", 50, 315, {
+    doc.fontSize(20).font('Helvetica-Bold').fillColor('#000000').text(`Codeforces Current Rating : 1890 , Rank : 'Specialist'`, 50, 315, {
         width: 500,
         align: 'justify'
     });
-    doc.fontSize(20).font('Helvetica-Bold').fillColor('#000000').text("Spotify Weekly Minutes Tracked : 315 min.", 50, 395, {
+    doc.fontSize(20).font('Helvetica-Bold').fillColor('#000000').text(`Spotify Weekly Minutes Tracked : ${totalhours} min.`, 50, 395, {
         width: 500,
         align: 'justify'
     });
-    doc.fontSize(20).font('Helvetica-Bold').fillColor('#000000').text("Total Events Managed this Week : 26", 50, 475, {
+    doc.fontSize(20).font('Helvetica-Bold').fillColor('#000000').text(`Total Events Managed this Week : ${eventscount}`, 50, 475, {
         width: 500,
         align: 'justify'
     });
@@ -1868,7 +1888,7 @@ async function weeklypdf(userId , dt) {
         width: 500,
         align: 'justify'
     });
-    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text("60", 120, 180, {
+    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text(`${totalcommits}`, 120, 180, {
         width: 500,
         align: 'justify'
     });
@@ -1876,7 +1896,7 @@ async function weeklypdf(userId , dt) {
         width: 500,
         align: 'justify'
     });
-    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text("60", 270, 180, {
+    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text(`${githubstars}`, 270, 180, {
         width: 500,
         align: 'justify'
     });
@@ -1884,37 +1904,45 @@ async function weeklypdf(userId , dt) {
         width: 500,
         align: 'justify'
     });
-    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text("60", 430, 180, {
+    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text(`${githbufollow}`, 430, 180, {
         width: 500,
         align: 'justify'
     });
 
+    let chartcommit;
+    let chartconfig;
+    let commitimage;
 
-    let chartconfig = {
-        type: 'bar',
-        data: {
-            labels: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
-            datasets: [{
-                label: 'Weekly Commit Record', // Label dena achha rehta hai
-                data: [8, 6, 11, 5, 20, 6, 19]
-            }]
-        }
-    };
+    if(githubcommit[0] = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'){
+        doc.fontSize(25)
+            .text(githubcommit[0] ,50, 225 ,{
+                align = 'center'
+            })
+    }else{
+        chartconfig = {
+            type: 'bar',
+            data: {
+                labels: datearr,
+                datasets: [{
+                    label: 'Weekly Commit Record', // Label dena achha rehta hai
+                    data: githubcommit
+                }]
+            }
+        };
 
-    let commitimage
+        try {
+            chartcommit = await chartmaking(chartconfig);
 
-    try {
-        let chartcommit = await chartmaking(chartconfig);
+            commitimage = chartcommit;
 
-        commitimage = chartcommit;
-
-        if (chartcommit) {
-            doc.image(chartcommit, 50, 225, { width: 500 , height : 250 });
-        }
-    } catch (error) {
-        console.error("Chart download fail ho gaya:", error.message);
-        doc.text("Chart could not be loaded.", 50, 250);
-    };
+            if (chartcommit) {
+                doc.image(chartcommit, 50, 225, { width: 500 , height : 250 });
+            }
+        } catch (error) {
+            console.error("Chart download fail ho gaya:", error.message);
+            doc.text("Chart could not be loaded.", 50, 250);
+        };
+    }
 
     doc.fontSize(25).font('Helvetica-Bold').fillColor('#000000').text("REPOS  INSIGHTS", 50, 490, {
         width: 500,
@@ -1957,7 +1985,23 @@ async function weeklypdf(userId , dt) {
         .fillColor('#000000')
         .text('Size' , 480 , 530 );
 
-    //loop laga kar ye table fill karni hai 
+    let yaxis = 570;
+    let xaxis = 50;
+
+    doc.fontSize(13)
+        .font('Helvetica')
+
+    for(let i=0 ; i<Math.min(7 , githubreponname.length) ; i++){
+
+        doc.text(`${githubreponame[i]}` , 50 , yaxis);
+        doc.text(`${githubrepostar[i]}` , 180, yaxis);
+        doc.text(`${githubrepowatcher[i]}` , 240, yaxis);
+        doc.text(`${githubrepolanguage[i]}` , 330, yaxis);
+        doc.text(`${githubrepofork[i]}` , 420, yaxis);
+        doc.text(`${githubreposize[i]}` , 480, yaxis);
+
+        yaxis = yaxis + 20;
+    };
     
     doc.addPage({
         size: 'A4',
@@ -1965,6 +2009,7 @@ async function weeklypdf(userId , dt) {
     });
 
     doc.fontSize(15)
+        .font('Helvetica-Bold')
             .text('Weekly Report',50 ,20 ,{
                 align : 'center'
             });
@@ -1991,7 +2036,7 @@ async function weeklypdf(userId , dt) {
         width: 500,
         align: 'justify'
     });
-    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text("60", 120, 180, {
+    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text(`${totalhours}`, 120, 180, {
         width: 500,
         align: 'justify'
     });
@@ -1999,7 +2044,7 @@ async function weeklypdf(userId , dt) {
         width: 500,
         align: 'justify'
     });
-    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text("60", 270, 180, {
+    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text(`${totalsong}`, 270, 180, {
         width: 500,
         align: 'justify'
     });
@@ -2007,7 +2052,7 @@ async function weeklypdf(userId , dt) {
         width: 500,
         align: 'justify'
     });
-    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text("60", 430, 180, {
+    doc.fontSize(18).font('Helvetica-Bold').fillColor('#61e615').text(`${totalartist}`, 430, 180, {
         width: 500,
         align: 'justify'
     });
@@ -2015,10 +2060,10 @@ async function weeklypdf(userId , dt) {
     chartconfig = {
         type: 'line',
         data: {
-            labels: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+            labels: datearr,
             datasets: [{
                 label: 'Listening Hours day wise',
-                data: [8, 6, 11, 5, 20, 6, 19]
+                data: spotifyhours
             }]
         }
     };
@@ -2042,10 +2087,10 @@ async function weeklypdf(userId , dt) {
     chartconfig = {
         type: 'bar',
         data: {
-            labels: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+            labels: datearr,
             datasets: [{
                 label: 'No. of Songs Listen that Week',
-                data: [8, 6, 11, 5, 20, 6, 19]
+                data: spotifysong
             }]
         }
     };
@@ -2119,15 +2164,44 @@ async function weeklypdf(userId , dt) {
         .fillColor('#000000')
         .text('Size' , 480 , 190 );
 
-    //loop laga kar ye table fill karni hai 
+    yaxis = 230;
+    xaxis = 50;
+
+    doc.fontSize(13)
+        .font('Helvetica')
+
+    for(let i=0 ; i<Math.min(7 , codeforceslanguage.length) ; i++){
+
+        doc.text(`${codeforcesname[i]}` , 50 , yaxis);
+        doc.text(`${codeforceslanguage[i]}` , 190, yaxis);
+        doc.text(`${codeforcesverdict[i]}` , 300, yaxis);
+        doc.text(`${codeforcestime[i]}` , 400, yaxis);
+        doc.text(`${codeforcessize[i]}` , 480, yaxis);
+
+        yaxis = yaxis + 20;
+    };
+
+    let answertype = [0,0,0,0];
+
+    for(let i=0 ; i<codeforceslanguage.length ; i++){
+        if(codeforcesverdict == 'OK'){
+            answertype[0]++;
+        }else if(codeforcesverdict == 'WRONG_ANSWER'){
+            answertype[1]++;
+        }else if(codeforcesverdict == 'T_LIMIT_EXCEDED'){
+            answertype[2]++;
+        }else if(codeforcesverdict == 'COMPILATION_ERROR'){
+            answertype[3]++;
+        }
+    }
 
     chartconfig = {
         type: 'doughnut',
         data: {
             labels: ['OK','WRONG_ANSWER','T_LIMIT_EXCEDED','COMPILATION ERROR'],
             datasets: [{
-                label: 'Listening Hours day wise',
-                data: [25,4,6,2]
+                label: 'Answer type',
+                data: answertype
             }]
         }
     };
@@ -2153,6 +2227,7 @@ async function weeklypdf(userId , dt) {
     });
 
     doc.fontSize(15)
+        .font('Helvetica-Bold')
             .text('Weekly Report',50 ,20 ,{
                 align : 'center'
             });
@@ -2170,10 +2245,10 @@ async function weeklypdf(userId , dt) {
     chartconfig = {
         type: 'bar',
         data: {
-            labels: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+            labels: datearr,
             datasets: [{
                 label: 'Hours Schedule Over Time',
-                data: [8, 6, 11, 5, 20, 6, 19]
+                data: calenderhours
             }]
         }
     };
@@ -2219,12 +2294,28 @@ async function weeklypdf(userId , dt) {
         .fillColor('#000000')
         .text('Date' , 450 , 530 );
 
+    yaxis = 570;
+    xaxis = 50;
+
+    doc.fontSize(13)
+        .font('Helvetica')
+
+    for(let i=0 ; i<Math.min(7 , calendereventsname.length) ; i++){
+
+        doc.text(`${calendereventsname[i]}` , 70 , yaxis);
+        doc.text(`${calendereventstime[i]}` , 300, yaxis);
+        doc.text(`${calendereventsdate[i]}` , 450, yaxis);
+
+        yaxis = yaxis + 20;
+    };
+
     doc.addPage({
         size: 'A4',
         margin: 50
     });
 
     doc.fontSize(15)
+        .font('Helvetica-Bold')
             .text('Weekly Report',50 ,20 ,{
                 align : 'center'
             });
@@ -2240,7 +2331,7 @@ async function weeklypdf(userId , dt) {
     });
 
     
-    const geminiurl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+    const geminiurl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
     doc.fontSize(20).font('Helvetica-Bold').fillColor('#000000').text("1. Github", 50, 150, {
         width: 500,
@@ -2250,24 +2341,29 @@ async function weeklypdf(userId , dt) {
     let requestBody = {
       contents: [{
         parts: [{
-          text: `You are an expert developer-advocate and content creator specializing in technical weekly wrap-ups for engineers.
+          text: `You are an expert developer-advocate and technical productivity analyst specializing in personalized weekly engineering wrap-ups.
         
-        I am providing you with the user's GitHub text metrics, repository table data, and one image of a day-wise commit chart.
+        I am providing you with the user's GitHub activity metrics entirely as structured text and parallel arrays.
         
-        USER'S GITHUB TEXT DATA:
-        - Total Commits this Week: 60
-        - Total Stars Earned: 60
-        - Followers Count: 60
+        USER'S GLOBAL METRICS:
+        - Total Commits this Week: ${totalcommit}
+        - Total Stars Earned: ${githubstars}
+        - Total Followers Count: ${githbufollow}
         
-        REPOSITORIES TABLE DATA (JSON format showing top active repos):abhi ke liye man se ek dummy sa data dekh lo 
-        table me coloums me likha hai name of repo , stars , watchers , language , forks , size of project 
-        abhi table me 5 repo rakh lena as a refrence .
+        COMMIT LOGS (Respective Arrays):
+        - Dates: ${JSON.stringify(datearr)}
+        - Commits on these dates: ${JSON.stringify(githubcommit)}
         
-        PROVIDED IMAGE:
-        1. Chart: A bar chart titled "Weekly Commit Record" that displays day-wise commit distribution (Sunday to Saturday). Here is the image --> ${commitimage}
+        REPOSITORY INSIGHTS TABLE (Respective Columns Arrays):
+        - Repository Names: ${JSON.stringify(githubreponame)}
+        - Stars per Repo: ${JSON.stringify(githubrepostar)}
+        - Watchers per Repo: ${JSON.stringify(githubrepowatcher)}
+        - Primary Languages: ${JSON.stringify(githubrepolanguage)}
+        - Forks per Repo: ${JSON.stringify(githubrepofork)}
+        - Code Sizes: ${JSON.stringify(githubreposize)}
 
         YOUR TASK:
-        Analyze the day-wise peaks from the commit chart image and synthesize it with the provided text and repository table data to generate an inspiring, highly technical, and engaging developer weekly summary.
+        Analyze these parallel datasets, identify the highest commit date, pinpoint the most impactful repository from the lists, and write an inspiring, sharp 4-point weekly summary that concludes with a practical developer suggestion.
 
         STRICT LAYOUT & FORMAT CONSTRAINTS (CRITICAL FOR PDF RENDERING):
         1. Format: The output MUST be a strict numbered list with EXACTLY 4 points, labeled as 1., 2., 3., 4.
@@ -2275,10 +2371,10 @@ async function weeklypdf(userId , dt) {
         3. No Markdown: Do NOT use any bold (**), italics (*), or special markdown symbols.
         4. No Intro/Outro: Do not include titles, introductory lines, or closing remarks. Start directly with "1. " and end with the final word of the 4th point.
         5. Structure:
-           - Point 1: Highlight the total commits and total stars earned with an encouraging tone about their productivity.
-           - Point 2: Analyze the "Weekly Commit Record" chart image and point out the peak day(s) when the developer was most active.
-           - Point 3: Reference the top repositories from the provided table data, calling out key languages, stars, or forks activity.
-           - Point 4: Mention the new follower growth and wrap up with a witty, motivational developer punchline.`
+           - Point 1: Highlight the global productivity metrics (total commits and total stars) with an encouraging tech tone.
+           - Point 2: Identify the peak activity date by checking the commit arrays and explicitly mention that exact date string (e.g., "15 jul") as their maximum flow-state day.
+           - Point 3: Reference the repository lists, highlighting the top-performing repo name, its primary language, and its community engagement (stars/forks).
+           - Point 4 (Suggestion): Provide a witty, data-driven engineering suggestion on how they can optimize their workflow or open-source footprint next week (e.g., modularizing code, documenting repositories, or balancing commit distributions).`
         }]
       }]
     };
@@ -2303,19 +2399,23 @@ async function weeklypdf(userId , dt) {
     requestBody = {
       contents: [{
         parts: [{
-          text: `You are an expert competitive programming coach and technical content writer specializing in gamified weekly performance reviews.
+          text: `You are an expert competitive programming coach and technical writer specializing in gamified weekly performance reviews for developers.
         
-        I am providing you with the user's Codeforces problem insights table data and one image of a submission verdict distribution chart.
+        I am providing you with the user's Codeforces problem-solving metrics entirely as structured text and parallel arrays.
         
-        PROBLEMS INSIGHTS TABLE DATA (JSON format showing recent problem attempts):abhi ke liye man se ek dummy sa data dekh lo 
-        table me coloums me likha hai name of problem , language used , verdict , time , size of code 
-        abhi table me 5 problem ko rakh lo as a refrence.
+        SUBMISSION VERDICTS DISTRIBUTION (Respective Arrays):
+        - Verdict Categories: ['OK','WRONG_ANSWER','T_LIMIT_EXCEDED','COMPILATION ERROR'],
+        - Respective Submission Counts: ${JSON.stringify(answertype)}
         
-        PROVIDED IMAGE:
-        1. Chart: A donut/pie chart displaying the distribution of submission verdicts (such as OK/Accepted, WRONG_ANSWER, TIME_LIMIT_EXCEEDED, COMPILATION_ERROR). Here is the Image --> ${answerimage}
+        PROBLEMS INSIGHTS TABLE (Respective Columns Arrays):
+        - Problem Names: ${JSON.stringify(codeforcesname)}
+        - Languages Used: ${JSON.stringify(codeforceslanguage)}
+        - Specific Verdicts: ${JSON.stringify(codeforcesverdict)}
+        - Execution Times: ${JSON.stringify(codeforcestime)}
+        - Code Sizes: ${JSON.stringify(codeforcessize)}
 
         YOUR TASK:
-        Analyze the verdict distribution from the chart image and combine it with the specific problem details from the table data to generate an engaging, motivating, and sharp weekly competitive programming summary.
+        Analyze these parallel datasets, extract the total successful accepted solutions, identify the bottleneck errors, evaluate their coding efficiency from the table lists, and write a sharp 4-point weekly summary that concludes with a strategic suggestion.
 
         STRICT LAYOUT & FORMAT CONSTRAINTS (CRITICAL FOR PDF RENDERING):
         1. Format: The output MUST be a strict numbered list with EXACTLY 4 points, labeled as 1., 2., 3., 4.
@@ -2323,10 +2423,10 @@ async function weeklypdf(userId , dt) {
         3. No Markdown: Do NOT use any bold (**), italics (*), or special markdown symbols.
         4. No Intro/Outro: Do not include titles, introductory lines, or closing remarks. Start directly with "1. " and end with the final word of the 4th point.
         5. Structure:
-           - Point 1: Celebrate the total number of successful 'OK' or accepted solutions visible in the chart with a high-energy tone.
-           - Point 2: Address the errors shown in the chart image (like WRONG_ANSWER or T_LIMIT_EXCEEDED) as engineering challenges to overcome.
-           - Point 3: Reference the problem insights table data, mentioning specific languages used (like C++) or notable execution times.
-           - Point 4: Provide a witty, motivational competitive programming closing remark about algorithmic optimization and ranking up.`
+           - Point 1: Celebrate the total number of successful 'OK' / accepted solutions found in the verdict arrays with a high-energy competitive programming tone.
+           - Point 2: Address the errors present in the distribution list (like WRONG_ANSWER or TIME_LIMIT_EXCEEDED counts) as tactical bugs to crush.
+           - Point 3: Highlight their primary programming language (like C++) and efficiency metrics (execution times/sizes) from the problem lists.
+           - Point 4 (Suggestion): Give a highly specific, data-driven optimization suggestion on how they can improve their execution speed, reduce errors, or pick better algorithmic approaches next week.`
         }]
       }]
     };
@@ -2367,21 +2467,20 @@ async function weeklypdf(userId , dt) {
     requestBody = {
       contents: [{
         parts: [{
-          text: `You are an expert content creator specializing in personalized weekly wrap-ups for music apps.
+          text: `You are an expert personalized content creator and music analyst specializing in weekly music wrap-ups.
         
-        I am providing you with the user's Spotify text data and two images showing day-wise trends graphs.
+        I am providing you with the user's Spotify listening metrics for the week as text. The daily breakdown arrays are perfectly mapped by index position to the dates provided in the dates array.
         
-        USER'S TEXT DATA:
-        - Total hours of music listened to this week: 60 hours
-        - Total number of unique songs played: 60 songs
-        - Total new artists followed this week: 60 artists
-        
-        PROVIDED IMAGES:
-        1. Graph 1: Day-wise breakdown of listening hours. Here is the image --> ${listeningimage}
-        2. Graph 2: Day-wise breakdown of number of songs played.Here is the image --> ${songsimage}
+        USER'S WEEKLY METRICS:
+        - Total hours of music listened to: ${totalhours} hours
+        - Total number of unique songs played: ${totalsongs} songs
+        - Number of new artists discovered/followed: ${newartist} new artists
+        - Mapped Dates Array: ${JSON.stringify(datearr)}
+        - Mapped Listening Hours Array: ${JSON.stringify(spotifyhours)}
+        - Mapped Number of Songs Played Array: ${JSON.stringify(spotifysong)}
 
         YOUR TASK:
-        Analyze the day-wise peaks from the graphs and merge them with the text data to create a compelling weekly music summary.
+        Analyze the numbers across the mapped arrays, find the exact date(s) where the user had the highest activity peaks, and write an incredibly engaging, sharp, and witty 4-point weekly summary that ends with a creative suggestion.
 
         STRICT LAYOUT & FORMAT CONSTRAINTS (CRITICAL FOR PDF RENDERING):
         1. Format: The output MUST be a strict numbered list with EXACTLY 4 points, labeled as 1., 2., 3., 4.
@@ -2389,10 +2488,10 @@ async function weeklypdf(userId , dt) {
         3. No Markdown: Do NOT use any bold (**), italics (*), or special markdown symbols.
         4. No Intro/Outro: Do not include titles, introductory lines, or closing remarks. Start directly with "1. " and end with the final word of the 4th point.
         5. Structure:
-           - Point 1: Highlight the total hours and total songs with an energetic comment.
-           - Point 2: Talk about the highest peak day/trend observed in Graph 1 (listening hours).
-           - Point 3: Talk about the highest peak day/trend observed in Graph 2 (number of songs).
-           - Point 4: Highlight the new artists followed and give a witty closing remark about their music taste.`
+           - Point 1: Highlight the overall high-level metrics (total hours and total songs) with an energetic, Spotify-Wrapped style vibe.
+           - Point 2: Identify the index of the highest peak from the hours and songs arrays, find its corresponding date from the dates array, and comment on that specific date's massive music session.
+           - Point 3: Highlight the new artists followed and describe what it says about their expanding or experimental musical taste.
+           - Point 4 (Suggestion): Give a fun, personalized suggestion on how they can improve or diversify their listening habits next week based on their data trends.`
         }]
       }]
     };
@@ -2419,18 +2518,19 @@ async function weeklypdf(userId , dt) {
         parts: [{
           text: `You are an expert productivity coach and time-management specialist specializing in personalized weekly routine analysis and reports.
         
-        I am providing you with the user's weekly calendar events table data and one image of a day-wise scheduled hours chart.
+        I am providing you with the user's weekly calendar schedule metrics entirely as structured text and parallel arrays.
         
-        EVENTS THAT WEEK TABLE DATA (JSON format showing scheduled meetings, tasks, or classes):
-        abhi ke liye man se ek dummy sa data dekh lo 
-        table me coloums me likha hai name of events , time of that event , date of that event 
-        abhi table me 5 events le lo as a reference .
+        SCHEDULE TRENDS LOGS (Respective Arrays):
+        - Dates: ${JSON.stringify(datearr)}
+        - Scheduled Hours on these dates: ${JSON.stringify(calenderhours)}
         
-        PROVIDED IMAGE:
-        1. Chart: A bar chart titled "Hours Schedule Over Time" that displays the day-wise breakdown of hours scheduled (Sunday to Saturday). Here is the Image -- > ${hoursimage}
+        EVENTS LOGS TABLE (Respective Columns Arrays):
+        - Event Names: ${JSON.stringify(calendereventsname)}
+        - Event Timings: ${JSON.stringify(calendereventstime)}
+        - Event Dates: ${JSON.stringify(calendereventsdate)}
 
         YOUR TASK:
-        Analyze the scheduled hour peaks from the chart image and blend it with the specific meeting/event logs from the table data to create an engaging, smart, and highly motivating weekly productivity summary.
+        Analyze these parallel datasets, identify the highest peak scheduled date from the logs, evaluate the critical commitments they handled from the event lists, and write a sharp 4-point weekly productivity summary that concludes with a practical time-management suggestion.
 
         STRICT LAYOUT & FORMAT CONSTRAINTS (CRITICAL FOR PDF RENDERING):
         1. Format: The output MUST be a strict numbered list with EXACTLY 4 points, labeled as 1., 2., 3., 4.
@@ -2438,9 +2538,10 @@ async function weeklypdf(userId , dt) {
         3. No Markdown: Do NOT use any bold (**), italics (*), or special markdown symbols.
         4. No Intro/Outro: Do not include titles, introductory lines, or closing remarks. Start directly with "1. " and end with the final word of the 4th point.
         5. Structure:
-           - Point 1: Reflect on the overall time management and commitment shown by the user based on the chart trends.
-           - Point 2: Scan the "Hours Schedule Over Time" chart image and call out the heaviest, highest-peak day(s) where they logged the most hours.
-           - Point 3: Reference the "Events that Week" table data, highlighting crucial meetings, deadlines, or major events they successfully attended.`
+           - Point 1: Reflect on the overall commitment, productivity, and time-allocation strategy shown by the user this week.
+           - Point 2: Identify the peak activity date by checking the schedule arrays and explicitly mention that exact date string (e.g., "15 jul") as their maximum grind day.
+           - Point 3: Reference the specific events lists, highlighting key deadlines, meetings, or major tasks they successfully managed.
+           - Point 4 (Suggestion): Provide a clever, data-driven time-management suggestion on how they can optimize their upcoming weekly routine, balance deep-work buffers, or prevent burnout based on high-hour clusters.`
         }]
       }]
     };
@@ -2483,6 +2584,206 @@ async function monthlypdf(userId , dt) {
         align: 'center'
     });
 
+    let realdate = new Date();
+
+    let diff = realdate - dt;
+
+    diff = Math.floor(diff/(1000*60*60*24));
+
+    let datearr = [];
+    
+    for (let i = 0 ; i<30 ; i++){
+        datearr[i] = datecalculater(dt + (1000*60*60*24)*i);
+    }
+
+    let daybefore = datecalculater(dt - (1000*60*60*24))
+    
+    let spotifyhours = [];
+    let spotifysong = [];
+    let spotifyartist = [];
+    
+    let ind = 0;
+    
+    for (let i=diff ; i>Math.min(diff-30 , -1) ; i--){
+        spotifyhours[ind]= user.spotify.totallisteningtime[i];
+        spotifysong[ind]= user.spotify.songplayed[i];
+        spotifyartist[ind]= user.spotify.newartist[i];
+        ind++ ;
+    };
+
+    let totalhours = 0;
+    let totalsongs = 0;
+    let taotalartist = 0;
+
+    for( let i=0 ; i<spotifyhours.length ; i++){
+        totalhours = totalhours + spotifyhours[i];
+        totalsongs = totalsongs + spotifysong[i];
+        totalartist = totalartist[i];
+    }
+
+    let calenderhours = [];
+    let calendereventsname = [];
+    let calendereventstime = [];
+    let calendereventsdate = [];
+    ind = 0;
+    let ind1 = 0;
+
+    for (let i=diff ; i>Math.min(diff-30 , -1) ; i--){
+        calenderhours[ind] = user.calender.scheduletime[i].value;
+        ind++;
+    };
+
+    let check = true;
+
+    ind = 0;
+
+    while(check){
+        if(daybefore == user.calender.events[ind].date){
+            check = false;
+        }
+        ind++;
+    }
+
+    ind--;
+    ind--;
+
+    check = true;
+
+    while(check){
+        if(datearr[29] == user.calender.events[ind1].date){
+            check = false;
+        }
+        ind1++;
+    }
+
+    ind1--;
+
+    let ind2 = ind;
+    ind = 0;
+
+    let eventscount = 0;
+
+    for(let i=ind2 ; i>ind1+1 ; i++){
+        calendereventsname[ind] = user.calender.events[ind2].name;
+        calendereventsdate[ind] = user.calender.events[ind2].date;
+        calendereventstime[ind] = user.calender.events[ind2].time;
+        eventscount ++;
+        ind++;
+    };
+    
+    ind1 = 0 ;
+    
+    check = true;
+    
+    ind = 0;
+    
+    while(check){
+        if(daybefore == user.codeforces.content[ind].date){
+            check = false;
+        }
+        ind++;
+    }
+    
+    ind--;
+    ind--;
+    
+    check = true;
+    
+    while(check){
+        if(datearr[29] == user.codeforces.content[ind1].date){
+            check = false;
+        }
+
+        ind1++;
+    }
+    
+    ind1--;
+    
+    let ind2 = ind;
+    ind = 0;
+    
+    let codeforcesname = [];
+    let codeforcesverdict = [];
+    let codeforceslanguage = [];
+    let codeforcestime = [];
+    let codeforcessize = [];
+
+    for(let i=ind2 ; i>ind1+1 ; i++){
+        codeforcesname[ind] = user.codeforces.content[i].name;
+        codeforcesverdict[ind] = user.codeforces.content[i].type;
+        codeforceslanguage[ind] = user.codeforces.content[i].language;
+        codeforcestime[ind] = user.codeforces.content[i].duration;
+        codeforcessize[ind] = user.codeforces.content[i].memory;
+    };
+
+    ind1 = 0 ;
+    
+    check = true;
+    
+    ind = 0;
+    
+    while(check){
+        if(daybefore == user.github.repolist[ind].createdat){
+            check = false;
+        }
+        ind++;
+    }
+    
+    ind--;
+    ind--;
+    
+    check = true;
+    
+    while(check){
+        if(datearr[29] == user.github.repolist[ind1].createdat){
+            check = false;
+        }
+        ind1++;
+    }
+    
+    ind1--;
+    
+    let ind2 = ind;
+    ind = 0;
+
+    let githubcommit = [];
+    let githubreponame = [];
+    let githubrepostar = [];
+    let githubrepowatcher = [];
+    let githubrepolanguage = [];
+    let githubrepofork = [];
+    let githubreposize = [];
+    let githbufollow = user.github.totalstar;
+    let githubstars = user.github.totalfollow;
+
+    for(let i=ind2 ; i>ind1+1 ; i++){
+        githubreponame[ind] = user.github.repolist[i].name;
+        githubrepostar[ind] = user.github.repolist[i].stars;
+        githubrepowatcher[ind] = user.github.repolist[i].watchers;
+        githubrepolanguage[ind] = user.github.repolist[i].language;
+        githubrepofork[ind] = user.github.repolist[i].forks;
+        githubreposize[ind] = user.github.repolist[i].size;
+    };
+
+    ind = 0;
+
+    if(diff>30){
+        githubcommit[0] = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
+    }else{
+        for(let i=diff ; i>Math.min(diff-30 , -1) ; i--){
+            githubcommit[ind] = user.github.commitsovertime[i].value;
+            ind++;
+        };
+    };
+
+    let totalcommit = 0;
+    if(diff > 30){
+
+    }else{
+        for (let i=0 ; i<githubcommit.length ;i++){
+            totalcommit = totalcommit + githubcommit[i];
+        }
+    };
 
     doc.fontSize(10)
             .text(`Page 1 of 10` , 50 , 750 ,{
