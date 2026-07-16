@@ -34,11 +34,38 @@ var options = {
             color: 'black',
         }
     },
-    
-     dataLabels: {
+
+    dataLabels: {
         enabled: false,
     },
 
+    responsive: [{
+        breakpoint: 700,
+        options: {
+            chart: {
+                toolbar: {
+                    show: true,
+                    tools: {
+                        download: true,
+                        selection: false,
+                        zoom: false,
+                        zoomin: false,
+                        zoomout: false,
+                        pan: false,
+                        reset: false
+                    }
+                },
+                xaxis: {
+                    labels: {
+                        style: {
+                            fontSize: '15px'
+                        }
+                    }
+                }
+
+            }
+        }
+    }],
 }
 
 var chartElement = document.querySelector("#box-1");
@@ -154,3 +181,33 @@ var option = {
 var chartelement = document.querySelector("#box-3");
 var chart3 = new ApexCharts(chartelement, option);
 chart3.render();
+
+
+
+
+
+
+
+
+function roggle() {
+    let sidebar = document.querySelector('.sidebar');
+    let logo = document.querySelector('.sidebar .logo');
+
+    if (sidebar.style.display != 'none') {
+        sidebar.style.display = 'none';
+    } else {
+        sidebar.style.display = 'block';
+        sidebar.style.width = '70vw';
+        sidebar.style.position = 'fixed';
+        sidebar.style.zIndex = '11';
+        sidebar.style.height = '100vh';
+        logo.style.visibility = 'hidden';
+    }
+};
+
+function moggle() {
+    let sidebars = document.querySelector('.sidebar');
+    if (sidebars.style.display != 'none') {
+        sidebars.style.display = 'none';
+    }
+}
