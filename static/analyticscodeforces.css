@@ -8,6 +8,7 @@
 .container {
     display: flex;
     min-height: 100vh;
+    z-index: 10;
 }
 
 /* sidebar css */
@@ -84,6 +85,10 @@
 
 /* header part */
 
+.responsive-header {
+    display: none;
+}
+
 .analytics-header {
     background: white;
     padding: 20px;
@@ -99,12 +104,21 @@
     color: #777;
 }
 
-
 /* tabs css */
 .tabs {
     display: flex;
     gap: 15px;
     margin: 13px;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE & old Edge */
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
 }
 
 .tabs button {
@@ -183,6 +197,14 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
+.scroll-hint {
+    display: none;
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 8px;
+    opacity: 0.6;
+}
+
 .bottom-widgets {
     display: grid;
     grid-template-columns: 2fr 3fr;
@@ -209,13 +231,15 @@
     border: 0.5px solid rgb(132, 130, 130);
     border-radius: 20px;
     padding: 5px 10px;
-    width: 455px;
+    min-width: 455px;
     font-size: 14px;
 }
 
-.wrong .left, .wrong .right {
+.wrong .left,
+.wrong .right {
     display: flex;
     gap: 5px;
+    text-wrap: nowrap;
 }
 
 .wrong .name {
@@ -223,7 +247,7 @@
     max-width: 145px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
 }
 
 .table h4 {
@@ -237,7 +261,7 @@ table th {
     text-align: center;
 }
 
-.table td {
+table td {
     font-size: 14px;
     padding: 7px 7px;
     border-top: 1px solid rgb(195, 192, 192);
@@ -245,7 +269,7 @@ table th {
     width: 120px;
 }
 
-table th:first-child {
+.table th:first-child {
     text-align: left;
     padding-left: 8px;
 }
@@ -255,6 +279,11 @@ th:nth-child(3) {
     width: 255px;
 }
 
+table td:nth-child(2),
+th:nth-child(2) {
+    width: 200px;
+    text-wrap: nowrap;
+}
 
 table td:first-child {
     max-width: 200px;
@@ -262,5 +291,175 @@ table td:first-child {
     padding-left: 8px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
+}
+
+
+
+/* CSS FOR RESPONSIVENESS */
+
+/* Large Tablets */
+
+@media (max-width: 1500px) and (min-width: 1200px) {
+    .card {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 1400px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .responsive-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 15px;
+        position: sticky;
+        top: 10px;
+        z-index: 15;
+    }
+
+    .responsive-header .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .responsive-header .menu-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #222;
+        padding: 0;
+    }
+
+    .responsive-header h2 {
+        font-size: 22px;
+        color: #3a4ccd;
+        font-weight: 700;
+    }
+
+    .responsive-header .header-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .responsive-header .profile-logo {
+        margin-left: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: #e2e8f0;
+    }
+
+    .responsive-header .notifications-icon {
+        width: 35px;
+        height: 30px;
+    }
+
+    .notification-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .analytics-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .top-widgets {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bottom-widgets {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wrong {
+        width: 100%;
+    }
+
+    .filter,
+    .table {
+        width: 100%;
+        overflow-x: auto;
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* IE & old Edge */
+    }
+
+    .filter::-webkit-scrollbar,
+    .table::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Tablets */
+@media (max-width: 500px) {
+
+    .main-content {
+        font-size: 0.9rem;
+    }
+
+    .scroll-hint {
+        display: flex;
+        justify-content: center;
+    }
+
+     .analytics-cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (min-width: 950px) {
+    table {
+        width: 100%;
+    }
+}
+
+/* Mobile */
+@media (max-width: 680px) {
+     .table .scroll-hint {
+        display: flex;
+        justify-content: center;
+     }
+}
+
+
+@media (max-width: 580px) and (min-width: 500px) {
+    .card {
+        font-size: 0.85rem;
+    }
 }
