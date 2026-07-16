@@ -8,6 +8,7 @@
 .container {
     display: flex;
     min-height: 100vh;
+    z-index: 10;
 }
 
 /* sidebar css */
@@ -17,12 +18,15 @@
 }
 
 .sidebar ul li a {
-    display: block;
-    padding: 12px 16px;
     text-decoration: none;
     color: #222;
     border-radius: 50px;
     font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px 15px;
+    gap: 10px;
 }
 
 .sidebar ul li.active a {
@@ -39,7 +43,14 @@
 }
 
 .logo {
+    display: flex;
     margin-bottom: 40px;
+}
+
+.logo img {
+    width: 70px;
+    height: 115px;
+    margin: -40px 0px -50px -5px;
 }
 
 .logo h2 {
@@ -50,10 +61,14 @@
     list-style: none;
 }
 
+.menu img {
+    width: 40px;
+    height: 40px;
+}
+
 .menu a:hover {
-    display: block;
     border-radius: 50px;
-    background: #727edb;
+    background: hsl(234, 100%, 69%);
     color: white;
     font-weight: 600;
 }
@@ -66,9 +81,11 @@
     background-color: rgb(219, 237, 245);
 }
 
-
-
 /* header part */
+
+.responsive-header {
+    display: none;
+}
 
 .analytics-header {
     background: white;
@@ -85,12 +102,21 @@
     color: #777;
 }
 
-
 /* tabs css */
 .tabs {
     display: flex;
     gap: 15px;
-    margin: 15px;
+    margin: 13px;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE & old Edge */
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
 }
 
 .tabs button {
@@ -107,17 +133,12 @@
     font-weight: 600;
 }
 
-
 .tabs button:hover {
     background-color: #918cf5;
     color: white;
 }
 
-
-
-
 /* grid css */
-
 .analytics-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -130,11 +151,18 @@
     background: white;
     padding: 20px 0px 20px 15px;
     border-radius: 15px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .card .left {
-    padding: 3px 0px 0px 3px;
-    margin: 0px 25px 0px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 25px;
     font-size: 30px;
     width: 50px;
     height: 50px;
@@ -143,13 +171,14 @@
 }
 
 .card .right div {
-    margin: 10px 0px;
+    margin: 7px 0px;
     font-size: 22px;
 }
 
 .card .right span {
     color: green;
 }
+
 
 
 .top-widgets {
@@ -186,6 +215,15 @@
     color: green;
 }
 
+/* wideget-1 css */
+
+#chart1 {
+    padding: 0px -10px;
+    background: white;
+    padding: 10px 5px;
+    border-radius: 15px;
+    height: 240px;
+}
 
 /* widget-2 css */
 
@@ -212,6 +250,7 @@
 th:last-child {
     text-align: center;
     padding-right: 10px;
+    text-wrap: nowrap;
 }
 
 .recent img {
@@ -230,6 +269,15 @@ th:last-child {
 .recentsongs td:first-child {
     display: flex;
     align-items: center;
+    max-width: 190px;
+}
+
+.recentsongs td:first-child span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
 }
 
 
@@ -239,6 +287,15 @@ th:last-child {
     width: 110%;
     border-collapse: collapse;
     font-size: 13px;
+    width: 100%;
+}
+
+.scroll-hint {
+    display: none;
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 8px;
+    opacity: 0.6;
 }
 
 .artists th {
@@ -257,7 +314,8 @@ th:last-child {
 .artists td:last-child,
 th:last-child {
     text-align: center;
-    padding-right: 15px;
+    padding-right: 14px;
+    text-wrap: nowrap;
 }
 
 .artists img {
@@ -272,6 +330,15 @@ th:last-child {
 .artists .singer {
     display: flex;
     align-items: center;
+    width: 185px;
+}
+
+.artists td span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
 }
 
 .singer span {
@@ -305,10 +372,19 @@ th:last-child {
     border-top: 1px solid #eee;
 }
 
+.tracks td span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+}
+
 .tracks td:last-child,
 th:last-child {
     text-align: center;
     padding-right: 10px;
+    text-wrap: nowrap;
 }
 
 .tracks img {
@@ -331,6 +407,7 @@ th:last-child {
 .tracks .song {
     display: flex;
     align-items: center;
+    width: 185px;
 }
 
 .tracks tr:first-child {
@@ -368,6 +445,7 @@ th:last-child {
 th:last-child {
     text-align: center;
     padding-right: 10px;
+    text-wrap: nowrap;
 }
 
 .playlists img {
@@ -380,12 +458,23 @@ th:last-child {
 
 .playlists span {
     font-weight: bold;
+    max-width: 175px;
+}
+
+.playlists td span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
 }
 
 
 .playlists .playlist {
     display: flex;
     align-items: center;
+    width: 190px;
+
 }
 
 .playlists th:nth-child(2) {
@@ -396,8 +485,9 @@ th:last-child {
 /* widget-6 css */
 
 .items {
-    display: grid;
-    grid-template-columns: 1fr 4fr;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
     border-bottom: 1px solid rgb(64, 63, 63);
     padding: 10px 0px;
 }
@@ -407,18 +497,213 @@ th:last-child {
 }
 
 .items .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 28px;
     width: 47px;
     height: 47px;
     border-radius: 50%;
     background-color: #dcd8d8;
-    padding: 4px;
 }
 
 .items .right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
     font-size: 13px;
 }
 
 .items .right p {
-    margin-bottom: 5px;
+    margin-top: 6px;
+}
+
+
+
+
+
+
+@media (max-width: 1500px) and (min-width: 1200px) {
+    .card {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 1400px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .responsive-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 15px;
+        position: sticky;
+        top: 10px;
+        z-index: 15;
+    }
+
+    .responsive-header .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .responsive-header .menu-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #222;
+        padding: 0;
+    }
+
+    .responsive-header h2 {
+        font-size: 22px;
+        color: #3a4ccd;
+        font-weight: 700;
+    }
+
+    .responsive-header .header-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .responsive-header .profile-logo {
+        margin-left: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: #e2e8f0;
+    }
+
+    .responsive-header .notifications-icon {
+        width: 35px;
+        height: 30px;
+    }
+
+    .notification-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .analytics-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .top-widgets {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bottom-widgets {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* Tablets */
+@media (max-width: 500px) {
+
+    .main-content {
+        font-size: 0.9rem;
+    }
+
+    .analytics-cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (min-width: 950px) {}
+
+/* Mobile */
+@media (max-width: 380px) {
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    #recentsongs,
+    #artists,
+    #tracks,
+    #playlists {
+        width: 100%;
+        height: 100%;
+        overflow-x: auto;
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* IE & old Edge */
+    }
+
+    #recentsongs::-webkit-scollbar,
+    #artists::-webkit-scrollbar,
+    #tracks::-webkit-scrollbar,
+    #playlists::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroll-hint {
+        display: flex;
+        justify-content: center;
+    }
+
+
+}
+
+@media (max-width:400px) {
+    .items {
+        gap: 10px;
+    }
+
+    .items .left {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .items .right {
+        font-size: 12px;
+    }
+
+    #insights {
+        height: fit-content;
+        padding: 8px 15px;
+    }
+}
+
+
+@media (max-width: 580px) and (min-width: 500px) {
+    .card {
+        font-size: 0.85rem;
+    }
 }
