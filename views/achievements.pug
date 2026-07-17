@@ -8,7 +8,7 @@ head
   // Sidebar
   aside.sidebar
     .logo
-      img(src="/static/photos/dashboard logo.png", alt="")
+      img(src='/static/photos/dashboard logo.png' alt='')
       h2 Dashboard
     ul.menu
       li
@@ -16,17 +16,13 @@ head
           img(src='/static/photos/overview icon.png' alt='')
           span  Overview 
       li
-        a(href='/analyticsoverview')
+        a(href='/analyticsgithub')
           img(src='/static/photos/analytics icon.png' alt='')
           span Analytics
       li
         a(href='/goals')
           img(src='/static/photos/goals icon.png' alt='')
           span Goals
-      li
-        a(href='/calender')
-          img(src='/static/photos/calendar icon.png' alt='')
-          span Calendar
       li
         a(href='/integration')
           img(src='/static/photos/integrations icon.png' alt='')
@@ -45,51 +41,40 @@ head
           span Settings
   // main-content
   .main-content
-    // Header
-    header.achievements-header
-      div
-        h2 Achievements
-        p Celebrate your milestones and accomplishments
-    // Achievement Cards
-    .achievements-cards
-      h3.heading Your Achievements
-      .cards
-        .card1
-          .top
-            .left
-              span.level Level 2
-              div
-                h3
-                  b  7 
-                h3  DAY 
-                h3  STREAK 
-            .right
-              img(src='images/Level 2 icon.png' alt='')
-          .middle
-            p  fire streak! 
-            p  Don&apos;t stop now!
-          .bottom
-            .level-dots
-              #dot-1.dot
-              #dot-2.dot
-              #dot-3.dot
-              #dot-4.dot
-              #dot-5.dot
-            .bottom-progress
-              .progress-bar
-                .progress(style='width: 40%')
-              span  3/7 
-          each achievement in user.achievementlevel
+    // responsive header
+    header.responsive-header
+      .header-left
+        button.menu-btn(onclick='roggle()')  &#x2630; 
+        h2 Dashboard
+      .header-right
+        .notification-wrapper
+          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
+          span.badge 3
+        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+    .content(onclick='moggle()')
+      // Header
+      header.achievements-header
+        div
+          h2 Achievements
+          p Celebrate your milestones and accomplishments
+      // Achievement Cards
+      .achievements-cards
+        h3.heading Your Achievements
+        .cards
+          .card1
             .top
               .left
-                span.level= achievement.level
-                div  
+                span.level Level 2
+                div
                   h3
-                    b=  achievement.topic 
+                    b  7 
+                  h3  DAY 
+                  h3  STREAK 
               .right
-                img(src='images/Level 2 icon.png' alt='')
+                img(src='/static/photos/level 2 icon.png' alt='')
             .middle
-              p=  achievement.name
+              p  fire streak! 
+              p  Don&apos;t stop now!
             .bottom
               .level-dots
                 #dot-1.dot
@@ -100,17 +85,15 @@ head
               .bottom-progress
                 .progress-bar
                   .progress(style='width: 40%')
-                span=  achievement.progress 
-                | /
-                span=  achievement.target[0]
-        //.card2
-        //  .top
-        //    h4
-        //      b  100 
-        //      |  PROBLEMS SOLVED
-        //  .middle
-        //    img(src='images/Level 2 icon.png' alt='')
-        //  .bottom
-        //    p  You&apos;re on fire! 
-        //    p  Solved 100 leetcode problems 
-script(src='achievements.js')
+                span  3/7 
+          .card2
+            .top
+              h4
+                b  100 
+                |  PROBLEMS SOLVED
+            .middle
+              img(src='/static/photos/level 2 icon.png' alt='')
+            .bottom
+              p  You&apos;re on fire! 
+              p  Solved 100 leetcode problems 
+script(src='/static/achievements.js')
