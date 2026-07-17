@@ -2,9 +2,10 @@ doctype html
 head
   meta(charset='UTF-8')
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title Analytics
-  link(rel='stylesheet' href='/static/analyticscalender.css')
+  title Project01
+  link(rel='stylesheet' href='/static/reports.css')
 .container
+  // Sidebar
   aside.sidebar
     .logo
       img(src='/static/photos/dashboard logo.png' alt='')
@@ -14,7 +15,7 @@ head
         a(href='/dashboard')
           img(src='/static/photos/overview icon.png' alt='')
           span  Overview 
-      li.active
+      li
         a(href='/analyticsgithub')
           img(src='/static/photos/analytics icon.png' alt='')
           span Analytics
@@ -26,7 +27,7 @@ head
         a(href='/integration')
           img(src='/static/photos/integrations icon.png' alt='')
           span Integrations
-      li
+      li.active
         a(href='/reports')
           img(src='/static/photos/reports icon.png' alt='')
           span Reports
@@ -50,149 +51,45 @@ head
           span.badge 3
         img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
     .content(onclick='moggle()')
-      // Header
-      header.analytics-header
+      // header
+      header.reports-header
         div
-          h2 Analytics
-          p  Deep dive into your productivity 
-      .tabs
-        button(onclick="window.location.href='/analyticsgithub'") Github
-        button(onclick="window.location.href='/analyticscodeforces'") Codeforeces
-        button(onclick="window.location.href='/analyticsspotify'") Spotify
-        button(onclick="window.location.href='/analyticscalender'"  class="active") Calendar
-      section.analytics-cards
-        .card
-          .left &#x1F55D;
-          .right
-            h4 Total Events
-            div
-              b 26
-            span &uarr; 22% vs last 7 days 
-        .card
-          .left &#x1F55D;
-          .right
-            h4 Scheduled Time
-            div
-              b 34h 20m
-            span &uarr; 15% vs last 7 days 
-        .card
-          .left &#x1F55D;
-          .right
-            h4 Avg. Event Duration
-            div
-              b 42min
-            span &uarr; 12% vs last 7 days 
-        .card
-          .left &#x1F55D;
-          .right
-            h4 Free Time
-            div
-              b 21h 30m
-            span &darr; 4% vs last 7 days 
-      section.top-widgets
-        #box-1
-        #box-2.box
-          .heading
-            div
-              h4 Today&apos;s Schedule
-              p
-                b July 06 2026
-            button.btn View Full Day &gt;
-          .schedule
-            .schedulename
-              p  09:15 AM &nbsp; &nbsp;| 
-              span Team Standup
-            .scheduleduration
-              | 1hr
-          .schedule
-            .schedulename
-              p  10:00 AM &nbsp; &nbsp;| 
-              span Project Review
-            .scheduleduration
-              | 45min
-          .schedule
-            .schedulename
-              p  11:30 AM &nbsp; &nbsp;| 
-              span Client Call
-            .scheduleduration
-              | 1hr
-          .schedule
-            .schedulename
-              p  01:00 PM &nbsp; &nbsp;| 
-              span Lunch Break
-            .scheduleduration
-              | 40min
-          .schedule
-            .schedulename
-              p  02:30 PM &nbsp; &nbsp;| 
-              span Design Discussion
-            .scheduleduration
-              | 30min
-          .schedule
-            .schedulename
-              p  04:00 PM &nbsp; &nbsp;| 
-              span Project Presentationfhfgfnvg
-            .scheduleduration
-              | 30min
-        #box-3.box
-          .heading
-            h4 Upcoming Events
-            button.btn View All &gt;
-          .events
-            .event
-              .left &bull;
-              .eventname
-                h5  Gym Session
-                p Today &bull; 06:00 PM
-            .event
-              .left &bull;
-              .eventname
-                h5  Doctor Appointment
-                p Tomorrow &bull; 10:00 AM
-            .event
-              .left &bull;
-              .eventname
-                h5  Hackathon 
-                p July 12 &bull; 09:00 AM
-            .event
-              .left &bull;
-              .eventname
-                h5  Flight to Indore 
-                p July 15 &bull; 08:30 AM
-            .event
-              .left &bull;
-              .eventname
-                h5  Team Outing 
-                p July 16 &bull; 05:00 PM
-      section.bottom-widgets
-        #item-1
-        #item-2
-        #item-3.box
-          .heading
-            h4 Insights
-          .item
-            .left &#x1F3B5;
-            .right
-              p
-                b You scheduled 18% more events this week.
-              p Great job staying productive!
-          .item
-            .left &#x2B50;
-            .right
-              p
-                b Thursday is your busiest day.
-              p You have 8 hours of scheduled events.
-          .item
-            .left &#x1F525;
-            .right
-              p
-                b Your avarage meeting duration is 48 min.
-              p Ideal meeting length!
-          .item
-            .left &#x1F375;
-            .right
-              p
-                b You have the most free time on Saturday.
-              p Enjoy your free time!
-script(src='https://cdn.jsdelivr.net/npm/apexcharts')
-script(src='/static/analyticscalender.js')
+          h2  Reports 
+          p  Generate and download your productivity reports. 
+      // Filters
+      .report-filters
+        .filter-group
+          .filter
+            label Report Type:
+            select
+              option Weekly
+              option Monthly
+              option Custom
+          .filter
+            label Select Starting Date:
+            input(type='date')
+        button.generate-btn
+          | Generate Report
+      // Available Reports
+      .reports-card
+        h3 Available Reports In PDF Format
+        // Report Item
+        .report-item
+          .report-icon
+            | &#x1F4C4;
+          div
+            h4 Weekly Summary Report
+            p Overview of your weekly productivity.
+        .report-item
+          .report-icon
+            | &#x1F4CA;
+          div
+            h4 Monthly Analysis Report
+            p Detailed monthly analysis and trends.
+        .report-item
+          .report-icon
+            | &#x1F4C1;
+          div
+            h4 Custom Report
+            p Overview of any specific date productivity.
+script(src='/static/reports.js')
