@@ -10,23 +10,23 @@ head
     form(action='/newgoals' method='post')
       .setgoals
         | Type : 
-        select(name='type')
+        select(name='goaltype')
           option(value='weekly') Weekly
           option(value='monthly') Monthly
           option(value='custom') Custom
-        | Goal : 
-        select(name='goal')
+        |                     Goal : 
+        select(name='app')
           option(value='spotifyhours') Listen the music on Spotify.
           option(value='addeventcalender') Add event on Calender
           option(value='addcommitgithub') Add commit on Github
           option(value='leetcodeproblem') Problem solve on Leetcode
           option(value='codeforcesproblem') Problem solve on Codeforces
-        | Total Target : 
-        input(type='number' name='target')
-        | Deadline : 
+        |                     Total Target : 
+        input(type='number' name='total')
+        |                     Deadline : 
         input(type='date' name='deadline')
       .submission
-        button(type='button' onclick="window.location.href='/goals'") Back
+        button(type='button' onclick="window.location.href='/goals' ") Back
         div
           input(type='submit' value='Submit')
           input(type='reset' value='Reset')
