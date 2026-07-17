@@ -16,17 +16,13 @@ head
           img(src='/static/photos/overview icon.png' alt='')
           span  Overview 
       li
-        a(href='/analyticsoverview')
+        a(href='/analyticsgithub')
           img(src='/static/photos/analytics icon.png' alt='')
           span Analytics
       li
         a(href='/goals')
           img(src='/static/photos/goals icon.png' alt='')
           span Goals
-      li
-        a(href='/calender')
-          img(src='/static/photos/calendar icon.png' alt='')
-          span Calendar
       li
         a(href='/integration')
           img(src='/static/photos/integrations icon.png' alt='')
@@ -44,44 +40,56 @@ head
           img(src='/static/photos/settings icon.png' alt='')
           span Settings
   .main-content
-    // header
-    header.reports-header
-      div
-        h2  Reports 
-        p  Generate and download your productivity reports. 
-    // Filters
-    form(action="/reports" method='post') 
-        .report-filters
-          .filter-group
-            .filter
-              label Report Type:
-              select
-                option(value='weekly') Weekly
-                option(value='monthly') Monthly
-                option(value='custom') Custom
-            .filter
-              label Select Starting Date:
-              input(type='date' value='date')
-          button.generate-btn(type='submit' value='Submit') Generate Report
-    // Available Reports
-    .reports-card
-      h3 Available Reports In PDF Format
-      // Report Item
-      .report-item
-        .report-icon
-          | &#x1F4C4;
+    // responsive header
+    header.responsive-header
+      .header-left
+        button.menu-btn(onclick='roggle()')  &#x2630; 
+        h2 Dashboard
+      .header-right
+        .notification-wrapper
+          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
+          span.badge 3
+        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+    .content(onclick='moggle()')
+      // header
+      header.reports-header
         div
-          h4 Weekly Summary Report
-          p Overview of your weekly productivity.
-      .report-item
-        .report-icon
-          | &#x1F4CA;
-        div
-          h4 Monthly Analysis Report
-          p Detailed monthly analysis and trends.
-      .report-item
-        .report-icon
-          | &#x1F4C1;
-        div
-          h4 Custom Report
-          p Overview of any specific date productivity.
+          h2  Reports 
+          p  Generate and download your productivity reports. 
+      // Filters
+      .report-filters
+        .filter-group
+          .filter
+            label Report Type:
+            select
+              option Weekly
+              option Monthly
+              option Custom
+          .filter
+            label Select Starting Date:
+            input(type='date')
+        button.generate-btn
+          | Generate Report
+      // Available Reports
+      .reports-card
+        h3 Available Reports In PDF Format
+        // Report Item
+        .report-item
+          .report-icon
+            | &#x1F4C4;
+          div
+            h4 Weekly Summary Report
+            p Overview of your weekly productivity.
+        .report-item
+          .report-icon
+            | &#x1F4CA;
+          div
+            h4 Monthly Analysis Report
+            p Detailed monthly analysis and trends.
+        .report-item
+          .report-icon
+            | &#x1F4C1;
+          div
+            h4 Custom Report
+            p Overview of any specific date productivity.
+script(src='/static/reports.js')
