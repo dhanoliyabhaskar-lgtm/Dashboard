@@ -8,6 +8,7 @@
  .container {
      display: flex;
      min-height: 100vh;
+     z-index: 10;
  }
 
  /* sidebar css */
@@ -48,8 +49,8 @@
 
  .logo img {
      width: 70px;
-     height: 155px;
-     margin: -55px 0px -50px -5px;
+     height: 115px;
+     margin: -40px 0px -50px -5px;
  }
 
  .logo h2 {
@@ -81,6 +82,11 @@
 
 
  /* header */
+
+ .responsive-header {
+    display: none;
+ }
+
  .achievements-header {
      background: white;
      padding: 20px;
@@ -109,21 +115,19 @@
  }
 
  .heading {
-     margin: 10px 0px 0px 10px;
-     font-size: 20px;
+    margin: 10px 0px 0px 10px;
+    font-size: 20px;
  }
 
  .cards {
-     display: flex;
-     /*justify-content: center;*/
-     /*align-items: center;*/
-     flex-wrap: wrap;
-     background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: white;
  }
 
- .card1,
- .card2 {
-     display: flex;
+ .card1, .card2 {
      height: 265px;
      width: 269px;
      margin: 10px 13px;
@@ -156,37 +160,37 @@
  }
 
  .top .left div {
-     display: flex;
-     flex-direction: column;
-     gap: 5px;
-     justify-content: center;
-     align-items: center;
-     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
  }
 
- .card1 .top .left div h3:first-child {
-     font-size: 35px;
+  .card1 .top .left div h3:first-child {
+    font-size: 35px;
  }
 
  .card1 img {
-     margin-top: -15px;
-     width: 160px;
-     height: 175px;
+    margin-top: -15px;
+    width: 160px;
+    height: 175px;
  }
 
  .middle {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: center;
-     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
  }
 
  .bottom {
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
  }
 
  .bottom .dot {
@@ -223,12 +227,146 @@
  }
 
  .card2 .top {
-     display: flex;
-     justify-content: center;
+    display: flex;
+    justify-content: center;
  }
 
  .card2 img {
      width: 190px;
-     height: 190px;
-     margin-top: -25px;
+    height: 190px;
+    margin-top: -25px;
+ }
+
+
+
+
+ /* CSS FOR RESPONSIVENESS */
+
+ /* Large Tablets */
+ @media (max-width: 1400px) {
+
+     .container {
+         flex-direction: column;
+     }
+
+     .main-content {
+         padding: 15px;
+     }
+
+     .sidebar {
+         display: none;
+     }
+
+     .responsive-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         background: white;
+         padding: 10px;
+         border-radius: 10px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+         margin-bottom: 15px;
+         position: sticky;
+         top: 10;
+         z-index: 15;
+     }
+
+     .responsive-header .header-left {
+         display: flex;
+         align-items: center;
+         gap: 15px;
+     }
+
+     .responsive-header .menu-btn {
+         background: none;
+         border: none;
+         font-size: 24px;
+         cursor: pointer;
+         color: #222;
+         padding: 0;
+     }
+
+     .responsive-header h2 {
+         font-size: 22px;
+         color: #3a4ccd;
+         font-weight: 700;
+     }
+
+     .responsive-header .header-right {
+         display: flex;
+         align-items: center;
+         gap: 15px;
+     }
+
+     .responsive-header .profile-logo {
+         margin-left: 0;
+         width: 36px;
+         height: 36px;
+         border-radius: 50%;
+         object-fit: cover;
+         background-color: #e2e8f0;
+     }
+
+     .responsive-header .notifications-icon {
+         width: 35px;
+         height: 30px;
+     }
+
+     .overview-header .notifications-icon {
+         width: 47px;
+         height: 35px;
+     }
+
+     .notification-wrapper {
+         position: relative;
+         display: inline-block;
+     }
+
+     .badge {
+         position: absolute;
+         top: -5px;
+         right: -5px;
+         background-color: red;
+         color: white;
+         border-radius: 50%;
+         padding: 2px 6px;
+         font-size: 10px;
+         font-weight: bold;
+     }
+ }
+
+ /* Tablets */
+@media (max-width: 370px) {
+
+}
+
+
+ /* Mobile */
+ @media (max-width: 450px) and (min-width: 370px) {
+     
+ }
+
+ @media (max-width: 600px) {
+    .main-content {
+        font-size: 0.9rem;
+    }
+ }
+
+ @media (max-width: 420px) {
+    .main-content {
+        font-size: 0.8rem;
+    }
+ }
+
+ @media (max-width: 500px) {
+     .main-content {
+         font-size: 0.85rem;
+     }
+ }
+
+
+
+
+ @media (max-width: 550px) and (min-width: 500px) {
+
  }
