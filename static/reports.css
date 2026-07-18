@@ -8,6 +8,7 @@
  .container {
      display: flex;
      min-height: 100vh;
+     z-index: 10;
  }
 
  /* sidebar css */
@@ -48,8 +49,8 @@
 
  .logo img {
      width: 70px;
-     height: 155px;
-     margin: -55px 0px -50px -5px;
+     height: 115px;
+     margin: -40px 0px -50px -5px;
  }
 
  .logo h2 {
@@ -81,6 +82,11 @@
 
 
  /* header */
+
+ .responsive-header {
+     display: none;
+ }
+
  .reports-header {
      display: flex;
      justify-content: space-between;
@@ -125,6 +131,7 @@
      margin-bottom: 6px;
      font-weight: 600;
      margin-left: 7px;
+     text-align: center;
  }
 
  .filter select,
@@ -196,4 +203,159 @@
  .report-item p {
      font-size: 13px;
      color: #777;
+ }
+
+ /* CSS FOR RESPONSIVENESS */
+
+ /* Large Tablets */
+ @media (max-width: 1400px) {
+
+     .container {
+         flex-direction: column;
+     }
+
+     .main-content {
+         padding: 15px;
+     }
+
+     .sidebar {
+         display: none;
+     }
+
+     .responsive-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         background: white;
+         padding: 10px;
+         border-radius: 10px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+         margin-bottom: 15px;
+         position: sticky;
+         top: 10;
+         z-index: 15;
+     }
+
+     .responsive-header .header-left {
+         display: flex;
+         align-items: center;
+         gap: 15px;
+     }
+
+     .responsive-header .menu-btn {
+         background: none;
+         border: none;
+         font-size: 24px;
+         cursor: pointer;
+         color: #222;
+         padding: 0;
+     }
+
+     .responsive-header h2 {
+         font-size: 22px;
+         color: #3a4ccd;
+         font-weight: 700;
+     }
+
+     .responsive-header .header-right {
+         display: flex;
+         align-items: center;
+         gap: 15px;
+     }
+
+     .responsive-header .profile-logo {
+         margin-left: 0;
+         width: 36px;
+         height: 36px;
+         border-radius: 50%;
+         object-fit: cover;
+         background-color: #e2e8f0;
+     }
+
+     .responsive-header .notifications-icon {
+         width: 35px;
+         height: 30px;
+     }
+
+     .overview-header .notifications-icon {
+         width: 47px;
+         height: 35px;
+     }
+
+     .notification-wrapper {
+         position: relative;
+         display: inline-block;
+     }
+
+     .badge {
+         position: absolute;
+         top: -5px;
+         right: -5px;
+         background-color: red;
+         color: white;
+         border-radius: 50%;
+         padding: 2px 6px;
+         font-size: 10px;
+         font-weight: bold;
+     }
+
+ }
+
+ /* Tablets */
+ @media (max-width: 992px) {}
+
+ /* Mobile */
+ @media (max-width: 600px) {
+     .main-content {
+        font-size: 0.9rem;
+    }
+
+    .report-filters {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+ }
+
+ @media (max-width: 420px) {
+     .main-content {
+        font-size: 0.8rem;
+    }
+
+    .reports-header{
+        padding: 10px;
+    }
+
+    .filter {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 5px;
+    }
+
+    .report-item {
+        font-size: 0.9rem;
+    }
+
+    .report-card {
+        padding: 5px;
+    }
+
+    .report-icon {
+        width: 35px;
+        height: 35px;
+    }
+ }
+
+ @media (max-width: 1400px) and (min-width: 1200px) {
+
  }
