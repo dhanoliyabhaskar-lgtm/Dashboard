@@ -198,8 +198,10 @@ function roggle() {
 };
 
 function moggle() {
-    let sidebars = document.querySelector('.sidebar');
-    if (sidebars.style.display != 'none') {
-        sidebars.style.display = 'none';
+    if (window.innerWidth <= 1400) {
+        let sidebars = document.querySelector('.sidebar');
+        if (sidebars.style.display != 'none') {
+            sidebars.style.display = 'none';
+        }
     }
 }
