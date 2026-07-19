@@ -4,7 +4,6 @@ var options = {
     chart: {
         type: 'area',
         height: 250,
-        width: 430,
     },
 
     series: [
@@ -21,6 +20,10 @@ var options = {
     title: {
         text: "Hours Scheduled Over Time",
         align: 'left',
+        style: {
+            fontSize: "14px",
+            color: 'black',
+        }
     },
 
     subtitle: {
@@ -44,7 +47,42 @@ var options = {
         padding: {
             left: -3,
         }
-    }
+    },
+
+    responsive: [{
+        breakpoint: 350,
+        options: {
+            chart: {
+                height: '260px',
+            },
+            title: {
+                style: {
+                    fontSize: "12px"
+                }
+            }
+        }
+    }],
+
+    responsive: [{
+        breakpoint: 700,
+        options: {
+            chart: {
+                height: '260px',
+                toolbar: {
+                    show: true,
+                    tools: {
+                        download: true,
+                        selection: false,
+                        zoom: false,
+                        zoomin: false,
+                        zoomout: false,
+                        pan: false,
+                        reset: false
+                    }
+                }
+            }
+        }
+    }]
 }
 
 var chartElement = document.querySelector("#box-1");
@@ -77,7 +115,11 @@ var hbar = {
 
     title: {
         text: "Most Busy Days",
-        align: 'start'
+        align: 'start',
+        style: {
+            fontSize: "14px",
+            color: 'black',
+        }
     },
 
     xaxis: {
@@ -103,8 +145,6 @@ chart2.render();
 
 // chart3 css
 
-
-
 var donut = {
     chart: {
         type: 'donut',
@@ -114,20 +154,24 @@ var donut = {
         },
     },
 
-    series: [9*60+30, 5*60+30],
+    series: [9 * 60 + 30, 5 * 60 + 30],
 
     labels: ['Busy Time', 'Free Time'],
 
     title: {
         text: "Busy Vs Free Time (Today)",
         align: 'left',
+        style: {
+            fontSize: "14px",
+            color: 'black',
+        }
     },
 
     subtitle: {
-          text: " Your 8hrs sleep time is not included",
-          align: 'left',
-          offsetY: 20,
-          style: {
+        text: " Your 8hrs sleep time is not included",
+        align: 'left',
+        offsetY: 20,
+        style: {
             fontSize: '12px',
             fontWeight: 'bold',
             color: 'grey'
@@ -144,26 +188,65 @@ var donut = {
 
     legend: {
         show: true,
-        position: 'right',
-        offsetY: 90,
-        offsetX: 5,
-        fontSize: '13px',
-        markers: {
-           offsetX: -5
+        position: "bottom",
+        horizontalAlign: "center",
+        fontSize: "14px",
+    },
+
+    dataLabels: {
+        style: {
+            fontSize: "14px",
+            fontWeight: 600
+        },
+        formatter: function (val) {
+            return Math.round(val) + "%";
         }
     },
 
     tooltip: {
-    y: {
-      formatter: function (value) {
-        const hours = Math.floor(value / 60);
-        const minutes = value % 60;
-        return hours + "h " + minutes + "m";
-      }
+        y: {
+            formatter: function (value) {
+                const hours = Math.floor(value / 60);
+                const minutes = value % 60;
+                return hours + "h " + minutes + "m";
+            }
+        }
     }
-  }
 }
 
 var chartspace = document.querySelector("#item-2");
 var chart3 = new ApexCharts(chartspace, donut);
 chart3.render();
+
+
+
+
+
+
+
+
+
+function roggle() {
+    let sidebar = document.querySelector('.sidebar');
+    let logo = document.querySelector('.sidebar .logo');
+
+    if (sidebar.style.display != 'none') {
+        sidebar.style.display = 'none';
+    } else {
+        sidebar.style.display = 'block';
+        sidebar.style.width = '70vw';
+        sidebar.style.position = 'fixed';
+        sidebar.style.zIndex = '11';
+        sidebar.style.height = '100vh';
+        logo.style.visibility = 'hidden';
+    }
+};
+
+function moggle() {
+    if (window.innerWidth <= 1400) {
+        let sidebars = document.querySelector('.sidebar');
+        if (sidebars.style.display != 'none') {
+            sidebars.style.display = 'none';
+        }
+    }
+}
