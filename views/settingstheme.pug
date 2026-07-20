@@ -1,61 +1,103 @@
 doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Settings
-    link(rel="stylesheet" href="/static/settingstheme.css")
-
-  body(data-theme=user.theme)
-    .container
-
-      // Sidebar
-      aside.sidebar
-        .logo
-          h2 My Dashboard
-        ul.menu
-          li: a(href="/dashboard") Overview
-          li: a(href="/analyticsoverview") Analytics
-          li: a(href="/goals") Goals
-          li: a(href="/calendar") Calendar
-          li: a(href="/integration") Integrations
-          li: a(href="/reports") Reports
-          li: a(href="/achievements") Achievements
-          li.active: a(href="") Settings
-        
-      // Main Content
-      main.main-content
-
-        // header
-        header.settings-header
-          div
-            h2 Settings
-            p Manage your account preferences and application settings.
-
-        .settings-page
-          .settings-bar
-            button(onclick="window.location.href='/settingsprofile' ") Profile
-            button(onclick="window.location.href='/settingsnotifications' ") Notifications
-            button(onclick="window.location.href='/settingsprivacy' ") Privacy &amp; Security
-            button.active(onclick="window.location.href='/settingstheme' ") Theme
-            button(onclick="window.location.href='/settingshelp' ") Help &amp; Feedback
-            button(onclick="window.location.href='/settingslogout' ") Log Out
-
-          .privacyandsecurity-page
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Settings
+  link(rel='stylesheet' href='/static/settingstheme.css')
+.container
+  // Sidebar
+  aside.sidebar
+    .logo
+      img(src='/static/photos/dashboard logo.png' alt='')
+      h2 Dashboard
+    ul.menu
+      li
+        a(href='/dashboard')
+          img(src='/static/photos/overview icon.png' alt='')
+          span  Overview 
+      li
+        a(href='/analyticsgithub')
+          img(src='/static/photos/analytics icon.png' alt='')
+          span Analytics
+      li
+        a(href='/goals')
+          img(src='/static/photos/goals icon.png' alt='')
+          span Goals
+      li
+        a(href='/integration')
+          img(src='/static/photos/integrations icon.png' alt='')
+          span Integrations
+      li
+        a(href='/reports')
+          img(src='/static/photos/reports icon.png' alt='')
+          span Reports
+      li
+        a(href='/achievements')
+          img(src='/static/photos/achievements icon.png' alt='')
+          span Achievements
+      li.active
+        a(href='/settingsprofile')
+          img(src='/static/photos/settings icon.png' alt='')
+          span Settings
+  // Main Content
+  .main-content
+    // responsive header
+    header.responsive-header
+      .header-left
+        button.menu-btn(onclick='roggle()')  &#x2630; 
+        h2 Dashboard
+      .header-right
+        .notification-wrapper
+          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
+          span.badge 3
+        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+    .content(onclick='moggle()')
+      // header
+      header.settings-header
+        div
+          h2  Settings 
+          p  Manage your account preferences and application settings. 
+      .settings-page
+        .settings-bar
+          button.active(onclick="window.location.href='/settingsprofile' ")
+            img(src='/static/photos/settings profile icon.png' alt='')
+            span Profile
+          button(onclick="window.location.href='/settingsnotifications' ")
+            img(src='/static/photos/settings notifications icon.png' alt='')
+            span Notifications
+          button(onclick="window.location.href='/settingstheme' ")
+            img(src='/static/photos/settings themes icon.png' alt='' style='size: 0.8em')
+            span Themes
+          button(onclick="window.location.href='/settingsprivacy' ")
+            img(src='/static/photos/settings privacy&security icon.png' alt='')
+            span Privacy &amp; Security
+          button(onclick="window.location.href='/settingshelp' ")
+            img(src='/static/photos/settings help&feedback icon.png' alt='')
+            span Help &amp; Feedback
+          button(onclick="window.location.href='/settingslogout' ")
+            img(src='/static/photos/settings logout icon.png' alt='')
+            span Log Out
+        .themes-page
+          .themes-heading
             h3 Theme Change
-            
-            .privacyandsecurity-set
-              h4 Please Select the corressponding Number for specific colour combination
-
-              p 1. Light Theme (default (Alice Blue and White))
-              p 2. Dark Theme (Jet Black and Dark Obsidian)
-              p 3. Slate Theme (Deep Slate and Charcoal Blue)
-              p 4. Midnight Theme (Midnight Navy and Deep Indigo)
-              
-              form.set-theme(action="/settingstheme" method="post")
-                label(for="current-pass") Your Colour Theme number: 
-                input#current-pass(type="text",name="theme", required , placeholder="1")
-                
-                button(type="submit") Update Theme
-    
-    script(src="/static/settingstheme.js")
+          .themes-set
+            h4 Please Select the corresponding Number for specific colour combination
+            .options
+              span
+                b 1. Light Theme
+                |  (Default - Alice Blue and White)
+              span
+                b 2. Dark Theme
+                |  (Jet Black and Dark Obsidian)
+              span
+                b 3. Slate Theme
+                |  (Deep Slate and Charcoal Blue)
+              span
+                b 4. Midnight Theme
+                |  (Midnight Navy and Deep Indigo)
+            form.set-theme(action='settingstheme' method='post')
+              label(for='current-pass')
+                b Your Colour Theme Number:
+              input#current-pass(type='text' name='theme' placeholder='1' required='')
+              button(type='submit') Update Theme
+script(src='/static/settingstheme.js')
