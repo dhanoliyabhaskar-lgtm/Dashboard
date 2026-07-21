@@ -9,6 +9,7 @@
 .container {
     display: flex;
     min-height: 100vh;
+    z-index: 10;
 }
 
 /* sidebar css */
@@ -18,12 +19,15 @@
 }
 
 .sidebar ul li a {
-    display: block;
-    padding: 12px 16px;
     text-decoration: none;
     color: #222;
     border-radius: 50px;
     font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px 15px;
+    gap: 10px;
 }
 
 .sidebar ul li.active a {
@@ -40,22 +44,32 @@
 }
 
 .logo {
+    display: flex;
     margin-bottom: 40px;
+}
+
+.logo img {
+    width: 70px;
+    height: 115px;
+    margin: -40px 0px -50px -5px;
 }
 
 .logo h2 {
     color: rgb(46, 46, 230)
 }
 
-
 .menu {
     list-style: none;
 }
 
+.menu img {
+    width: 40px;
+    height: 40px;
+}
+
 .menu a:hover {
-    display: block;
     border-radius: 50px;
-    background: #727edb;
+    background: hsl(234, 100%, 69%);
     color: white;
     font-weight: 600;
 }
@@ -71,6 +85,11 @@
 
 
 /* header css */
+
+.responsive-header {
+    display: none;
+}
+
 .settings-header {
     display: flex;
     justify-content: space-between;
@@ -107,11 +126,19 @@
     height: fit-content;
 }
 
+.settings-bar img {
+    width: 50px;
+    height: 50px;
+}
+
 .settings-bar button {
+    display: flex;
+    align-items: center;
+    justify-content: left;
     border: none;
     cursor: pointer;
     background: white;
-    padding: 20px 0px;
+    padding: 5px 0px 0px 30px;
     border-bottom: 1px solid rgb(12, 12, 12);
     font-weight: 600;
     font-size: 17px;
@@ -122,54 +149,54 @@
 .settings-bar button.active {
     border-bottom: 4px solid rgb(45, 42, 42);
     background: #d1d0d0;
+    padding: 5px 0px 2px 30px;
 }
 
 .settings-bar button:hover {
     border-bottom: 4px solid rgb(45, 42, 42);
     background: #f7f1f1;
+    padding: 5px 0px 2px 30px;
 }
-
 
 /* logout page */
 
 .logout-page {
     margin-left: 3px;
     border: 2px solid rgb(121, 115, 115);
-    height: 105%;
+    height: 100%;
     background-color: white;
     border-radius: 15px;
-    
+    font-size: 17px;
 }
 
-.logout-page h3 {
-    margin: 18px 15px 0px 15px;
-    padding-bottom: 15px;
+.logout-heading {
+    padding: 18px 15px 15px 15px;
     border-bottom: 1px solid rgb(121, 115, 115)
 }
 
-.logout{
+.logout {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-    font-size: 20px;
+    margin: 20px 0px;
 }
 
-.logout img{
+.logout img {
     border-radius: 50%;
-    width: 40%;
-    height: 40%;
+    width: 35%;
+    height: 35%;
     background-color: #b9e3f6;
 }
 
-.logout p{
-    margin-top: 15px;
+.logout p {
+    font-size: 19px;
+    margin: 20px 7px;
+    text-align: center;
 }
 
-.logout button{
+.logout button {
     padding: 15px 30px;
-    margin-top: 30px;
     width: 150px;
     cursor: pointer;
     background: blue;
@@ -177,3 +204,185 @@
     border: none;
     border-radius: 10px;
 }
+
+
+
+
+
+
+
+/* CSS FOR RESPONSIVENESS */
+
+/* Large Tablets */
+@media (max-width: 1400px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .responsive-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 15px;
+        position: sticky;
+        top: 10;
+        z-index: 15;
+    }
+
+    .responsive-header .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .responsive-header .menu-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #222;
+        padding: 0;
+    }
+
+    .responsive-header h2 {
+        font-size: 22px;
+        color: #3a4ccd;
+        font-weight: 700;
+    }
+
+    .responsive-header .header-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .responsive-header .profile-logo {
+        margin-left: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: #e2e8f0;
+    }
+
+    .responsive-header .notifications-icon {
+        width: 35px;
+        height: 30px;
+    }
+
+    .overview-header .notifications-icon {
+        width: 47px;
+        height: 35px;
+    }
+
+    .notification-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .settings-page {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: 2fr 30fr;
+        column-gap: 15px;
+    }
+
+    .settings-bar {
+        background: white;
+        border-radius: 30px;
+        width: fit-content;
+        margin-right: 5px;
+        padding: 0px 5px;
+    }
+
+    .settings-bar button span {
+        display: none;
+    }
+
+    .settings-bar button {
+        padding: 5px;
+    }
+
+    .settings-bar button.active {
+        padding: 5px;
+    }
+
+    .settings-bar button:hover {
+        padding: 5px;
+    }
+
+    .settings-bar img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .logout-page {
+        height: fit-content;
+        width: auto;
+    }
+
+}
+
+/* Tablets */
+@media (max-width: 992px) {}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .main-content {
+        font-size: 0.9rem;
+    }
+
+    .logout-heading {
+        padding: 13px 10px;
+    }
+}
+
+@media (max-width:750px) {
+    .logout p {
+        font-size: 16px;
+        margin-top: 15px 0px;
+    }
+
+    .logout button {
+        width: 120px;
+        padding: 10px 25px;
+    }
+}
+
+@media (max-width: 450px) {
+    .main-content {
+        font-size: 0.8rem;
+    }
+
+    .settings-page {
+        column-gap: 10px;
+    }
+
+}
+
+@media (max-width: 1400px) and (min-width: 1200px) {}
