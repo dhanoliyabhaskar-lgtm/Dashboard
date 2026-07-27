@@ -1,5 +1,17 @@
-// chart1 css
+const calender = JSON.parse(document.body.dataset.calender);
 
+const hours = calender && calender.scheduletime ? calender.scheduletime : null;
+const maindata = Array.isArray(hours) ? hours[0] : hours; 
+
+const hoursarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+
+let valuesarray = hoursarray.map(item => item.value); // taking the values of the array in an another array
+let datesarray = hoursarray.map(item => item.at); // taking the values of the array in an another array
+
+let reversevalues = valuesarray.reverse(); //reversing the array 
+let reverseat = datesarray.reverse(); //reversing the array 
+
+// chart1 css
 var options = {
     chart: {
         type: 'area',
@@ -8,13 +20,13 @@ var options = {
 
     series: [
         {
-            name: 'Listening Time (in hrs)',
-            data: [2, 7, 6, 3, 4, 1, 8]
+            name: 'Hours In Events',
+            data: reversevalues
         }
     ],
 
     xaxis: {
-        categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        categories: reverseat
     },
 
     title: {
@@ -89,6 +101,16 @@ var chartElement = document.querySelector("#box-1");
 var chart1 = new ApexCharts(chartElement, options);
 chart1.render();
 
+const busy = calender && calender.scheduletime ? calender.scheduletime : null;
+const Maindata = Array.isArray(busy) ? busy[0] : busy; 
+
+const busyarray = Maindata ? Object.values(Maindata) : []; // convert the object into an array 
+
+valuesarray = busyarray.map(item => item.value); // taking the values of the array in an another array
+datesarray = busyarray.map(item => item.at); // taking the values of the array in an another array
+
+reversevalues = valuesarray.reverse(); //reversing the array 
+reverseat = datesarray.reverse(); //reversing the array
 
 // chart2 css
 
@@ -101,7 +123,7 @@ var hbar = {
     series: [
         {
             name: "Busy Hours",
-            data: [3, 4, 2, 3, 1, 6, 5]
+            data: reversevalues
         }
     ],
 
@@ -123,7 +145,7 @@ var hbar = {
     },
 
     xaxis: {
-        categories: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        categories: reverseat,
         color: 'black',
     },
 
@@ -143,6 +165,7 @@ var chart2 = new ApexCharts(horzbar, hbar);
 chart2.render();
 
 
+
 // chart3 css
 
 var donut = {
@@ -154,7 +177,7 @@ var donut = {
         },
     },
 
-    series: [9 * 60 + 30, 5 * 60 + 30],
+    series: [calender.todaybusy.busy.hr + calender.todaybusy.busy.min, calender.todaybusy.free.hr + calender.todaybusy.free.min],
 
     labels: ['Busy Time', 'Free Time'],
 
@@ -208,10 +231,16 @@ var donut = {
             formatter: function (value) {
                 const hours = Math.floor(value / 60);
                 const minutes = value % 60;
-                return hours + "h " + minutes + "m";
+                return minutes + "h " + hours + "m";
             }
         }
     }
+}
+
+const schedulearr = calender.todayschedule ? Object.values(calender.todayschedule) : [];
+console.log(schedulearr);
+if(schedulearr.length>0){
+    
 }
 
 var chartspace = document.querySelector("#item-2");
