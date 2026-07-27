@@ -1,9 +1,21 @@
 // chart1 css
+const github = JSON.parse(document.body.dataset.github);
+
+const commits = github && github.commitsovertime ? github.commitsovertime : null;
+const maindata = Array.isArray(commits) ? commits[0] : commits; 
+
+const commitsarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+
+const valuesarray = commitsarray.map(item => item.value); // taking the values of the array in an another array
+const datesarray = commitsarray.map(item => item.at); // taking the values of the array in an another array
+
+const reversevalues = valuesarray.reverse(); //reversing the array 
+const reverseat = datesarray.reverse(); //reversing the array 
 
 const options = {
     series: [{
         name: "Commits",
-        data: [8, 3, 5, 12, 15, 21, 23, 31, 16, 6, 8, 36, 24, 29, 18, 22, 12, 19, 16, 31, 25, 5, 11, 8, 13, 20, 23, 13, 10, 17]
+        data: reversevalues
     }],
 
     chart: {
@@ -12,20 +24,13 @@ const options = {
     },
 
     xaxis: {
-        categories: [
-            "Jun 1", "Jun 2", "Jun 3", "Jun 4", "Jun 5",
-            "Jun 6", "Jun 7", "Jun 8", "Jun 9", "Jun 10",
-            "Jun 11", "Jun 12", "Jun 13", "Jun 14", "Jun 15",
-            "Jun 16", "Jun 17", "Jun 18", "Jun 19", "Jun 20",
-            "Jun 21", "Jun 22", "Jun 23", "Jun 24", "Jun 25",
-            "Jun 26", "Jun 27", "Jun 28", "Jun 29", "Jun 30"
-        ],
+        categories: reverseat,
 
         labels: {
             rotate: 0,
             hideOverlappingLabels: true,
             style: {
-                fontSize: "11px"
+                fontSize: "18px"
             }
         },
 
@@ -99,7 +104,13 @@ var chart1 = new ApexCharts(chartElement, options);
 chart1.render();
 
 
+const languagename = Object.keys(github.language);
+const languagevalues = Object.values(github.language);
+let newvalues =[];
 
+for (let i=0 ; i<languagevalues.length ; i++){
+    newvalues[i] = Math.floor(languagevalues[i]/(1024));
+}
 
 
 // chart2 css
@@ -113,9 +124,9 @@ var donut = {
         },
     },
 
-    series: [50, 30, 20],
+    series: newvalues,
 
-    labels: ['Cpp', 'Python', 'Java'],
+    labels: languagename,
 
     title: {
         text: "Most Used Language",
@@ -142,7 +153,7 @@ var donut = {
                         fontSize: "15px",
                         fontWeight: 'bold',
                         formatter: function (val) {
-                            return Math.round(val) + "%";
+                            return Math.round(val) + " KB";
                         }
                     },
                 }
@@ -205,3 +216,7 @@ function moggle() {
         }
     }
 }
+
+
+const arr = github.repolist ? Object.values(github.repolist) : [];
+console.log(arr);
