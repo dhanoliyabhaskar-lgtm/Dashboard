@@ -4,6 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Analytics
   link(rel='stylesheet' href='/static/analyticscodeforces.css')
+body(data-codeforces=user.codeforces)
 .container
   aside.sidebar
     .logo
@@ -66,29 +67,25 @@ head
           .right
             h4 Current Rating
             div
-              b 1420
-            span &uarr; 22% vs last 7 days 
+              b #{user.codeforces.currentrating}
         .card
           .left &#x1F525;
           .right
             h4 Max Rank
             div
-              b SPECIALIST
-            span &uarr; 15% vs last 7 days 
+              b #{user.codeforces.maxrank}
         .card
           .left &#x2708;&#xFE0F;
           .right
             h4 Problem Solved
             div
-              b 87
-            span &darr; 12% vs last 7 days 
+              b #{user.codeforces.problemsolved}
         .card
           .left &#x1F465;
           .right
             h4 Friends
             div
-              b 463
-            span &uarr; 4% vs last 7 days 
+              b #{user.codeforces.followcount}
       section.top-widgets
         #box-1.box
         #box-2.box
@@ -96,48 +93,21 @@ head
       .bottom-widgets
         .filter
           p.scroll-hint &larr; Swipe horizontally to view all &rarr;
-          h4 Wrong Answeres Filter
+          h4 Wrong Answers Filter
           .wrong-answers
-            .wrong
-              .left
-                b &bull;
-                .name Count Pairs
-              .right
-                .language  GNU C++20 |
-                .verdict(style='color:red')  WRONG ANSWER 
-                .time | 11ms 
-            .wrong
-              .left
-                b &bull;
-                .name Count Pairs
-              .right
-                .language  GNU C++20 |
-                .verdict(style='color:red')  WRONG ANSWER 
-                .time | 11ms 
-            .wrong
-              .left
-                b &bull;
-                .name Count Pairs
-              .right
-                .language  GNU C++20 |
-                .verdict(style='color:rgb(242, 201, 140)')  T_LIMIT_EXCEDED
-                .time | 11ms 
-            .wrong
-              .left
-                b &bull;
-                .name Count Pairs;ldg,fglkljbhjhvjnjkdfk
-              .right
-                .language  GNU C++20 |
-                .verdict(style='color:rgb(242, 201, 140)')  T_LIMIT_EXCEDED
-                .time | 11ms 
-            .wrong
-              .left
-                b &bull;
-                .name Count Pairs
-              .right
-                .language  GNU C++20 |
-                .verdict(style='color:red')  WRONG ANSWER 
-                .time | 11ms 
+            - const rawWrong = user && user.codeforces && user.codeforces.wronganswers
+            - const wrongarr = Array.isArray(rawWrong) ? rawWrong : (rawWrong ? Object.values(rawWrong) : [])
+
+            if wrongarr && wrongarr.length > 0
+              each wrong in wrongarr
+                .wrong
+                  .left
+                    b &bull;
+                    .name #{wrong.name}
+                  .right
+                    .language #{wrong.language} | 
+                    .verdict #{wrong.type}
+                    .time | #{wrong.duration} ms
         .table
           p.scroll-hint &larr; Swipe horizontally to view all columns &rarr;
           h4 Recent Submissions Table
@@ -150,35 +120,16 @@ head
                 th Time(ms)
                 th Memory(MB)
             tbody
-              tr
-                td 1800B-Count Pairs
-                td GNU C++20
-                td(style='color:red') WRONG ANSWER
-                td 11.3ms
-                td 1MB
-              tr
-                td 1765C-Matrix
-                td GNU C++17
-                td(style='color: rgb(2, 152, 2);') OK
-                td 15ms
-                td 1.3MB
-              tr
-                td 1804D-Data Structurejjhggfghbhjhbhbhhgffghvgf
-                td PyPy 3
-                td(style='color:rgb(242, 201, 140)') T_LIMIT_EXCEDED
-                td 100ms
-                td 0.8MB
-              tr
-                td 1800B-Graph
-                td GNU JAVA 17
-                td(style='color:red') WRONG ANSWER
-                td 8ms
-                td 2.1MB
-              tr
-                td 1799A-Math
-                td GNU C++20
-                td(style='color: rgb(188, 188, 188);') COMPILATION ERROR
-                td 32ms
-                td 1.7MB
+              - const raw = user && user.codeforces && user.codeforces.content
+              - const questionarr = Array.isArray(raw) ? raw : (raw ? Object.values(raw) : [])
+
+              if questionarr.length>0
+                each question in questionarr.slice(0,5)
+                  tr 
+                    td #{question.name}
+                    td #{question.language}
+                    td #{question.type}
+                    td #{question.duration || 0} ms
+                    td #{question.memory || 0} KB
 script(src='https://cdn.jsdelivr.net/npm/apexcharts')
 script(src='/static/analyticscodeforces.js')
