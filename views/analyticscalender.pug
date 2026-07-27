@@ -4,6 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Analytics
   link(rel='stylesheet' href='/static/analyticscalender.css')
+body(data-calender=user.calender)
 .container
   aside.sidebar
     .logo
@@ -65,106 +66,121 @@ head
           .left &#x1F55D;
           .right
             h4 Total Events
+            - const week1 = user.calender.totaleventsforweek || 0
+            - const lastweek1 = user.calender.totaleventsforlastweek || 0
+            - const diff1 = week1 !== 0 ? (((week1 - lastweek1) / week1) * 100) : 0
             div
-              b 26
-            span &uarr; 22% vs last 7 days 
+              b #{week1}
+            if diff1 > 0
+              span.text-success &uarr; #{diff1.toFixed(1)}% vs last week
+            else if diff1<0
+              span.text-danger &darr; #{Math.abs(diff1).toFixed(1)}% vs last week
+            else if diff1==0
+              span.text-normal --
         .card
           .left &#x1F55D;
           .right
             h4 Scheduled Time
+            - const week2 = user.calender.totalbusytimeforweek || 0
+            - const lastweek2 = user.calender.totalbusytimeforlastweek || 0
+            - const diff2 = week2 !== 0 ? (((week2 - lastweek2) / week2) * 100) : 0
             div
-              b 34h 20m
-            span &uarr; 15% vs last 7 days 
+              b #{week2} hours
+            if diff2 > 0
+              span.text-success &uarr; #{diff2.toFixed(1)}% vs last week
+            else if diff2<0
+              span.text-danger &darr; #{Math.abs(diff2).toFixed(1)}% vs last week
+            else if diff2==0
+              span.text-normal --
         .card
           .left &#x1F55D;
           .right
             h4 Avg. Event Duration
+            - const week3 = user.calender.avgeventtimeforweek || 0
+            - const lastweek3 = user.calender.avgeventtimeforlastweek || 0
+            - const diff3 = week3 !== 0 ? (((week3 - lastweek3) / week3) * 100) : 0
             div
-              b 42min
-            span &uarr; 12% vs last 7 days 
+              b #{week3} min
+            if diff3 > 0
+              span.text-success &uarr; #{diff3.toFixed(1)}% vs last week
+            else if diff3<0
+              span.text-danger &darr; #{Math.abs(diff3).toFixed(1)}% vs last week
+            else if diff3==0
+              span.text-normal --
         .card
           .left &#x1F55D;
           .right
             h4 Free Time
+            - const week4 = user.calender.totalfreetimeforweek || 0
+            - const lastweek4 = user.calender.totalfreetimeforlastweek || 0
+            - const diff4 = week4 !== 0 ? (((week4 - lastweek4) / week4) * 100) : 0
             div
-              b 21h 30m
-            span &darr; 4% vs last 7 days 
+              b #{week4} hours
+            if diff4 > 0
+              span.text-success &uarr; #{diff4.toFixed(1)}% vs last week
+            else if diff4<0
+              span.text-danger &darr; #{Math.abs(diff4).toFixed(1)}% vs last week
+            else if diff4==0
+              span.text-normal -- 
       section.top-widgets
         #box-1
         #box-2.box
           .heading
+            - const eventsarr = user.calender.eventstoday ? Object.values(user.calender.eventstoday) : []
             div
               h4 Today&apos;s Schedule
               p
-                b July 06 2026
+                b #{eventsarr[0].date}
             button.btn View Full Day &gt;
-          .schedule
-            .schedulename
-              p  09:15 AM &nbsp; &nbsp;| 
-              span Team Standup
-            .scheduleduration
-              | 1hr
-          .schedule
-            .schedulename
-              p  10:00 AM &nbsp; &nbsp;| 
-              span Project Review
-            .scheduleduration
-              | 45min
-          .schedule
-            .schedulename
-              p  11:30 AM &nbsp; &nbsp;| 
-              span Client Call
-            .scheduleduration
-              | 1hr
-          .schedule
-            .schedulename
-              p  01:00 PM &nbsp; &nbsp;| 
-              span Lunch Break
-            .scheduleduration
-              | 40min
-          .schedule
-            .schedulename
-              p  02:30 PM &nbsp; &nbsp;| 
-              span Design Discussion
-            .scheduleduration
-              | 30min
-          .schedule
-            .schedulename
-              p  04:00 PM &nbsp; &nbsp;| 
-              span Project Presentationfhfgfnvg
-            .scheduleduration
-              | 30min
+          -const schedulearr = user.calender.todayschedule ? Object.values(user.calender.todayschedule) : []
+          if schedulearr.length > 0
+            each schedule in schedulearr.slice(0,6)
+              .schedule 
+                .schedulename 
+                  p #{schedule.start}
+                  p | 
+                  span #{schedule.name}
+                .scheduleduration 
+                  | #{schedule.time}
         #box-3.box
           .heading
             h4 Upcoming Events
             button.btn View All &gt;
           .events
-            .event
-              .left &bull;
-              .eventname
-                h5  Gym Session
-                p Today &bull; 06:00 PM
-            .event
-              .left &bull;
-              .eventname
-                h5  Doctor Appointment
-                p Tomorrow &bull; 10:00 AM
-            .event
-              .left &bull;
-              .eventname
-                h5  Hackathon 
-                p July 12 &bull; 09:00 AM
-            .event
-              .left &bull;
-              .eventname
-                h5  Flight to Indore 
-                p July 15 &bull; 08:30 AM
-            .event
-              .left &bull;
-              .eventname
-                h5  Team Outing 
-                p July 16 &bull; 05:00 PM
+            if eventsarr.length>0
+              each event in eventsarr.slice(0,5)
+                .event 
+                  .left &bull;
+                  .eventname 
+                    h5 #{event.name}
+                    p #{event.date} &bull; #{event.time}
       section.bottom-widgets
+        - let busyarr = []
+        - let rawData = user && user.calender && user.calender.mostbusydays
+        - if (rawData) {
+        -   let target = Array.isArray(rawData) && rawData[0] && !rawData[0].at ? rawData[0] : rawData
+        -   busyarr = Object.keys(target).filter(k => !isNaN(k)).map(k => target[k])
+        - }
+      
+        - let high = 0
+        - let low = Infinity
+        - let highdate = ''
+        - let lowdate = ''
+      
+        - if (busyarr.length > 0) {
+        -   busyarr.forEach(busy => {
+        -     if (busy && busy.value !== undefined) {
+        -       if (busy.value > high) {
+        -         high = busy.value
+        -         highdate = busy.at
+        -       }
+        -       if (busy.value < low) {
+        -         low = busy.value
+        -         lowdate = busy.at
+        -       }
+        -     }
+        -   })
+        - }
         #item-1
         #item-2
         #item-3.box
@@ -173,26 +189,31 @@ head
           .item
             .left &#x1F3B5;
             .right
-              p
-                b You scheduled 18% more events this week.
-              p Great job staying productive!
+              if diff1 >=0
+                p
+                  b You scheduled #{diff1.toFixed(1)}% more events this week.
+                p Great job staying productive!
+              else 
+                p 
+                  b You scheduled #{Math.abs(diff2).toFixed(1)}% less events this week.
+                p Improve your self !
           .item
             .left &#x2B50;
             .right
               p
-                b Thursday is your busiest day.
-              p You have 8 hours of scheduled events.
+                b #{highdate} is your busiest day.
+              p You have #{high} hours of scheduled events.
           .item
             .left &#x1F525;
             .right
               p
-                b Your avarage meeting duration is 48 min.
+                b Your avarage meeting duration is #{user.calender.avgeventtime[6]} min.
               p Ideal meeting length!
           .item
             .left &#x1F375;
             .right
               p
-                b You have the most free time on Saturday.
+                b You have the most free time on #{lowdate}.
               p Enjoy your free time!
 script(src='https://cdn.jsdelivr.net/npm/apexcharts')
 script(src='/static/analyticscalender.js')
