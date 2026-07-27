@@ -4,6 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Analytics
   link(rel='stylesheet' href='/static/analyticsgithub.css')
+body(data-github=user.github)
 .container
   aside.sidebar
     .logo
@@ -65,30 +66,37 @@ head
           .left &#x1F525;
           .right
             h4 Today&apos;s Commits
+            - const rawCommits = user && user.github && user.github.commitsovertime ? user.github.commitsovertime : null
+            - const commitsObj = Array.isArray(rawCommits) ? rawCommits[0] : rawCommits
+            - const todayValue = commitsObj && commitsObj['0'] ? commitsObj['0'].value : 0
+            - const yesterdayValue = commitsObj && commitsObj['1'] ? commitsObj['1'].value : 0
+            - const diff = todayValue !== 0 ? (((todayValue - yesterdayValue) / todayValue) * 100) : 0
             div
-              b 12
-            span &uarr; 22% vs last 7 days 
+              b #{todayValue}
+            if diff > 0
+              span.text-success &uarr; #{diff.toFixed(1)}% vs last day
+            else if diff<0
+              span.text-danger &darr; #{Math.abs(diff).toFixed(1)}% vs last day
+            else if diff==0
+              span.text-normal --
         .card
           .left &#x2708;&#xFE0F;
           .right
             h4 Total Public Repos
             div
-              b 16
-            span &uarr; 15% vs last 7 days 
+              b #{user.github.totalrepo  || 0}
         .card
           .left &#x2B50;
           .right
             h4 Total Stars Earned
             div
-              b 345
-            span &uarr; 12% vs last 7 days 
+              b #{user.github.taotalstar  || 0}
         .card
           .left &#x1F465;
           .right
             h4 Followers
             div
-              b 1024
-            span &darr; 4% vs last 7 days 
+              b #{user.github.totalfollow  || 0}
       section.chart-section
         #commitChart
         #languageChart
@@ -106,45 +114,17 @@ head
               th Forks
               th Project Size
           tbody
-            tr
-              td Project-A
-              td 2026-04-06
-              td 87
-              td 23
-              td JavaScript
-              td 8
-              td 234KB
-            tr
-              td Project-B
-              td 2026-04-09
-              td 116
-              td 12
-              td Python
-              td 12
-              td 425KB
-            tr
-              td Project-C
-              td 2026-08-06
-              td 93
-              td 16
-              td Cpp
-              td 21
-              td 754KB
-            tr
-              td Project-D
-              td 2026-06-06
-              td 67
-              td 8
-              td Python
-              td 32
-              td 176KB
-            tr
-              td Project-E
-              td 2025-04-06
-              td 157
-              td 19
-              td Cpp
-              td 19
-              td 134KB
+            -const repoarr = user.github.repolist ? Object.values(user.github.repolist) : []
+            if repoarr.length > 0
+              each repo in repoarr 
+                tr 
+                  td #{repo.name} 
+                  td #{repo.createdat}
+                  td #{repo.stars}
+                  td #{repo.watchers}
+                  td #{repo.language}
+                  td #{repo.forks}
+                  td #{repo.size}
+                 
 script(src='https://cdn.jsdelivr.net/npm/apexcharts')
 script(src='/static/analyticsgithub.js')
