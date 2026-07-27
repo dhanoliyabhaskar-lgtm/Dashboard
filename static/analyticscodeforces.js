@@ -1,3 +1,19 @@
+const codeforces = JSON.parse(document.body.dataset.codeforces);
+
+const arr = codeforces.wronganswers ? Object.values(codeforces.wronganswers) : [];
+console.log(arr);
+
+const history = codeforces && codeforces.ratinghistory ? codeforces.ratinghistory : null;
+let maindata = Array.isArray(history) ? history[0] : history; 
+
+const historyarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+
+let valuesarray = historyarray.map(item => item.value); // taking the values of the array in an another array
+let datesarray = historyarray.map(item => item.at); // taking the values of the array in an another array
+
+let reversevalues = valuesarray.reverse(); //reversing the array 
+let reverseat = datesarray.reverse(); //reversing the array 
+
 // chart1 css
 
 var options = {
@@ -8,13 +24,12 @@ var options = {
     series: [
         {
             name: 'Rating',
-            data: [2, 48, 95, 143, 262, 413, 578, 732, 879, 919, 1013, 1100, 1173, 1220, 1263]
+            data: reversevalues
         }
     ],
 
     xaxis: {
-        categories: ["12Mar", "17Mar", "20Mar", "21Mar", "28Mar", "02Apr", "05Apr",
-            "06Apr", "17Apr", "28Apr", "5May", "14May", "22May", "03Jun", "17Jun"],
+        categories: reverseat,
 
         labels: {
             rotate: 0,
@@ -73,6 +88,47 @@ var chart1 = new ApexCharts(chartElement, options);
 chart1.render();
 
 
+const topic = codeforces && codeforces.topics ? codeforces.topics : {};
+
+let namesarr = Object.keys(topic);
+let valuesarr = Object.values(topic);
+
+console.log(namesarr);
+console.log(valuesarr);
+
+let count = 0 ;
+
+for(let i=0 ; i<valuesarr.length ; i++){
+    count = count + valuesarr[i];
+}
+
+let mincrit = count/20;
+
+console.log(mincrit);
+
+let j=0;
+
+let newname = [];
+let newvalue = [];
+
+count = 0;
+
+for (let i=0 ; i<valuesarr.length ; i++){
+    if(valuesarr[i]>mincrit){
+        newname[j] = namesarr[i];
+        newvalue[j] = valuesarr[i];
+        j++;
+    }else{
+        count = count+ valuesarr[i]
+    }
+};
+
+newname[j] = 'Others' ;
+newvalue[j] = count ;
+
+console.log(newname);
+console.log(newvalue);
+// ------->>>>>>> isme bahut sara data hai to kon kon sa dikhna hai or kon sa nahi dikhna hai ???????
 
 // chart2 css
 
@@ -85,9 +141,9 @@ var donut = {
         },
     },
 
-    series: [52, 20, 43, 37],
+    series: newvalue,
 
-    labels: ['Dp', 'Maths', 'Greedy', 'Its'],
+    labels: newname,
 
     title: {
         text: "Topics Solved",
@@ -129,7 +185,13 @@ var chart2 = new ApexCharts(chartspace, donut);
 chart2.render();
 
 
+const difficulty = codeforces && codeforces.difficulty ? codeforces.difficulty : null;
+maindata = Array.isArray(difficulty) ? difficulty[0] : difficulty; 
 
+const difficultyarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+
+valuesarray = difficultyarray.map(item => item.value); // taking the values of the array in an another array
+let namesarray = difficultyarray.map(item => item.name); // taking the values of the array in an another array
 
 // chart3 css
 
@@ -142,12 +204,12 @@ var option = {
     series: [
         {
             name: 'Problems Solved',
-            data: [65, 147, 114, 31],
+            data: valuesarray,
         }
     ],
 
     xaxis: {
-        categories: ["800", "1000", "1200", "1500+"]
+        categories: namesarray
     },
 
     title: {
