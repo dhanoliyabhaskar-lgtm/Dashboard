@@ -19,7 +19,7 @@ const { Server } = require('socket.io');
 const port = 3000;
 
 const io = new Server(server, {
-    cors: { origin: "*" } 
+    cors: { origin: "*" }
 });
 
 require('./Oauth/google');
@@ -59,12 +59,12 @@ var newuserSchema = new mongoose.Schema({
     password: String,
     dob: Date,
 
-    login : {type : String , default : 'yes'},
+    login: { type: String, default: 'yes' },
 
-    todaydate : {type : Number , default : 0},
-    lastlogindate : {type : Number , default : 0},
+    todaydate: { type: Number, default: 0 },
+    lastlogindate: { type: Number, default: 0 },
 
-    theme: { type: String, default: "1" },
+    theme: { type: Number, default: 1 },
 
     status: {
         spotify: { type: String, default: 'no' },
@@ -140,35 +140,43 @@ var newuserSchema = new mongoose.Schema({
         refreshtoken: { type: String },
 
         totaleventsforweek: {
-            value: { type: String },
-            change: { type: String }
-        },
-        totaleventsforlastweek: [{
             type: Number
+        },
+        totaleventsforlastweek: {
+            type: Number
+        },
+        totaleventsforlastweekarr: [{
+            type: Number,
+            default: [0, 0, 0, 0, 0, 0, 0]
         }],
 
         totalbusytimeforweek: {
-            value: { type: String },
-            change: { type: String }
+            type: Number,
         },
-        totalbusytimeforlastweek: [{
+        totalbusytimeforlastweek: {
             type: Number
+        },
+        totalbusytimeforlastweekarr: [{
+            type: Number,
+            default: [0, 0, 0, 0, 0, 0, 0]
         }],
 
         totalfreetimeforweek: {
-            value: { type: String },
-            change: { type: String }
-        },
-        totalfreetimeforlastweek: [{
             type: Number
-        }],
+        },
+        totalfreetimeforlastweek: {
+            type: Number
+        },
 
         avgeventtimeforweek: {
-            value: { type: String },
-            change: { type: String }
-        },
-        avgeventtimeforlastweek: [{
             type: Number
+        },
+        avgeventtimeforlastweek: {
+            type: Number
+        },
+        avgeventtimeforlastweekarr: [{
+            type: Number,
+            default: [0, 0, 0, 0, 0, 0, 0]
         }],
 
         avgeventtime: [{
@@ -187,6 +195,12 @@ var newuserSchema = new mongoose.Schema({
         }],
 
         events: [{
+            name: { type: String },
+            time: { type: String },
+            date: { type: String }
+        }],
+
+        eventstoday: [{
             name: { type: String },
             time: { type: String },
             date: { type: String }
@@ -216,16 +230,19 @@ var newuserSchema = new mongoose.Schema({
 
         name: { type: String },
 
-        commitsovertime: [{
-            value: { type: Number },
-            at: { type: String },
-            realdt: { type: String }
-        }],
+        commitsovertime: {
+            type: [{
+                value: { type: Number },
+                at: { type: String },
+                realdate: { type: String }
+            }],
+            default: []
+        },
 
         language: {
-            type : Map ,
-            of : Number , 
-            default : {}
+            type: Map,
+            of: Number,
+            default: {}
         },
 
         repolist: [{
@@ -244,7 +261,10 @@ var newuserSchema = new mongoose.Schema({
 
         totalfollow: { type: Number },
 
-        week : {type : Number}
+        week: { type: Number },
+
+        thisweekcommit : {type : Number},
+        lastweekcommit : {type : Number}
 
     },
 
@@ -253,13 +273,23 @@ var newuserSchema = new mongoose.Schema({
 
         maxrank: { type: String, default: "NEWBIE" },
 
-        currentrank : { Type : Number , default : 0},
+        currentrating: { type: Number, default: 0 },
 
-        currentrank : {type : String , default : "NEWBIE"},
+        currentrank: { type: String, default: "NEWBIE" },
 
         followcount: { type: Number },
 
         problemsolved: { type: Number },
+        problemsolvedthisweek: { type: Number },
+        problemsolvedlastweek: { type: Number },
+        problemsolvedthisweekarr: [{
+            type: Number,
+            default: [0, 0, 0, 0, 0, 0, 0]
+        }],
+        problemsolvedlastweekarr: [{
+            type: Number,
+            default: [0, 0, 0, 0, 0, 0, 0]
+        }],
 
         ratinghistory: [{
             value: { type: Number },
@@ -294,23 +324,196 @@ var newuserSchema = new mongoose.Schema({
         }]
     },
 
-    newgoal: [{
-        type: { type: String, default: null },
-        goal: { type: String, default: "" },
-        target: { type: Number, default: null },
-        deadline: { type: Date, default: null },
-        done: { type: Number, default: 0 }
-    }],
+    goal: {
+        weekly : {
+            spotify : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F3B5;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+                    {
+                        type: 'weekly',
+                        goal: 'Listen to Music for 15 Hours',
+                        target: 15,
+                        deadline: 'aug 9',
+                        icon : '&#x1F3B5;',
+                        done: 0
+                    }
+                ]
+            },
+            github : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F419;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
 
-    totalnotification : {
-        type : Number
+                ]
+            },
+            calender : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F4C5;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+
+                ]
+            },
+            codeforces : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F4BB;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+
+                ]
+            }
+        },
+        monthly :  {
+            spotify : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F3B5;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+
+                ]
+            },
+            github : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F419;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+                    {
+                        goal: 'Make 50 GitHub Commits',
+                        target: 50,
+                        deadline: 'sep 2',
+                        icon : '&#x1F419;',
+                        done: 0
+                    }
+                ]
+            },
+            calender : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F4C5;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+
+                ]
+            },
+            codeforces : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F4BB;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+
+                ]
+            }
+        },
+        custom :  {
+            spotify : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F3B5;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+
+                ]
+            },
+            github : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F419;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+
+                ]
+            },
+            calender : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F4C5;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+
+                ]
+            },
+            codeforces : {
+                type : [{
+                    goal: { type: String, default: "" },
+                    target: { type: Number, default: null },
+                    deadline: { type: String, default: null },
+                    icon : {type : String, default : '&#x1F4BB;' },
+                    done: { type: Number, default: 0 } 
+                }],default : [
+                    {
+                        goal: 'Solve 100 Codeforces Problems',
+                        target: 100,
+                        deadline: 'aug 15',
+                        icon : '&#x1F4BB;',
+                        done: 0
+                    }
+                ]
+            }
+        }
     },
 
-    notification : [{
-        name : {type : String},
-        date : {type : String},
-        dt : {type : Number}
-    }],
+    totalnotification: {
+        type: Number ,
+        default : 2
+    },
+
+    notification: {
+        type: [{
+            type: { type: String },
+            topic: { type: String },
+            name: { type: String },
+            date: { type: String },
+            dt: { type: Number }
+        }],
+        default: [
+            {
+                type: 'updates',
+                topic: 'New Feature: Dark Mode',
+                name: 'You can now switch between light and dark theme in settings.',
+                date: '1 day ago',
+                dt: 1
+            },
+            {
+                type: 'report',
+                topic: 'Your weekly summary is ready.',
+                name: 'Check out your progress',
+                date: '2 day ago',
+                dt: 1
+            }
+        ]
+    },
 
     achievementlevel: {
         type: [{
@@ -330,7 +533,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'The Real Additive',
                 name: 'No. of hours of songs listen on spotify',
                 level: 1,
-                bgimage: [''],
+                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
                 progress: 0,
                 target: [10, 30, 75, 200, 500]
             },
@@ -338,7 +541,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'Event Maker',
                 name: 'Hours of Events make',
                 level: 1,
-                bgimage: [''],
+                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
                 progress: 0,
                 target: [10, 50, 100, 500, 2000]
             },
@@ -346,7 +549,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'Commit Maker',
                 name: 'Make Commit on Github',
                 level: 1,
-                bgimage: [''],
+                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
                 progress: 0,
                 target: [10, 25, 50, 100, 500]
             },
@@ -354,7 +557,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: "Real Coder",
                 name: 'Make repo on Github',
                 level: 1,
-                bgimage: [''],
+                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
                 progress: 0,
                 target: [1, 5, 10, 25, 50]
             },
@@ -362,41 +565,33 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'The Psyco',
                 name: 'Song played on Spotify',
                 level: 1,
-                bgimage: [''],
+                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
                 progress: 0,
                 target: [25, 100, 250, 1000, 5000]
             },
             { // done
                 topic: 'App Lover',
-                name : 'Connect to the third party apps',
+                name: 'Connect to the third party apps',
                 level: 1,
-                bgimage: [''],
+                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
                 progress: 0,
-                target: [1,2,5,10,20]
+                target: [1, 2, 5, 10, 20]
             },
-            {
-                topic: '',
-                name: '',
-                level: 1,
-                bgimage: [''],
-                progress: 0,
-                target: []
-            }
+            //{
+            //    topic: '',
+            //    name: '',
+            //    level: 1,
+            //    bgimage: [''],
+            //    progress: 0,
+            //   target: []
+            //}
         ]
     },
-    achievementone: {
-        type: [{
-            topic: { type: String },
-            name: { type: String },
-            bgimage: { type: String }
-        }],
-        default: [
-            {
-                topic: 'Night owl',
-                name: 'Solve a problem b/w 12-4 am',
-                bgimage: ''
-            }
-        ]
+
+    checkbox : {
+        goalreminders : {type:Boolean , default : true},
+        weeklysummary : {type:Boolean , default : false},
+        productupdates : {type:Boolean , default : true}
     }
 });
 var newUser = mongoose.model('newUser', newuserSchema);
@@ -474,7 +669,7 @@ function daysfetch() {
     let dt = [];
 
     let b = a.getDate();
-    let c = a.getMonth()+1;
+    let c = a.getMonth() + 1;
     for (let i = 0; i < 30; i++) {
         if (b == 1) {
             if ([2, 4, 6, 8, 9, 11].includes(c)) {
@@ -539,7 +734,7 @@ async function listeninghourtime(userId) {
         changeobj[`spotify.songplayed.${0}`] = 0;
         changeobj[`spotify.newartist.${0}`] = 0;
 
-        await newUser.findByIdAndUpdate(userId, { 
+        await newUser.findByIdAndUpdate(userId, {
             $set: {
                 ...changeobj
             }
@@ -637,15 +832,15 @@ async function avgtrack(userId) {
     let limit = Math.min(50, user.spotify.recentlyplayed.length);
 
     for (let i = 0; i < limit; i++) {
-        avg = avg + (user.spotify.recentlyplayed[i].duaration  || 0);
+        avg = avg + (user.spotify.recentlyplayed[i].duaration || 0);
     }
 
     if (limit > 0) {
-        let averageMs = avg / limit; 
-        let totalSeconds = averageMs / 1000; 
-        
-        min = Math.floor(totalSeconds / 60); 
-        avg = Math.floor(totalSeconds - (min * 60)); 
+        let averageMs = avg / limit;
+        let totalSeconds = averageMs / 1000;
+
+        min = Math.floor(totalSeconds / 60);
+        avg = Math.floor(totalSeconds - (min * 60));
 
         await newUser.findByIdAndUpdate(userId, {
             $set: {
@@ -685,9 +880,7 @@ async function gettimeago(userId) {
         $set: {
             [`spotify.recentlyplayedtime`]: timeago
         }
-    },
-        { new: true }
-    )
+    },)
 
 };
 
@@ -723,45 +916,51 @@ async function hoursscheduleovertime(userId, data) {
         b = b - c;
         c = b / (1000 * 60);
         b = Math.floor(c / 60);
-        diff = data.items[i].start.datetime - newdate;
-        a = data.items[i].start.datetime;
+        a = data.items[i].start.dateTime;
         a = new Date(a);
+        diff = a - newdate;
         if (diff <= 86400000) {
             value[0] = b + value[0];
-            avg1[i] = avg[i] + Math.floor(c);
+            avg1[0] = avg1[0] + Math.floor(c);
             busyhr = busyhr + b;
-            busymin = busymin + Math.floor(c * 60) - (b * 60);
-            len[i] = len[i] + 1;
+            busymin = busymin + Math.floor(c) - (b * 60);
+            len[0] = len[0] + 1;
             dt[0] = a.getDate();
             mth[0] = a.toLocaleString('en-US', { month: 'short' });
         } else if (diff <= (86400000 * 2) && diff > (86400000)) {
             value[1] = b + value[1];
-            len[i] = len[i] + 1;
+            avg1[1] = avg1[1] + Math.floor(c);
+            len[1] = len[1] + 1;
             dt[1] = a.getDate();
             mth[1] = a.toLocaleString('en-US', { month: 'short' });
         } else if (diff <= (86400000 * 3) && diff > (86400000 * 2)) {
             value[2] = b + value[2];
-            len[i] = len[i] + 1;
+            avg1[2] = avg1[2] + Math.floor(c);
+            len[2] = len[2] + 1;
             dt[2] = a.getDate();
             mth[2] = a.toLocaleString('en-US', { month: 'short' });
         } else if (diff <= (86400000 * 4) && diff > (86400000 * 3)) {
             value[3] = b + value[3];
-            len[i] = len[i] + 1;
+            avg1[3] = avg1[3] + Math.floor(c);
+            len[3] = len[3] + 1;
             dt[3] = a.getDate();
             mth[3] = a.toLocaleString('en-US', { month: 'short' });
         } else if (diff <= (86400000 * 5) && diff > (86400000 * 4)) {
             value[4] = b + value[4];
-            len[i] = len[i] + 1;
+            avg1[4] = avg1[4] + Math.floor(c);
+            len[4] = len[4] + 1;
             dt[4] = a.getDate();
             mth[4] = a.toLocaleString('en-US', { month: 'short' });
         } else if (diff <= (86400000 * 6) && diff > (86400000 * 5)) {
             value[5] = b + value[5];
-            len[i] = len[i] + 1;
+            avg1[5] = avg1[5] + Math.floor(c);
+            len[5] = len[5] + 1;
             dt[5] = a.getDate();
             mth[5] = a.toLocaleString('en-US', { month: 'short' });
         } else if (diff <= (86400000 * 7) && diff > (86400000 * 6)) {
             value[6] = b + value[6];
-            len[i] = len[i] + 1;
+            avg1[6] = avg1[6] + Math.floor(c);
+            len[6] = len[6] + 1;
             dt[6] = a.getDate();
             mth[6] = a.toLocaleString('en-US', { month: 'short' });
         }
@@ -780,6 +979,7 @@ async function hoursscheduleovertime(userId, data) {
         freehr = 16 - busyhr;
     }
 
+
     let value1 = value.reverse();
     let dt1 = dt.reverse();
     let mth1 = mth.reverse();
@@ -789,9 +989,10 @@ async function hoursscheduleovertime(userId, data) {
         obj[`calender.scheduletime.${i}.value`] = value1[i];
         obj[`calender.scheduletime.${i}.at`] = `${mth1[i]} ${dt1[i]}`;
         obj[`calender.mostbusydays.${i}.at`] = `${mth1[i]} ${dt1[i]}`;
-        obj[`calender.mostbusydays.${i}.value`] = len1[i];
+        obj[`calender.mostbusydays.${i}.value`] = len1[i] || 0;
         avg[i] = len[i] > 0 ? (avg1[i] || 0) / len[i] : 0;
     }
+
 
     await newUser.findByIdAndUpdate(userId, {
         $set: {
@@ -802,7 +1003,7 @@ async function hoursscheduleovertime(userId, data) {
             'calender.todaybusy.free.hr': freehr,
             'calender.avgeventtime': avg
         }
-    })
+    });
 };
 
 async function todayschedule(userId, data) {
@@ -814,6 +1015,7 @@ async function todayschedule(userId, data) {
     let c = 0;
     let a = 0;
 
+
     for (let i = 0; i < data.items.length; i++) {
         a = new Date(data.items[i].end.dateTime);
         b = new Date(data.items[i].start.dateTime);
@@ -824,7 +1026,7 @@ async function todayschedule(userId, data) {
         } else {
             a = Math.floor(TEM[i] / (60));
             TEM[i] = TEM[i] - (a * 60);
-            tem[i] = `${a}h${TEM[i]}min`;
+            tem[i] = `${a}h ${TEM[i]}min`;
         }
     };
     for (let i = 0; i < data.items.length; i++) {
@@ -832,12 +1034,12 @@ async function todayschedule(userId, data) {
         a = b.getHours();
         c = b.getMinutes();
         if (a <= 12 && a >= 1) {
-            dt[i] = `${a} ${c} AM`;
+            dt[i] = `${a}:${c} AM`;
         } else if (a == 0) {
-            dt[i] = `12 ${c} AM`;
+            dt[i] = `12:${c} AM`;
         } else {
             a = a - 12;
-            dt[i] = `${a} ${c} PM`;
+            dt[i] = `${a}:${c} PM`;
         }
     };
 
@@ -849,10 +1051,9 @@ async function todayschedule(userId, data) {
 
     await newUser.findByIdAndUpdate(userId, {
         $set: {
-            obj
+            ...obj
         }
-    }, { new: true }
-    )
+    });
 };
 
 async function upcomingevents(userId, data) {
@@ -867,18 +1068,19 @@ async function upcomingevents(userId, data) {
 
     const user = await newUser.findById(userId);
 
+
     for (let i = 0; i < data.items.length; i++) {
         if (data.items[i].start.dateTime) {
             b = new Date(data.items[i].start.dateTime);
             a = b.getHours();
             c = b.getMinutes();
             if (a <= 12 && a >= 1) {
-                tem[i] = `${a} ${c} AM`;
+                tem[i] = `${a}:${c} AM`;
             } else if (a == 0) {
-                tem[i] = `12 ${c} AM`;
+                tem[i] = `12:${c} AM`;
             } else {
                 a = a - 12;
-                tem[i] = `${a} ${c} PM`;
+                tem[i] = `${a}:${c} PM`;
             }
         } else {
             tem[i] = 'All Day';
@@ -908,10 +1110,39 @@ async function upcomingevents(userId, data) {
         }
     };
 
-    for (let i = 0; i < data.items.length; i++) {
-        obj[`calender.events.${i + count}.date`] = user.calender.events[i].date;
-        obj[`calender.events.${i + count}.time`] = user.calender.events[i].time;
-        obj[`calender.events.${i + count}.name`] = user.calender.events[i].name;
+    // 1. Data ko safely unwrapping aur normalizing
+    let rawData = user.calender.events;
+
+    // Agar Mongoose ne [ { '0': ..., '1': ... } ] banaya hua hai, to index 0 nikal lo
+    if (Array.isArray(rawData) && rawData.length > 0) {
+        rawData = rawData[0];
+    }
+
+    // 2. Mongoose Sub-document ko Plain JavaScript Object me convert karna
+    let eventsObj = rawData && typeof rawData.toObject === 'function' ? rawData.toObject() : (rawData || {});
+
+    // 3. Valid Numeric Keys (0, 1, 2...) nikalna (_id aur baki system keys filter karke)
+    let validKeys = Object.keys(eventsObj).filter(key => !isNaN(key));
+
+    // 4. Final Loop: Directly Accessing values using keys
+    for (let i = 0; i < validKeys.length; i++) {
+        let key = validKeys[i];
+        let currentEvent = eventsObj[key];
+
+        if (currentEvent) {
+            obj[`calender.events.${i + count}.date`] = currentEvent.date;
+            obj[`calender.events.${i + count}.time`] = currentEvent.time;
+            obj[`calender.events.${i + count}.name`] = currentEvent.name;
+        }
+    }
+
+    let data3 = data.items;
+
+
+    for (let i = 0; i < Math.min(5); i++) {
+        obj[`calender.eventstoday.${i}.date`] = dt[i];
+        obj[`calender.eventstoday.${i}.time`] = `${tem[i]}`;
+        obj[`calender.eventstoday.${i}.name`] = data3[i].summary;
     };
 
     let dt1 = dt.reverse();
@@ -925,12 +1156,12 @@ async function upcomingevents(userId, data) {
         obj[`calender.events.${i}.name`] = data2[i].summary;
     };
 
+
     await newUser.findByIdAndUpdate(userId, {
         $set: {
             ...obj
         }
-    }, { new: true }
-    )
+    });
 };
 
 async function totaleventsforweek(userId) {
@@ -938,25 +1169,66 @@ async function totaleventsforweek(userId) {
 
     let total = 0;
     let total1 = 0;
-    let incrementtext = '';
+    let somevalue = 0;
+    let arr = [0, 6, 7, 0, 0, 0, 0];
 
+    // 1. Data ko safely unwrapping aur normalizing
+    let rawData = user.calender.mostbusydays;
+
+    // Agar Mongoose ne [ { '0': ..., '1': ... } ] banaya hua hai, to index 0 nikal lo
+    if (Array.isArray(rawData) && rawData.length > 0) {
+        rawData = rawData[0];
+    }
+
+    // 2. Mongoose Sub-document ko Plain JavaScript Object me convert karna
+    let daysObj = rawData && typeof rawData.toObject === 'function' ? rawData.toObject() : (rawData || {});
+
+    // 3. Valid Numeric Keys (0, 1, 2...) nikalna (_id aur baki system keys filter karke)
+    let validKeys = Object.keys(daysObj).filter(key => !isNaN(key));
+
+    // 4. Final Loop: Directly Accessing values using keys
     for (let i = 0; i < 7; i++) {
+        let j = 6 - i;
+        let key = validKeys[j];
+        let currentEvent = daysObj[key];
+
         total = total + user.calender.mostbusydays[i].value;
+
+        let k = 6;
+        if (i == 6) {
+            somevalue = user.calender.mostbusydays[i].value;
+        }
     }
 
-    for (let i = 0; i < 7; i++) {
-        total1 = total1 + user.calender.totateventsforlastweek[i];
-    }
+    arr[0] = somevalue;
 
-    incrementtext = changecalculater(total, total1);
+    if (user.calender.totaleventsforlastweekarr) {
+        if (user.calender.totaleventsforlastweekarr.length > 0) {
+            for (let i = 0; i < 7; i++) {
+                total1 = total1 + user.calender.totaleventsforlastweekarr[i];
+            }
+        };
+    };
 
+    if (user.calender.totaleventsforlastweekarr) {
+        if (user.calender.totaleventsforlastweekarr.length > 0) {
+            for (let i = 0; i < 1; i++) {
+                if (i == 6) {
+                    break;
+                } else {
+                    //arr[i + 1] = user.calender.totaleventsforlastweekarr[i];
+                }
+            };
+        }
+    };
 
     await newUser.findByIdAndUpdate(userId, {
         $set: {
-            'calender.totaleventsforweek.value': `${total}`,
-            'calender.totaleventsforweek.change': incrementtext
+            'calender.totaleventsforweek': total,
+            'calender.totaleventsforlastweek': total1,
+            'calender.totaleventsforlastweekarr': arr
         }
-    })
+    });
 };
 
 async function totalfreetimeforweek(userId) {
@@ -965,46 +1237,87 @@ async function totalfreetimeforweek(userId) {
     let total = 0;
     let total1 = 0;
     let incrementtext = '';
+    let arr = [];
+    let somevalue = 0;
 
-    let busytime = parseInt(user.calender.totalbusytimeforweek.value, 10) || 0;
+    let busytime = parseInt(user.calender.totalbusytimeforweek, 10) || 0;
     total = 112 - busytime;
 
-    for (let i = 0; i < 7; i++) {
-        total1 = total1 + (user.calender.totatfreetimeforlastweek[i]  || 0);
-    }
-
-    incrementtext = changecalculater(total, total1);
+    let busytimelastweek = parseInt(user.calender.totalbusytimeforlastweek, 10) || 0;
+    total1 = 112 - busytimelastweek;
 
     await newUser.findByIdAndUpdate(userId, {
         $set: {
-            'calender.totalfreetimeforweek.value': `${total}`,
-            'calender.totalfreetimeforweek.change': incrementtext
+            'calender.totalfreetimeforweek': total,
+            'calender.totalfreetimeforlastweek': total1
         }
-    })
-}
+    });
+};
 
 async function totalbusytimeforweek(userId) {
     const user = await newUser.findById(userId);
 
     let total = 0;
     let total1 = 0;
-    let incrementtext = '';
+    let somevalue = 0;
+    let arr = [0, 3, 4, 0, 0, 0, 0];
 
+    // 1. Data ko safely unwrapping aur normalizing
+    let rawData = user.calender.scheduletime;
+
+    // Agar Mongoose ne [ { '0': ..., '1': ... } ] banaya hua hai, to index 0 nikal lo
+    if (Array.isArray(rawData) && rawData.length > 0) {
+        rawData = rawData[0];
+    }
+
+    // 2. Mongoose Sub-document ko Plain JavaScript Object me convert karna
+    let timeObj = rawData && typeof rawData.toObject === 'function' ? rawData.toObject() : (rawData || {});
+
+    // 3. Valid Numeric Keys (0, 1, 2...) nikalna (_id aur baki system keys filter karke)
+    let validKeys = Object.keys(timeObj).filter(key => !isNaN(key));
+
+    // 4. Final Loop: Directly Accessing values using keys
     for (let i = 0; i < 7; i++) {
+        let j = 6 - i;
+        let key = validKeys[j];
+        let currentEvent = timeObj[key];
+
         total = total + user.calender.scheduletime[i].value;
+
+        let k = 6;
+        if (i == 6) {
+            somevalue = user.calender.scheduletime[i].value;
+        }
     }
 
-    for (let i = 0; i < 7; i++) {
-        total1 = total1 + user.calender.totatbusytimeforlastweek[i];
+    arr[0] = somevalue;
+
+    if (user.calender.totalbusytimeforlastweekarr) {
+        if (user.calender.totalbusytimeforlastweekarr.length > 0) {
+            for (let i = 0; i < 7; i++) {
+                total1 = total1 + user.calender.totalbusytimeforlastweekarr[i];
+            }
+        };
     }
 
-    incrementtext = changecalculater(total, total1);
+    if (user.calender.totalbusytimeforlastweekarr) {
+        if (user.calender.totalbusytimeforlastweekarr.length > 0) {
+            for (let i = 0; i < 1; i++) {
+                if (i == 6) {
+                    break;
+                } else {
+                    //arr[i + 1] = user.calender.totalbusytimeforlastweekarr[i];
+                }
+            };
+        }
+    }
 
 
     await newUser.findByIdAndUpdate(userId, {
         $set: {
-            'calender.totalbusytimeforweek.value': `${total}`,
-            'calender.totalbusytimeforweek.change': incrementtext
+            'calender.totalbusytimeforweek': total,
+            'calender.totalbusytimeforlastweek': total1,
+            'calender.totalbusytimeforlastweekarr': arr
         }
     })
 };
@@ -1014,50 +1327,119 @@ async function avgeventtimeforweek(userId) {
 
     let total = 0;
     let total1 = 0;
-    let incrementtext = '';
+    let somevalue = 0;
+    let arr = [0, 45, 33, 29, 63, 12, 77];
 
-    for (let i = 0; i < user.calender.avgeventtime.length; i++) {
-        total = total + user.calender.avgeventtime[i];
-    }
 
-    total = user.calender.avgeventtime.length > 0 
-        ? total / user.calender.avgeventtime.length 
+    if (user.calender.avgeventtime) {
+        if (user.calender.avgeventtime.length > 0) {
+            for (let i = 0; i < user.calender.avgeventtime.length; i++) {
+                total = total + user.calender.avgeventtime[i];
+                if (i == 6) {
+                    arr[0] = user.calender.avgeventtime[i];
+                };
+            };
+        };
+    };
+
+    total = user.calender.avgeventtime.length > 0
+        ? total / user.calender.avgeventtime.length
         : 0;
 
+    total = Math.floor(total);
 
-    for (let i = 0; i < 7; i++) {
-        total1 = total1 + user.calender.avgeventtimeforlastweek[i];
-    }
+    if (user.calender.avgeventtimeforlastweekarr) {
+        if (user.calender.avgeventtimeforlastweekarr.length > 0) {
+            for (let i = 0; i < user.calender.avgeventtimeforlastweekarr.length; i++) {
+                total1 = total1 + user.calender.avgeventtimeforlastweekarr[i];
+            };
+        };
+    };
 
-    incrementtext = changecalculater(total, total1)
+    total1 = user.calender.avgeventtimeforlastweekarr.length > 0
+        ? total1 / user.calender.avgeventtimeforlastweekarr.length
+        : 0;
 
+    total1 = Math.floor(total1);
+
+    if (user.calender.avgeventtimeforlastweekarr) {
+        if (user.calender.avgeventtimeforlastweekarr.length > 0) {
+            for (let i = 0; i < 7; i++) {
+                if (i == 6) {
+                    break;
+                } else {
+                    //arr[i+1] = user.calender.avgeventtimeforlastweekarr[i];
+                };
+            };
+        };
+    };
 
     await newUser.findByIdAndUpdate(userId, {
         $set: {
-            'calender.avgeventtimeforweek.value': `${total}`,
-            'calender.avgeventtimeforweek.change': incrementtext
+            'calender.avgeventtimeforweek': total,
+            'calender.avgeventtimeforlastweek': total1,
+            'calender.avgeventtimeforlastweekarr': arr
         }
     })
 };
 
+// codeforces
+
+async function problemsort(userId, diff) {
+    const user = await newUser.findById(userId);
+    try {
+        let arr1 = [0, 5, 2, 1, 6, 0, 4];
+        let arr2 = [9, 6, 11, 7, 5, 1, 3];
+        let count1 = 0;
+        let count2 = 0;
+        arr1[0] = diff;
+        arr2[0] = user.codeforces.problemsolvedthisweekarr[6];
+
+        if (user.codeforces.problemsolvedthisweekarr.length > 0) {
+            for (let i = 0; i < 6; i++) {
+                arr1[i + 1] = user.codeforces.problemsolvedthisweekarr[i];
+                arr2[i + 1] = user.codeforces.problemsolvedlastweekarr[i];
+            }
+        }
+
+
+        for (let i = 0; i < 7; i++) {
+            count1 = count1 + arr1[i];
+            count2 = count2 + arr2[i];
+        };
+
+        await newUser.findByIdAndUpdate(userId, {
+            $set: {
+                'codeforces.problemsolvedthisweek': count1,
+                'codeforces.problemsolvedthisweekarr': arr1,
+                'codeforces.problemsolvedlastweek': count2,
+                'codeforces.problemsolvedlastweekarr': arr2
+            }
+        });
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 // sorting funtion for achievements and goals
 
-async function achievementsort(userId){
+async function achievementsort(userId) {
     const user = await newUser.findById(userId);
-    try{
+    try {
         let sortlevel = user.achievementlevel;
         let sortone = user.achievementone;
 
-        let obj1 ={};
+        let obj1 = {};
         let obj2 = {};
 
         // for level sorting
-        for(let i=0 ; i<sortlevel.length ; i++){
-            if(sortlevel[i].level == 5 && sortlevel[i].progress == sortlevel[i].target[4]){
+        for (let i = 0; i < sortlevel.length; i++) {
+            if (sortlevel[i].level == 5 && sortlevel[i].progress == sortlevel[i].target[4]) {
                 continue;
             };
-            for(let j=i ; j<sortlevel.length ; j++){
-                if(sortlevel[i].level<sortlevel[j].level){
+            for (let j = i; j < sortlevel.length; j++) {
+                if (sortlevel[i].level < sortlevel[j].level) {
                     obj1 = sortlevel[i];
                     obj2 = sortlevel[j];
                     sortlevel[i] = obj2;
@@ -1072,16 +1454,16 @@ async function achievementsort(userId){
         let level4 = 0;
         let level5 = 0;
 
-        for(let i=0 ; i<sortlevel.length ; i++){
-            if(sortlevel[i].level == 1){
+        for (let i = 0; i < sortlevel.length; i++) {
+            if (sortlevel[i].level == 1) {
                 level1++;
-            }else if(sortlevel[i].level == 2){
+            } else if (sortlevel[i].level == 2) {
                 level2++;
-            }else if(sortlevel[i].level == 3){
+            } else if (sortlevel[i].level == 3) {
                 level3++;
-            }else if(sortlevel[i].level == 4){
+            } else if (sortlevel[i].level == 4) {
                 level4++;
-            }else if(sortlevel[i].level == 5){
+            } else if (sortlevel[i].level == 5) {
                 level5++;
             }
         };
@@ -1092,23 +1474,23 @@ async function achievementsort(userId){
         let perct1 = 0;
         let target2 = 0;
         let progress2 = 0;
-        let diff2 = 0; 
+        let diff2 = 0;
         let perct2 = 0;
 
-        for(let i=0 ; i<level5 ; i++){
-            if(sortlevel[i].level == 5 && sortlevel[i].progress == sortlevel[i].target[4]){
+        for (let i = 0; i < level5; i++) {
+            if (sortlevel[i].level == 5 && sortlevel[i].progress == sortlevel[i].target[4]) {
                 continue;
             };
             target1 = sortlevel[i].target[4];
             progress1 = sortlevel[i].progress;
             diff1 = target1 - progress1;
-            perct1 = diff1/(target1-sortlevel[i].target[3]);
-            for(let j=i ; j<level5 ; j++){
+            perct1 = diff1 / (target1 - sortlevel[i].target[3]);
+            for (let j = i; j < level5; j++) {
                 target2 = sortlevel[j].target[4];
                 progress2 = sortlevel[j].progress;
                 diff2 = target2 - progress2;
-                perct2 = diff2/(target2-sortlevel[j].target[3]);
-                if(perct1>perct2){
+                perct2 = diff2 / (target2 - sortlevel[j].target[3]);
+                if (perct1 > perct2) {
                     obj1 = sortlevel[i];
                     obj2 = sortlevel[j];
                     sortlevel[i] = obj2;
@@ -1117,17 +1499,17 @@ async function achievementsort(userId){
             };
         };
 
-        for(let i=level5 ; i<level5+level4 ; i++){
+        for (let i = level5; i < level5 + level4; i++) {
             target1 = sortlevel[i].target[3];
             progress1 = sortlevel[i].progress;
             diff1 = target1 - progress1;
-            perct1 = diff1/(target1-sortlevel[i].target[2]);
-            for(let j=i ; j<level5+level4 ; j++){
+            perct1 = diff1 / (target1 - sortlevel[i].target[2]);
+            for (let j = i; j < level5 + level4; j++) {
                 target2 = sortlevel[j].target[3];
                 progress2 = sortlevel[j].progress;
                 diff2 = target2 - progress2;
-                perct2 = diff2/(target2-sortlevel[j].target[2]);
-                if(perct1>perct2){
+                perct2 = diff2 / (target2 - sortlevel[j].target[2]);
+                if (perct1 > perct2) {
                     obj1 = sortlevel[i];
                     obj2 = sortlevel[j];
                     sortlevel[i] = obj2;
@@ -1136,17 +1518,17 @@ async function achievementsort(userId){
             };
         };
 
-        for(let i=level5+level4 ; i<level5+level4+level3 ; i++){
+        for (let i = level5 + level4; i < level5 + level4 + level3; i++) {
             target1 = sortlevel[i].target[2];
             progress1 = sortlevel[i].progress;
             diff1 = target1 - progress1;
-            perct1 = diff1/(target1-sortlevel[i].target[1]);
-            for(let j=i ; j<level5+level4+level3 ; j++){
+            perct1 = diff1 / (target1 - sortlevel[i].target[1]);
+            for (let j = i; j < level5 + level4 + level3; j++) {
                 target2 = sortlevel[j].target[2];
                 progress2 = sortlevel[j].progress;
                 diff2 = target2 - progress2;
-                perct2 = diff2/(target2-sortlevel[j].target[1]);
-                if(perct1>perct2){
+                perct2 = diff2 / (target2 - sortlevel[j].target[1]);
+                if (perct1 > perct2) {
                     obj1 = sortlevel[i];
                     obj2 = sortlevel[j];
                     sortlevel[i] = obj2;
@@ -1155,17 +1537,17 @@ async function achievementsort(userId){
             };
         };
 
-        for(let i=level5+level4+level3 ; i<level5+level4+level3+level2 ; i++){
+        for (let i = level5 + level4 + level3; i < level5 + level4 + level3 + level2; i++) {
             target1 = sortlevel[i].target[1];
             progress1 = sortlevel[i].progress;
             diff1 = target1 - progress1;
-            perct1 = diff1/(target1-sortlevel[i].target[0]);
-            for(let j=i ; j<level5+level4+level3+level2 ; j++){
+            perct1 = diff1 / (target1 - sortlevel[i].target[0]);
+            for (let j = i; j < level5 + level4 + level3 + level2; j++) {
                 target2 = sortlevel[j].target[1];
                 progress2 = sortlevel[j].progress;
                 diff2 = target2 - progress2;
-                perct2 = diff2/(target2-sortlevel[j].target[0]);
-                if(perct1>perct2){
+                perct2 = diff2 / (target2 - sortlevel[j].target[0]);
+                if (perct1 > perct2) {
                     obj1 = sortlevel[i];
                     obj2 = sortlevel[j];
                     sortlevel[i] = obj2;
@@ -1174,17 +1556,17 @@ async function achievementsort(userId){
             };
         };
 
-        for(let i=level5+level4+level3+level2 ; i<level5+level4+level3+level2+level1 ; i++){
+        for (let i = level5 + level4 + level3 + level2; i < level5 + level4 + level3 + level2 + level1; i++) {
             target1 = sortlevel[i].target[4];
             progress1 = sortlevel[i].progress;
             diff1 = target1 - progress1;
-            perct1 = diff1/(target1);
-            for(let j=i ; j<level5+level4+level3+level2+level1 ; j++){
+            perct1 = diff1 / (target1);
+            for (let j = i; j < level5 + level4 + level3 + level2 + level1; j++) {
                 target2 = sortlevel[j].target[4];
                 progress2 = sortlevel[j].progress;
                 diff2 = target2 - progress2;
-                perct2 = diff2/(target2);
-                if(perct1>perct2){
+                perct2 = diff2 / (target2);
+                if (perct1 > perct2) {
                     obj1 = sortlevel[i];
                     obj2 = sortlevel[j];
                     sortlevel[i] = obj2;
@@ -1193,311 +1575,352 @@ async function achievementsort(userId){
             };
         };
 
-        await newUser.findByIdAndUpdate(userId , {
-            $set : {
-                'achievementlevel' : sortlevel
+        await newUser.findByIdAndUpdate(userId, {
+            $set: {
+                'achievementlevel': sortlevel
             }
         });
 
-    }catch(err){
+    } catch (err) {
         console.error(err);
     }
 };
 
 async function achievementcomplete(userId) {
     const user = await newUser.findById(userId);
-    try{
+    try {
         let changeobj = {};
 
-        let ind=0;
-        for (let i=0 ; i<user.achievementlevel.lenght ; i++){
-            if(user.achievementlevel[i].topic == 'Commit Maker'){
+        let rawData = user.github.commitsovertime;
+
+        // Agar Mongoose ne [ { '0': ..., '1': ... } ] banaya hua hai, to index 0 nikal lo
+        if (Array.isArray(rawData) && rawData.length > 0) {
+            rawData = rawData[0];
+        }
+
+        // 2. Mongoose Sub-document ko Plain JavaScript Object me convert karna
+        let timeObj = rawData && typeof rawData.toObject === 'function' ? rawData.toObject() : (rawData || {});
+
+        let ind = 0;
+        for (let i = 0; i < user.achievementlevel.lenght; i++) {
+            if (user.achievementlevel[i].topic == 'Commit Maker') {
                 ind = i;
                 break;
             }
         };
-        if(user.status.github == 'yes'){
-            if(user.achievementlevel[i].level == 1){
-                if(user.achievementlevel[i].progress + user.github.commitsovertime[0].value >= user.achievementlevel[i].target[0]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.github.commitsovertime[0].value;
+        if (user.status.github == 'yes') {
+            if (user.achievementlevel[i].level == 1) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[0]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
                     changeobj[`achievementlevel.${i}.level`] = 2;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.github.commitsovertime[0].value;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
                 }
             };
-            if(user.achievementlevel[i].level == 2){
-                if(user.achievementlevel[i].progress + user.github.commitsovertime[0].value >= user.achievementlevel[i].target[1]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.github.commitsovertime[0].value;
+            if (user.achievementlevel[i].level == 2) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[1]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
                     changeobj[`achievementlevel.${i}.level`] = 3;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.github.commitsovertime[0].value;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
                 }
             };
-            if(user.achievementlevel[i].level == 3){
-                if(user.achievementlevel[i].progress + user.github.commitsovertime[0].value >= user.achievementlevel[i].target[2]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.github.commitsovertime[0].value;
+            if (user.achievementlevel[i].level == 3) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[2]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
                     changeobj[`achievementlevel.${i}.level`] = 4;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.github.commitsovertime[0].value;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
                 }
             };
-            if(user.achievementlevel[i].level == 4){
-                if(user.achievementlevel[i].progress + user.github.commitsovertime[0].value >= user.achievementlevel[i].target[3]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.github.commitsovertime[0].value;
+            if (user.achievementlevel[i].level == 4) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[3]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
                     changeobj[`achievementlevel.${i}.level`] = 5;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.github.commitsovertime[0].value;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
                 }
             };
-            if(user.achievementlevel[i].level == 5){
-                if(user.achievementlevel[i].progress + user.github.commitsovertime[0].value >= user.achievementlevel[i].target[4]){
+            if (user.achievementlevel[i].level == 5) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[4]) {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].target[4];
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.github.commitsovertime[0].value;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
                 }
             };
         };
 
-        for (let i=0 ; i<user.achievementlevel.lenght ; i++){
-            if(user.achievementlevel[i].topic == 'The Psyco'){
+        rawData = user.spotify.songplayed;
+
+        // Agar Mongoose ne [ { '0': ..., '1': ... } ] banaya hua hai, to index 0 nikal lo
+        if (Array.isArray(rawData) && rawData.length > 0) {
+            rawData = rawData[0];
+        }
+
+        // 2. Mongoose Sub-document ko Plain JavaScript Object me convert karna
+        timeObj = rawData && typeof rawData.toObject === 'function' ? rawData.toObject() : (rawData || {});
+
+        for (let i = 0; i < user.achievementlevel.lenght; i++) {
+            if (user.achievementlevel[i].topic == 'The Psyco') {
                 ind = i;
                 break;
             }
         };
-        if(user.status.spotify == 'yes'){
-            if(user.achievementlevel[i].level == 1){
-                if(user.achievementlevel[i].progress + user.spotify.songplayed[0] >= user.achievementlevel[i].target[0]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.songplayed[0];
+        if (user.status.spotify == 'yes') {
+            if (user.achievementlevel[i].level == 1) {
+                if (user.achievementlevel[i].progress + timeObj[0] >= user.achievementlevel[i].target[0]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0];
                     changeobj[`achievementlevel.${i}.level`] = 2;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.songplayed[0];
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0];
                 }
             };
-            if(user.achievementlevel[i].level == 2){
-                if(user.achievementlevel[i].progress + user.spotify.songplayed[0] >= user.achievementlevel[i].target[1]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.songplayed[0];
+            if (user.achievementlevel[i].level == 2) {
+                if (user.achievementlevel[i].progress + timeObj[0] >= user.achievementlevel[i].target[1]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0];
                     changeobj[`achievementlevel.${i}.level`] = 3;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.songplayed[0];
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0];
                 }
             };
-            if(user.achievementlevel[i].level == 3){
-                if(user.achievementlevel[i].progress + user.spotify.songplayed[0] >= user.achievementlevel[i].target[2]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.songplayed[0];
+            if (user.achievementlevel[i].level == 3) {
+                if (user.achievementlevel[i].progress + timeObj[0] >= user.achievementlevel[i].target[2]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0];
                     changeobj[`achievementlevel.${i}.level`] = 4;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.songplayed[0];
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0];
                 }
             };
-            if(user.achievementlevel[i].level == 4){
-                if(user.achievementlevel[i].progress + user.spotify.songplayed[0] >= user.achievementlevel[i].target[3]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.songplayed[0];
+            if (user.achievementlevel[i].level == 4) {
+                if (user.achievementlevel[i].progress + timeObj[0] >= user.achievementlevel[i].target[3]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0];
                     changeobj[`achievementlevel.${i}.level`] = 5;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.songplayed[0];
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0];
                 }
             };
-            if(user.achievementlevel[i].level == 5){
-                if(user.achievementlevel[i].progress + user.spotify.songplayed[0] >= user.achievementlevel[i].target[4]){
+            if (user.achievementlevel[i].level == 5) {
+                if (user.achievementlevel[i].progress + timeObj[0] >= user.achievementlevel[i].target[4]) {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].target[4];
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.songplayed[0];
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0];
                 }
             };
         };
 
-        for (let i=0 ; i<user.achievementlevel.lenght ; i++){
-            if(user.achievementlevel[i].topic == 'The Real Addictive'){
+        rawData = user.spotify.songplayed;
+
+        // Agar Mongoose ne [ { '0': ..., '1': ... } ] banaya hua hai, to index 0 nikal lo
+        if (Array.isArray(rawData) && rawData.length > 0) {
+            rawData = rawData[0];
+        }
+
+        // 2. Mongoose Sub-document ko Plain JavaScript Object me convert karna
+        timeObj = rawData && typeof rawData.toObject === 'function' ? rawData.toObject() : (rawData || {});
+
+        for (let i = 0; i < user.achievementlevel.lenght; i++) {
+            if (user.achievementlevel[i].topic == 'The Real Addictive') {
                 ind = i;
                 break;
             }
         };
-        if(user.status.spotify == 'yes'){
-            if(user.achievementlevel[i].level == 1){
-                if(user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[0]){
+        if (user.status.spotify == 'yes') {
+            if (user.achievementlevel[i].level == 1) {
+                if (user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[0]) {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.totallisteningtime[0];
                     changeobj[`achievementlevel.${i}.level`] = 2;
-                }else{
+                } else {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.totallisteningtime[0];
                 }
             };
-            if(user.achievementlevel[i].level == 2){
-                if(user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[1]){
+            if (user.achievementlevel[i].level == 2) {
+                if (user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[1]) {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.totallisteningtime[0];
                     changeobj[`achievementlevel.${i}.level`] = 3;
-                }else{
+                } else {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.totallisteningtime[0];
                 }
             };
-            if(user.achievementlevel[i].level == 3){
-                if(user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[2]){
+            if (user.achievementlevel[i].level == 3) {
+                if (user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[2]) {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.totallisteningtime[0];
                     changeobj[`achievementlevel.${i}.level`] = 4;
-                }else{
+                } else {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.totallisteningtime[0];
                 }
             };
-            if(user.achievementlevel[i].level == 4){
-                if(user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[3]){
+            if (user.achievementlevel[i].level == 4) {
+                if (user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[3]) {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.totallisteningtime[0];
                     changeobj[`achievementlevel.${i}.level`] = 5;
-                }else{
+                } else {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.totallisteningtime[0];
                 }
             };
-            if(user.achievementlevel[i].level == 5){
-                if(user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[4]){
+            if (user.achievementlevel[i].level == 5) {
+                if (user.achievementlevel[i].progress + user.spotify.totallisteningtime[0] >= user.achievementlevel[i].target[4]) {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].target[4];
-                }else{
+                } else {
                     changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.spotify.totallisteningtime[0];
                 }
             };
         };
 
         let connectcount = 0;
-        if(user.status.github == 'yes'){
+        if (user.status.github == 'yes') {
             connectcount++;
         };
-        if(user.status.spotify == 'yes'){
+        if (user.status.spotify == 'yes') {
             connectcount++;
         };
-        if(user.status.codeforces == 'yes'){
+        if (user.status.codeforces == 'yes') {
             connectcount++;
         };
-        if(user.status.calender == 'yes'){
+        if (user.status.calender == 'yes') {
             connectcount++;
         };
 
-        for (let i=0 ; i<user.achievementlevel.lenght ; i++){
-            if(user.achievementlevel[i].topic == 'App Lover'){
+        for (let i = 0; i < user.achievementlevel.lenght; i++) {
+            if (user.achievementlevel[i].topic == 'App Lover') {
                 ind = i;
                 break;
             }
         };
 
-        if(connectcount == 1){
+        if (connectcount == 1) {
             changeobj[`achievementlevel.${i}.progress`] = 1;
             changeobj[`achievementlevel.${i}.level`] = 2;
-        }else if(connectcount == 2){
+        } else if (connectcount == 2) {
             changeobj[`achievementlevel.${i}.progress`] = 2;
             changeobj[`achievementlevel.${i}.level`] = 3;
-        }else if(connectcount >=3 && connectcount <5){
+        } else if (connectcount >= 3 && connectcount < 5) {
             changeobj[`achievementlevel.${i}.progress`] = connectcount;
             changeobj[`achievementlevel.${i}.level`] = 4;
-        }else if(connectcount >=5 && connectcount <10){
+        } else if (connectcount >= 5 && connectcount < 10) {
             changeobj[`achievementlevel.${i}.progress`] = connectcount;
             changeobj[`achievementlevel.${i}.level`] = 5;
-        }else if(connectcount >=10 && connectcount <20){
+        } else if (connectcount >= 10 && connectcount < 20) {
             changeobj[`achievementlevel.${i}.progress`] = connectcount;
             changeobj[`achievementlevel.${i}.level`] = 5;
         };
 
-        for (let i=0 ; i<user.achievementlevel.lenght ; i++){
-            if(user.achievementlevel[i].topic == 'Event Maker'){
+        for (let i = 0; i < user.achievementlevel.lenght; i++) {
+            if (user.achievementlevel[i].topic == 'Event Maker') {
                 ind = i;
                 break;
             }
         };
 
+        rawData = user.calender.scheduletime;
 
-        if(changeobj != {}){
-            await newUser.findByIdAndUpdate(userId , {
-                $set : {
+        // Agar Mongoose ne [ { '0': ..., '1': ... } ] banaya hua hai, to index 0 nikal lo
+        if (Array.isArray(rawData) && rawData.length > 0) {
+            rawData = rawData[0];
+        }
+
+        // 2. Mongoose Sub-document ko Plain JavaScript Object me convert karna
+        timeObj = rawData && typeof rawData.toObject === 'function' ? rawData.toObject() : (rawData || {});
+
+        if (user.status.calender == 'yes') {
+            if (user.achievementlevel[i].level == 1) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[0]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
+                    changeobj[`achievementlevel.${i}.level`] = 2;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
+                }
+            };
+            if (user.achievementlevel[i].level == 2) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[1]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
+                    changeobj[`achievementlevel.${i}.level`] = 3;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
+                }
+            };
+            if (user.achievementlevel[i].level == 3) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[2]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
+                    changeobj[`achievementlevel.${i}.level`] = 4;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
+                }
+            };
+            if (user.achievementlevel[i].level == 4) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[3]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
+                    changeobj[`achievementlevel.${i}.level`] = 5;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
+                }
+            };
+            if (user.achievementlevel[i].level == 5) {
+                if (user.achievementlevel[i].progress + timeObj[0].value >= user.achievementlevel[i].target[4]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].target[4];
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + timeObj[0].value;
+                }
+            };
+        };
+
+        for (let i = 0; i < user.achievementlevel.lenght; i++) {
+            if (user.achievementlevel[i].topic == 'Real Coder') {
+                ind = i;
+                break;
+            }
+        };
+        if (user.status.github == 'yes') {
+            if (user.achievementlevel[i].level == 1) {
+                if (user.github.totalrepo >= user.achievementlevel[i].target[0]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.github.totalrepo;
+                    changeobj[`achievementlevel.${i}.level`] = 2;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.github.totalrepo;
+                }
+            };
+            if (user.achievementlevel[i].level == 2) {
+                if (user.github.totalrepo >= user.achievementlevel[i].target[1]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.github.totalrepo;
+                    changeobj[`achievementlevel.${i}.level`] = 3;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.github.totalrepo;
+                }
+            };
+            if (user.achievementlevel[i].level == 3) {
+                if (user.github.totalrepo >= user.achievementlevel[i].target[2]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.github.totalrepo;
+                    changeobj[`achievementlevel.${i}.level`] = 4;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.github.totalrepo;
+                }
+            };
+            if (user.achievementlevel[i].level == 4) {
+                if (user.github.totalrepo >= user.achievementlevel[i].target[3]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.github.totalrepo;
+                    changeobj[`achievementlevel.${i}.level`] = 5;
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.github.totalrepo;
+                }
+            };
+            if (user.achievementlevel[i].level == 5) {
+                if (user.github.totalrepo >= user.achievementlevel[i].target[4]) {
+                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].target[4];
+                } else {
+                    changeobj[`achievementlevel.${i}.progress`] = user.github.totalrepo;
+                }
+            };
+        };
+
+
+        if (changeobj != {}) {
+            await newUser.findByIdAndUpdate(userId, {
+                $set: {
                     ...changeobj
                 }
             })
         };
-        if(user.status.calender == 'yes'){
-            if(user.achievementlevel[i].level == 1){
-                if(user.achievementlevel[i].progress + user.calender.scheduletime[0] >= user.achievementlevel[i].target[0]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.calender.scheduletime[0];
-                    changeobj[`achievementlevel.${i}.level`] = 2;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.calender.scheduletime[0];
-                }
-            };
-            if(user.achievementlevel[i].level == 2){
-                if(user.achievementlevel[i].progress + user.calender.scheduletime[0] >= user.achievementlevel[i].target[1]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.calender.scheduletime[0];
-                    changeobj[`achievementlevel.${i}.level`] = 3;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.calender.scheduletime[0];
-                }
-            };
-            if(user.achievementlevel[i].level == 3){
-                if(user.achievementlevel[i].progress + user.calender.scheduletime[0] >= user.achievementlevel[i].target[2]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.calender.scheduletime[0];
-                    changeobj[`achievementlevel.${i}.level`] = 4;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.calender.scheduletime[0];
-                }
-            };
-            if(user.achievementlevel[i].level == 4){
-                if(user.achievementlevel[i].progress + user.calender.scheduletime[0] >= user.achievementlevel[i].target[3]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.calender.scheduletime[0];
-                    changeobj[`achievementlevel.${i}.level`] = 5;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.calender.scheduletime[0];
-                }
-            };
-            if(user.achievementlevel[i].level == 5){
-                if(user.achievementlevel[i].progress + user.calender.scheduletime[0] >= user.achievementlevel[i].target[4]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].target[4];
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].progress + user.calender.scheduletime[0];
-                }
-            };
-        };
 
-        for (let i=0 ; i<user.achievementlevel.lenght ; i++){
-            if(user.achievementlevel[i].topic == 'Real Coder'){
-                ind = i;
-                break;
-            }
-        };
-        if(user.status.github == 'yes'){
-            if(user.achievementlevel[i].level == 1){
-                if(user.github.totalrepo >= user.achievementlevel[i].target[0]){
-                    changeobj[`achievementlevel.${i}.progress`] =user.github.totalrepo;
-                    changeobj[`achievementlevel.${i}.level`] = 2;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] =user.github.totalrepo;
-                }
-            };
-            if(user.achievementlevel[i].level == 2){
-                if(user.github.totalrepo >= user.achievementlevel[i].target[1]){
-                    changeobj[`achievementlevel.${i}.progress`] =user.github.totalrepo;
-                    changeobj[`achievementlevel.${i}.level`] = 3;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] =user.github.totalrepo;
-                }
-            };
-            if(user.achievementlevel[i].level == 3){
-                if(user.github.totalrepo >= user.achievementlevel[i].target[2]){
-                    changeobj[`achievementlevel.${i}.progress`] =user.github.totalrepo;
-                    changeobj[`achievementlevel.${i}.level`] = 4;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] =user.github.totalrepo;
-                }
-            };
-            if(user.achievementlevel[i].level == 4){
-                if( user.github.totalrepo >= user.achievementlevel[i].target[3]){
-                    changeobj[`achievementlevel.${i}.progress`] =user.github.totalrepo;
-                    changeobj[`achievementlevel.${i}.level`] = 5;
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] =user.github.totalrepo;
-                }
-            };
-            if(user.achievementlevel[i].level == 5){
-                if(user.github.totalrepo >= user.achievementlevel[i].target[4]){
-                    changeobj[`achievementlevel.${i}.progress`] = user.achievementlevel[i].target[4];
-                }else{
-                    changeobj[`achievementlevel.${i}.progress`] =user.github.totalrepo;
-                }
-            };
-        };
-        
-    }catch(err){
+    } catch (err) {
         console.error(err);
     }
 };
@@ -1516,9 +1939,9 @@ async function fetchdatafromspotify(userId) {
                     //     headers: { 'Authorization': `Bearer ${user.spotify.accesstoken}` }
                     // });
 
+                    console.log('1');
 
-
-                    let spotifyresponse = await axios.get('https://api.spotify.com/v1/me/player/recently_played?limit=50', {
+                    let spotifyresponse = await axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=50', {
                         headers: { 'Authorization': `Bearer ${user.spotify.accesstoken}` }
                     });
 
@@ -1526,6 +1949,8 @@ async function fetchdatafromspotify(userId) {
                     let recentlyfortime = 0;
                     let songcount = 0;
                     let limit = Math.min(spotifyresponse.data.items.length, 50);
+
+                    console.log('7');
 
                     for (let i = 0; i < limit; i++) {
                         recently[`spotify.recentlyplayed.${i}.song`] = spotifyresponse.data.items[i].track.name;
@@ -1543,7 +1968,7 @@ async function fetchdatafromspotify(userId) {
                     } else { // for old user
                         for (let i = 0; i < limit; i++) {
                             if (user.spotify.lastsong === spotifyresponse.data.items[i].played_at) {
-                                break; 
+                                break;
                             } else {
                                 recentlyfortime += spotifyresponse.data.items[i].track.duration_ms;
                                 songcount += 1;
@@ -1554,6 +1979,8 @@ async function fetchdatafromspotify(userId) {
                     addtimeandsong(userId, recentlyfortime, songcount);
                     timeandsongaddforweek(userId);
                     avgtrack(userId);
+
+                    console.log('2');
 
                     spotifyresponse = await axios.get('https://api.spotify.com/v1/me/top/artists?offset=0&limit=50', {
                         headers: { 'Authorization': `Bearer ${user.spotify.accesstoken}` }
@@ -1572,6 +1999,8 @@ async function fetchdatafromspotify(userId) {
                     });
 
                     limit = Math.min(spotifyresponse.data.items.length, 50);
+
+                    console.log('3');
 
                     for (let i = 0; i < limit; i++) {
                         recently[`spotify.toptrack.${i}.name`] = spotifyresponse.data.items[i].name;
@@ -1599,27 +2028,37 @@ async function fetchdatafromspotify(userId) {
 
                     // Saving the data
 
+                    console.log('4');
+
                     await newUser.findByIdAndUpdate(userId, {
                         $set: {
                             ...recently,
                             'spotify.lastsong': latestsong,
                             [`spotify.newartist.0`]: totalartist
                         }
-                    }, { new: true }
-                    )
+                    },)
 
                 } catch (err) {
+                    console.log('4');
+                    console.error(err);
+                    if (err.reason) {
+                        console.log(err.reason);
+                    }
                     if (err.response && err.response.status === 401) {
+                        console.log('5');
                         try {
                             const params = new URLSearchParams();
 
                             params.append('grant_type', 'refresh_token');
                             params.append('refresh_token', user.spotify.refreshtoken);
-                            params.append('client_id', process.env.SPOTIFY_CLIENT_ID);
-                            params.append('client_secret', process.env.SPOTIFY_CLIENT_SECRET);
+
+                            const authHeader = Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64');
 
                             const refreshresponse = await axios.post('https://accounts.spotify.com/api/token', params, {
-                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'Authorization': `Basic ${authHeader}`
+                                }
                             });
                             const newtoken = refreshresponse.data.access_token;
                             await newUser.findByIdAndUpdate(userId, {
@@ -1651,10 +2090,9 @@ async function fetchdatafromcalender(userId) {
             if (user.calender.accesstoken) {
                 try {
                     const startdate = new Date();
-                    startdate.setHours(0, 0, 0, 0);
 
                     const enddate = new Date();
-                    enddate.setDate(startdate.getDate() + 7);
+                    enddate.setDate(startdate.getDate() + 6);
                     enddate.setHours(23, 59, 59, 999);
 
                     let response = await axios.get(`https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${encodeURIComponent(startdate.toISOString())}&timeMax=${encodeURIComponent(enddate.toISOString())}&singleEvents=true&orderBy=startTime`, {
@@ -1692,8 +2130,10 @@ async function fetchdatafromcalender(userId) {
 
                     await upcomingevents(userId, response.data);
 
-
-
+                    avgeventtimeforweek(userId);
+                    totalbusytimeforweek(userId);
+                    totalfreetimeforweek(userId);
+                    totaleventsforweek(userId);
 
                 } catch (err) {
                     if (err.response && err.response.status === 401) {
@@ -1722,11 +2162,14 @@ async function fetchdatafromcalender(userId) {
                             console.error(err);
                             return;
                         }
+                    } else {
+                        console.error(err);
                     }
                 }
             }
         }
     } catch (err) {
+        console.log('7');
         console.error(err);
     }
 };
@@ -1748,7 +2191,7 @@ async function fetchdatafromcodeforces(userId) {
 
                     for (let i = 0; i < looplimit; i++) {
                         obj[`codeforces.ratinghistory.${i}.value`] = ratinghistory[i].newRating;
-                        obj[`codeforces.ratinghistory.${i}.at`] = datecalculater(ratinghistory[i].ratingUpdateTimeSeconds);
+                        obj[`codeforces.ratinghistory.${i}.at`] = datecalculater(ratinghistory[i].ratingUpdateTimeSeconds * 1000);
                     }
 
 
@@ -1759,7 +2202,7 @@ async function fetchdatafromcodeforces(userId) {
                     followcount = response.data.result[0].friendOfCount;
 
                     let currentrating = response.data.result[0].rating;
-                    let currentrank = response.data.result[o].rank;
+                    let currentrank = response.data.result[0].rank;
 
                     response = await axios.get(`https://codeforces.com/api/user.status?handle=${user.codeforces.name}`);
 
@@ -1767,6 +2210,10 @@ async function fetchdatafromcodeforces(userId) {
                     let j = 0;
                     let k = 0;
                     let problemcount = 0;
+
+                    //console.log(response.data.result[0].creationTimeSeconds);
+                    //let z= new Date(1784931230*1000);
+                    //console.log(z);
 
                     if (response.data.status == 'OK') {
                         for (let i = 0; i < response.data.result.length; i++) {
@@ -1782,9 +2229,9 @@ async function fetchdatafromcodeforces(userId) {
                                 }
 
                                 //for rating of the questions 
-                                if(!response.data.result[i].problem.rating){
+                                if (!response.data.result[i].problem.rating) {
 
-                                }else if (response.data.result[i].problem.rating == 800) {
+                                } else if (response.data.result[i].problem.rating == 800) {
                                     arr[0]++;
                                     obj[`codeforces.difficulty.${0}.name`] = 800;
                                     obj[`codeforces.difficulty.${0}.value`] = arr[0];
@@ -1810,8 +2257,18 @@ async function fetchdatafromcodeforces(userId) {
                             if (response.data.result[i].verdict == "WRONG_ANSWER" || response.data.result[i].verdict == "TIME_LIMIT_EXCEEDED" || response.data.result[i].verdict == "COMPILATION_ERROR") {
                                 if (j < 5) {
                                     obj[`codeforces.wronganswers.${j}.name`] = response.data.result[i].problem.name;
-                                    obj[`codeforces.wronganswers.${j}.language`] = response.data.result[i].programmingLanguage;
-                                    obj[`codeforces.wronganswers.${j}.type`] = response.data.result[i].verdict;
+                                    if (response.data.result[i].programmingLanguage === 'C++23 (GCC 14-64, msys2)') {
+                                        obj[`codeforces.wronganswers.${j}.language`] = 'C++23';
+                                    } else if (response.data.result[i].programmingLanguage === 'C++20 (GCC 13-64)') {
+                                        obj[`codeforces.wronganswers.${j}.language`] = 'C++20';
+                                    } else {
+                                        obj[`codeforces.wronganswers.${j}.language`] = response.data.result[i].programmingLanguage;
+                                    }
+                                    if (response.data.result[i].verdict === 'TIME_LIMIT_EXCEEDED') {
+                                        obj[`codeforces.wronganswers.${j}.type`] = 'TIME_EXCEED';
+                                    } else {
+                                        obj[`codeforces.wronganswers.${j}.type`] = response.data.result[i].verdict;
+                                    }
                                     obj[`codeforces.wronganswers.${j}.duration`] = response.data.result[i].timeConsumedMillis;
                                     j++;
                                 }
@@ -1819,14 +2276,14 @@ async function fetchdatafromcodeforces(userId) {
 
                             //for the table of all the data
 
-                            if (response.data.result.length > 1000) {
-                                if (k < 1000) {
+                            if (response.data.result.length > 10) {
+                                if (k < 10) {
                                     obj[`codeforces.content.${k}.name`] = response.data.result[i].problem.name;
                                     obj[`codeforces.content.${k}.language`] = response.data.result[i].programmingLanguage;
                                     obj[`codeforces.content.${k}.type`] = response.data.result[i].verdict;
                                     obj[`codeforces.content.${k}.duration`] = response.data.result[i].timeConsumedMillis;
-                                    obj[`codeforces.content.${k}.memory`] = response.data.result[i].memoryConsumedBytes;
-                                    obj[`codeforces.content.${k}.date`] = datecalculater(response.data.result[i].creationTimeSeconds);
+                                    obj[`codeforces.content.${k}.memory`] = Math.floor(response.data.result[i].memoryConsumedBytes / 1024);
+                                    obj[`codeforces.content.${k}.date`] = datecalculater(response.data.result[i].creationTimeSeconds * 1000);
                                     k++;
                                 }
                             } else {
@@ -1834,12 +2291,24 @@ async function fetchdatafromcodeforces(userId) {
                                 obj[`codeforces.content.${i}.language`] = response.data.result[i].programmingLanguage;
                                 obj[`codeforces.content.${i}.type`] = response.data.result[i].verdict;
                                 obj[`codeforces.content.${i}.duration`] = response.data.result[i].timeConsumedMillis;
-                                obj[`codeforces.content.${i}.memory`] = response.data.result[i].memoryConsumedBytes;
-                                obj[`codeforces.content.${i}.date`] = datecalculater(response.data.result[i].creationTimeSeconds);
+                                obj[`codeforces.content.${i}.memory`] = Math.floor(response.data.result[i].memoryConsumedBytes / 1024);
+                                obj[`codeforces.content.${i}.date`] = datecalculater(response.data.result[i].creationTimeSeconds * 1000);
                             }
 
                         }
-                    }
+                    };
+
+                    let diff = 0;
+
+                    diff = problemcount - user.codeforces.problemsolved;
+                    console.log(diff);
+                    problemsort(userId, diff);
+
+                    //console.log(obj[`codeforces.content.${5}.date`]);
+                    //console.log(obj[`codeforces.content.${50}.date`]);
+                    //console.log(obj[`codeforces.content.${500}.date`]);
+
+
 
                     await newUser.findByIdAndUpdate(userId, {
                         $set: {
@@ -1847,16 +2316,18 @@ async function fetchdatafromcodeforces(userId) {
                             'codeforces.maxrank': maxrank,
                             'codeforces.followcount': followcount,
                             'codeforces.problemsolved': problemcount,
-                            'codeforces.currentrating' : currentrank,
-                            'codeforces.currentrank' : currentrank
+                            'codeforces.currentrating': currentrating,
+                            'codeforces.currentrank': currentrank
                         }
                     });
                 } catch (err) {
+                    console.log('1');
                     console.error(err);
                 }
             }
         }
     } catch (err) {
+        console.log('2');
         console.error(err);
     }
 };
@@ -1887,6 +2358,7 @@ async function fetchdatafromgithub(userId) {
                     let obj = {};
                     let starcount = 0;
 
+
                     for (let i = 0; i < response.data.length; i++) {
                         obj[`github.repolist.${i}.name`] = response.data[i].name;
                         obj[`github.repolist.${i}.stars`] = response.data[i].stargazers_count;
@@ -1906,66 +2378,92 @@ async function fetchdatafromgithub(userId) {
 
                     a = response.data.length;
                     for (let i = 0; i < a; i++) {
-                        response = await axios.get(`https://api.github.com/repos/${name}/${obj[`github.repolist.${i}.name`]}/stats/commit_activity`, {
-                            headers: {
-                                'Authorization': `Bearer ${user.github.accesstoken}`,
-                                'Accept': 'application/vnd.github+json'
-                            }
-                        });
+                        let retries = 6;
 
-                        data3 = response.data.reverse();
-                        let weekname = data3[0].week ;
-                        let week = new Date(weekname*1000);
-                        let todaydate = new Date();
-                        let diff = todaydate-week ;
-                        diff = Math.floor(diff/(84600*1000));
-                        let count = 0;
-                        let data4 = [];
-                        for (let j = 0; j < 5; j++) {
-                            if (!data3[j] || !data3[j].days) {
-                                continue;
+                        while (retries > 0) {
+                            response = await axios.get(`https://api.github.com/repos/${name}/${obj[`github.repolist.${i}.name`]}/stats/commit_activity`, {
+                                headers: {
+                                    'Authorization': `Bearer ${user.github.accesstoken}`,
+                                    'Accept': 'application/vnd.github+json'
+                                }
+                            });
+
+                            if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+                                break;
                             }
-                            data4 = data3[j].days.reverse();
-                            let newno = 6-diff;
-                            if(j==0){
-                                for (let k = newno; k < 7; k++) {
-                                    let currentdaycommits = data4[k] || 0;
-                                    len[count] = (len[count] || 0) + currentdaycommits;
-                                    count++;
-                                };
-                            }
-                            if(j!=0){
-                                for (let k = 0; k < 7; k++) {
-                                    let currentdaycommits = data4[k] || 0;
-                                    len[count] = (len[count] || 0) + currentdaycommits;
-                                    count++;
-                                    if(count == 30){
+                            await new Promise(resolve => setTimeout(resolve, 4000));
+                            retries--;
+                        }
+
+
+                        if (response.data && Array.isArray(response.data)) {
+                            data3 = response.data.reverse();
+                            let weekname = data3[0].week;
+                            let week = new Date(weekname * 1000);
+                            let todaydate = new Date();
+                            let diff = todaydate - week;
+                            diff = Math.floor(diff / (86400 * 1000));
+                            let count = 0;
+                            let data4 = [];
+                            for (let j = 0; j < 5; j++) {
+                                if (!data3[j] || !data3[j].days) {
+                                    continue;
+                                }
+                                data4 = data3[j].days.reverse();
+                                let newno = 6 - diff;
+                                if (j == 0) {
+                                    for (let k = newno; k < 7; k++) {
+                                        let currentdaycommits = data4[k] || 0;
+                                        len[count] = (len[count] || 0) + currentdaycommits;
+                                        count++;
+                                    };
+                                }
+                                if (j != 0) {
+                                    for (let k = 0; k < 7; k++) {
+                                        let currentdaycommits = data4[k] || 0;
+                                        len[count] = (len[count] || 0) + currentdaycommits;
+                                        count++;
+                                        if (count == 30) {
+                                            break;
+                                        }
+                                    };
+                                    if (count == 30) {
                                         break;
                                     }
-                                };
-                                if(count == 30){
-                                    break;
                                 }
-                            }
+                            };
                         };
                     };
 
                     let realdt = [];
-                    let realdate = new Date(data3[0].week*1000 + (1000*60*60*24*6));
+                    let realdate = new Date(data3[0].week * 1000 + (1000 * 60 * 60 * 24 * 6));
                     for (let i = 0; i < 30; i++) {
-                        realdt[i] = datecalculater(new Date(realdate+(1000 * 60 * 60 * 24)*i));
+                        realdt[i] = datecalculater(new Date(realdate + (1000 * 60 * 60 * 24) * i));
                     };
 
                     dt = daysfetch();
 
-                    let weekname = data3[0].week ;
-                    for (let i = 0; i < 30; i++) {
+                    let weekname = data3[0].week;
+                    for (let i = 0; i < len.length; i++) {
                         obj[`github.commitsovertime.${i}.value`] = len[i];
                         obj[`github.commitsovertime.${i}.at`] = dt[i];
                         obj[`github.commitsovertime.${i}.realdate`] = realdt[i];
                     };
 
-                    let obj2 ={};
+                    
+
+                    let obj2 = {};
+
+                    let total1 = 0;
+                    let total2 = 0;
+                    
+                    for (let i=0 ; i<14 ; i++){
+                        if(i<7){
+                            total1 = total1 + len[i];
+                        }else{
+                            total2 = total2 + len[i];
+                        }
+                    }
 
                     if (a < 50) {
                         for (let i = 0; i < a; i++) {
@@ -2006,18 +2504,20 @@ async function fetchdatafromgithub(userId) {
                     await newUser.findByIdAndUpdate(userId, {
                         $set: {
                             ...obj,
-                            'github.language' : obj2,
+                            'github.language': obj2,
                             'github.name': name,
                             'github.totalrepo': repocount,
                             'github.totalstar': starcount,
                             'github.totalfollow': followcount,
-                            'github.week' : weekname
+                            'github.week': weekname,
+                            'github.thisweekcommit' : total1 ,
+                            'github.lastweekcommit' : total2
                         }
-                    }, { new: true }
+                    }
                     );
 
                 } catch (err) {
-                    console.log('err');
+                    console.error(err);
                     if (err.response && err.response.status === 401) {
                         try {
                             const params = new URLSearchParams();
@@ -2032,7 +2532,7 @@ async function fetchdatafromgithub(userId) {
 
                             const newtoken = refreshresponse.data.access_token;
                             await newUser.findByIdAndUpdate(userId, {
-                                $set :{
+                                $set: {
                                     'github.accesstoken': newtoken
                                 }
 
@@ -2262,9 +2762,20 @@ app.get('/basic', (req, res) => {
 app.get('/dashboard', async (req, res) => {
     let user = " ";
     if (req.session.userId) {
-        const User = await newUser.findById(req.session.userId);
+        const User = await newUser.findById(req.session.userId).lean();
         user = User;
         res.status(200).render('dashboard', { user: user });
+    } else {
+        res.status(500).redirect('/');
+    };
+});
+
+app.get('/notifications', async (req, res) => {
+    let user = " ";
+    if (req.session.userId) {
+        const User = await newUser.findById(req.session.userId).lean();
+        user = User;
+        res.status(200).render('notifications', { user: user });
     } else {
         res.status(500).redirect('/');
     };
@@ -2273,7 +2784,7 @@ app.get('/dashboard', async (req, res) => {
 app.get('/analyticsspotify', async (req, res) => {
     let user = "";
     if (req.session.userId) {
-        const User = await newUser.findById(req.session.userId);
+        const User = await newUser.findById(req.session.userId).lean();
         user = User;
         res.status(200).render('analyticsspotify', { user: user });
     } else {
@@ -2284,7 +2795,7 @@ app.get('/analyticsspotify', async (req, res) => {
 app.get('/analyticscodeforces', async (req, res) => {
     let user = "";
     if (req.session.userId) {
-        const User = await newUser.findById(req.session.userId);
+        const User = await newUser.findById(req.session.userId).lean();
         user = User;
         res.status(200).render('analyticscodeforces', { user: user });
     } else {
@@ -2295,7 +2806,7 @@ app.get('/analyticscodeforces', async (req, res) => {
 app.get('/analyticsgithub', async (req, res) => {
     let user = "";
     if (req.session.userId) {
-        const User = await newUser.findById(req.session.userId);
+        const User = await newUser.findById(req.session.userId).lean();
         user = User;
         res.status(200).render('analyticsgithub', { user: user });
     } else {
@@ -2306,7 +2817,7 @@ app.get('/analyticsgithub', async (req, res) => {
 app.get('/analyticscalender', async (req, res) => {
     let user = "";
     if (req.session.userId) {
-        const User = await newUser.findById(req.session.userId);
+        const User = await newUser.findById(req.session.userId).lean();
         user = User;
         res.status(200).render('analyticscalender', { user: user });
     } else {
@@ -2318,7 +2829,7 @@ app.get('/analyticscalender', async (req, res) => {
 app.get('/goals', async (req, res) => {
     let user = "";
     if (req.session.userId) {
-        const User = await newUser.findById(req.session.userId);
+        const User = await newUser.findById(req.session.userId).lean();
         user = User;
         res.status(200).render('goals', { user: user });
     } else {
@@ -2353,7 +2864,7 @@ app.get('/goalsmonthly', async (req, res) => {
     if (req.session.userId) {
         const User = await newUser.findById(req.session.userId);
         user = User;
-        fetchdatafromgithub(req.session.userId);
+        //fetchdatafromcalender(req.session.userId);
         res.status(200).render('goalsmonthly', { user: user });
     } else {
         res.status(500).redirect('/');
@@ -2409,7 +2920,7 @@ app.get('/reports', async (req, res) => {
 app.get('/achievements', async (req, res) => {
     let user = '';
     if (req.session.userId) {
-        const USER = await newUser.findById(req.session.userId);
+        const USER = await newUser.findById(req.session.userId).lean();
         user = USER;
         res.status(200).render('achievements', { user: user });
     } else {
@@ -2439,7 +2950,7 @@ app.get('/settingsprivacy', async (req, res) => {
 app.get('/settingsnotifications', async (req, res) => {
     let user = "";
     if (req.session.userId) {
-        const User = await newUser.findById(req.session.userId);
+        const User = await newUser.findById(req.session.userId).lean();
         user = User;
         res.status(200).render('settingsnotifications', { user: user });
     } else {
@@ -2533,12 +3044,13 @@ app.get('/auth/spotify', (req, res) => {
         'client_id=' + process.env.SPOTIFY_CLIENT_ID +
         '&response_type=code' +
         '&redirect_uri=' + encodeURIComponent('http://127.0.0.1:3000/spotifycallback') +
-        `&scope=` + encodeURIComponent(scope);
+        `&scope=` + encodeURIComponent(scope) +
+        `&show_dialog=true`;
     res.redirect(spotifyLoginUrl);
 });
 
 app.get('/auth/calender', (req, res) => {
-    let scope = 'https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly';
+    let scope = 'https://www.googleapis.com/auth/calendar.events.readonly';
     const calenderLoginUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' +
         'client_id=' + process.env.CALENDER_CLIENT_ID +
         '&response_type=code' +
@@ -2588,7 +3100,6 @@ app.get('/spotifycallback', async (req, res) => {
         params.append('client_id', process.env.SPOTIFY_CLIENT_ID);
         params.append('client_secret', process.env.SPOTIFY_CLIENT_SECRET);
 
-
         const response = await axios.post('https://accounts.spotify.com/api/token', params, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -2613,7 +3124,7 @@ app.get('/spotifycallback', async (req, res) => {
     } catch (err) {
         console.error(err);
     }
-    if(req.session.userId){
+    if (req.session.userId) {
         await fetchdatafromspotify(req.session.userId);
     }
     res.status(200).redirect("/integration");
@@ -2626,14 +3137,13 @@ app.get('/calendercallback', async (req, res) => {
     }
 
     try {
-        const params = new URLSearchParams();
-        params.append('grant_type', 'authorization_code');
-        params.append('code', mycode);
-        params.append('redirect_uri', process.env.CALENDER_CALLBACK_URL);
-        params.append('client_id', process.env.CALENDER_CLIENT_ID);
-        params.append('client_secret', process.env.CALENDER_CLIENT_SECRET);
-
-        const response = await axios.post('https://oauth2.googleapis.com/token', params, {
+        const response = await axios.post('https://oauth2.googleapis.com/token', {
+            grant_type: 'authorization_code',
+            code: mycode,
+            redirect_uri: process.env.CALENDER_CALLBACK_URL,
+            client_id: process.env.CALENDER_CLIENT_ID,
+            client_secret: process.env.CALENDER_CLIENT_SECRET
+        }, {
             headers: { 'Content-Type': 'application/x/www-form-urlencoded' }
         });
 
@@ -2652,9 +3162,13 @@ app.get('/calendercallback', async (req, res) => {
 
         }
     } catch (err) {
-        console.error(err);
+        if (err.response) {
+            console.log("GOOGLE EXACT ERROR:", err.response.data);
+        } else {
+            console.log("OTHER ERROR:", err.message);
+        }
     }
-    if(req.session.userId){
+    if (req.session.userId) {
         await fetchdatafromcalender(req.session.userId);
     }
     res.status(200).redirect("/integration");
@@ -2680,21 +3194,22 @@ app.get('/githubcallback', async (req, res) => {
 
         if (req.session.userId) {
             await newUser.findByIdAndUpdate(req.session.userId,
-                {$set : {
-                    'github.accesstoken': accesstoken,
-                    'github.refreshtoken': refreshtoken,
-                    'status.github': 'yes'
-                }
-                },{new : true}
+                {
+                    $set: {
+                        'github.accesstoken': accesstoken,
+                        'github.refreshtoken': refreshtoken,
+                        'status.github': 'yes'
+                    }
+                }, { new: true }
             );
         }
     } catch (err) {
         console.error(err);
     }
-    if(req.session.userId){
+    if (req.session.userId) {
         await fetchdatafromgithub(req.session.userId);
     }
-    
+
     res.status(200).redirect("/integration");
 });
 
@@ -2735,23 +3250,23 @@ app.post('/register', (req, res) => {
         });
 });
 
-app.post('/codeforceslogin' , async(req,res)=>{
-    const {name} = req.body;
-    if(req.session.userId){
-        try{
+app.post('/codeforceslogin', async (req, res) => {
+    const { name } = req.body;
+    if (req.session.userId) {
+        try {
             const response = await axios.get(`https://codeforces.com/api/user.info?handles=${name}`);
 
             if (response.data.status === 'OK') {
-                await newUser.findByIdAndUpdate(req.session.userId , {
-                    $set : {
-                        'codeforces.name' : name,
-                        'status.codeforces' : 'yes'
+                await newUser.findByIdAndUpdate(req.session.userId, {
+                    $set: {
+                        'codeforces.name': name,
+                        'status.codeforces': 'yes'
                     }
                 });
 
                 res.status(200).redirect('/integration');
             }
-        }catch(err){
+        } catch (err) {
             if (err.response && err.response.data && err.response.data.status === 'FAILED') {
                 res.status(500).redirect('/wronghandle');
             }
@@ -2761,24 +3276,204 @@ app.post('/codeforceslogin' , async(req,res)=>{
 })
 
 app.post('/newgoals', async (req, res) => {
-    const { type, goal, target, deadline } = req.body;
+    const type = req.body.goaltype;
+    const goal = req.body.app;
+    const target = req.body.total;
+    let deadline = req.body.deadline;
+    //let { type, goal, target, deadline } = req.body;
+    deadline = new Date(deadline);
+    deadline = datecalculater(deadline);
     try {
         if (req.session.userId) {
-            await newUser.findByIdAndUpdate(req.session.userId, {
-                    $push: {
-                        newgoal: { 
-                            type: type,
-                            goal: goal,
-                            target: target,
-                            deadline: deadline,
-                            done: 0 
+            if(type == 'weekly'){
+                if(goal == 'spotifyhours'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.spotify': {
+                                goal: `Listen ${target} Hours on Spotify`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F3B5;',
+                                done: 0
+                            }
                         }
-                    }
-                },
-                { new: true }
-            );
+                    }); 
+                }else if(goal == 'codeforcesproblem'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.codeforces': {
+                                goal: `Solve ${target} problem on Codeforces`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F4BB;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'addeventcalender'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.calender': {
+                                goal: `Add ${target} Events on Calendar`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F4C5;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'addcommitgithub'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.github': {
+                                goal: `Make ${target} Commits on Github`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F419;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'leetcodeproblem'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.leetcode': {
+                                goal: `Solve ${target} Problem on Leetcode`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F4BB;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                } 
+            }else if(type == 'monthly'){
+                if(goal == 'spotifyhours'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.spotify': {
+                                goal: `Listen ${target} Hours on Spotify`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F3B5;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'codeforcesproblem'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.codeforces': {
+                                goal: `Solve ${target} Problem on Codeforces`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F4BB;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'addeventcalender'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.calender': {
+                                goal: `Add ${target} Events on Calendar`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F4C5;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'addcommitgithub'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.github': {
+                                goal: `Make ${target} Commits on Github`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F419;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'leetcodeproblem'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.leetcode': {
+                                goal: `Solve ${target} Problem on Leetcode`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F4BB;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                } 
+            }else if(type == 'custom'){
+                if(goal == 'spotifyhours'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.spotify': {
+                                goal: `Listen ${target} Hours on Spotify`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F3B5;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'codeforcesproblem'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.codeforces': {
+                                goal: `Solve ${target} Problem on Codeforces`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F4BB;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'addeventcalender'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.calender': {
+                                goal: `Add ${target} Events on Calendar`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F4C5;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'addcommitgithub'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.github': {
+                                goal: `Make ${target} Commits on Github`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F419;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                }else if(goal == 'leetcodeproblem'){
+                   await newUser.findByIdAndUpdate(req.session.userId, {
+                        $push: {
+                            'goal.weekly.leetcode': {
+                                goal: `Solve ${target} Problem on Leetcode`,
+                                target: target,
+                                deadline: deadline,
+                                icon : '&#x1F4BB;',
+                                done: 0
+                            }
+                        }
+                    }); 
+                } 
+            }
             res.status(200).redirect('/goals');
-        }else{
+        } else {
             res.status(501).redirect('/');
         }
 
@@ -2793,7 +3488,7 @@ app.post('/reports', async (req, res) => {
         if (req.session.userId) {
             if (type == 'weekly') {
                 //making of functionlet dt = when;
-                let dt =new Date(when) ;
+                let dt = new Date(when);
 
                 const user = await newUser.findById(req.session.userId);
 
@@ -2948,8 +3643,8 @@ app.post('/reports', async (req, res) => {
                 let codeforceslanguage = [];
                 let codeforcestime = [];
                 let codeforcessize = [];
-                let cfrating = user.codeforces.currentrating ;
-                let cfrank= user.codeforces.currentrank;
+                let cfrating = user.codeforces.currentrating;
+                let cfrank = user.codeforces.currentrank;
 
                 for (let i = ind2; i >= ind1; i--) {
                     codeforcesname[ind] = user.codeforces.content[i].name;
@@ -3110,9 +3805,9 @@ app.post('/reports', async (req, res) => {
 
                 if (githubforold == 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.') {
                     doc.fontSize(25)
-                    .text(githubforold, 50, 225, {
-                        align : 'center'
-                    })
+                        .text(githubforold, 50, 225, {
+                            align: 'center'
+                        })
                 } else {
                     chartconfig = {
                         type: 'bar',
@@ -3652,8 +4347,8 @@ app.post('/reports', async (req, res) => {
                         }]
                     }]
                 };
-                
-                let [responsegithub , responsecodeforces , responsespotify , responsecalender] = await Promise.all([
+
+                let [responsegithub, responsecodeforces, responsespotify, responsecalender] = await Promise.all([
                     axios.post(geminiurl, requestBodygithub, {
                         headers: { 'Content-Type': 'application/json' }
                     }),
@@ -3667,9 +4362,9 @@ app.post('/reports', async (req, res) => {
                         headers: { 'Content-Type': 'application/json' }
                     })
                 ]);
-                
+
                 let replygithub = responsegithub.data.candidates[0].content.parts[0].text;
-                
+
                 let replycodeforces = responsecodeforces.data.candidates[0].content.parts[0].text;
 
                 let replyspotify = responsespotify.data.candidates[0].content.parts[0].text;
@@ -3681,7 +4376,7 @@ app.post('/reports', async (req, res) => {
                     width: 500,
                     align: 'justify'
                 });
-                
+
                 doc.fontSize(11).font('Helvetica-Bold').fillColor('#000000').text(replygithub, 50, 175, {
                     width: 500,
                     align: 'justify'
@@ -3691,7 +4386,7 @@ app.post('/reports', async (req, res) => {
                     width: 500,
                     align: 'justify'
                 });
-                
+
                 doc.fontSize(11).font('Helvetica-Bold').fillColor('#000000').text(replycodeforces, 50, 455, {
                     width: 500,
                     align: 'justify'
@@ -3716,7 +4411,7 @@ app.post('/reports', async (req, res) => {
                     width: 500,
                     align: 'justify'
                 });
-                
+
                 doc.fontSize(11).font('Helvetica-Bold').fillColor('#000000').text(replyspotify, 50, 125, {
                     width: 500,
                     align: 'justify'
@@ -3740,7 +4435,7 @@ app.post('/reports', async (req, res) => {
 
                 writestream.on('finish', () => {
                     res.download(reportFilePath, 'Performance_Report.pdf', (err) => {
-                        if (err){ 
+                        if (err) {
                             console.error(err)
                         };
                         fs.unlink(reportFilePath, (unlinkErr) => {
@@ -3898,8 +4593,8 @@ app.post('/reports', async (req, res) => {
                 let codeforceslanguage = [];
                 let codeforcestime = [];
                 let codeforcessize = [];
-                let cfrating = user.codeforces.currentrating ;
-                let cfrank= user.codeforces.currentrank;
+                let cfrating = user.codeforces.currentrating;
+                let cfrank = user.codeforces.currentrank;
 
                 for (let i = ind2; i >= ind1; i--) {
                     codeforcesname[ind] = user.codeforces.content[i].name;
@@ -4183,7 +4878,7 @@ app.post('/reports', async (req, res) => {
                 if (githubforold == 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.') {
                     doc.fontSize(25)
                         .text(githubforold, 50, 225, {
-                            align : 'center'
+                            align: 'center'
                         })
                 } else {
                     chartconfig = {
@@ -4335,11 +5030,11 @@ app.post('/reports', async (req, res) => {
 
                 try {
                     let chartlistening = await chartmaking(chartconfig);
-                
-                    listeningimage = chartlistening ;
-                
+
+                    listeningimage = chartlistening;
+
                     if (chartlistening) {
-                        doc.image(chartlistening, 50, 225, { width: 500 , height : 300 });
+                        doc.image(chartlistening, 50, 225, { width: 500, height: 300 });
                     }
                 } catch (error) {
                     console.error("Chart download fail ho gaya:", error.message);
@@ -4359,9 +5054,9 @@ app.post('/reports', async (req, res) => {
 
                 try {
                     let chartsongs = await chartmaking(chartconfig);
-                
+
                     if (chartsongs) {
-                        doc.image(chartsongs, 50, 550, { width: 500 , height : 200});
+                        doc.image(chartsongs, 50, 550, { width: 500, height: 200 });
                     }
                 } catch (error) {
                     console.error("Chart download fail ho gaya:", error.message);
@@ -4468,9 +5163,9 @@ app.post('/reports', async (req, res) => {
 
                 try {
                     let chartanswertype = await chartmaking(chartconfig);
-                
+
                     if (chartanswertype) {
-                        doc.image(chartanswertype, 50, 500, { width: 500 , height : 250 });
+                        doc.image(chartanswertype, 50, 500, { width: 500, height: 250 });
                     }
                 } catch (error) {
                     console.error("Chart download fail ho gaya:", error.message);
@@ -4511,9 +5206,9 @@ app.post('/reports', async (req, res) => {
 
                 try {
                     let charthours = await chartmaking(chartconfig);
-                
+
                     if (charthours) {
-                        doc.image(charthours, 50, 125, { width: 500 , height : 280});
+                        doc.image(charthours, 50, 125, { width: 500, height: 280 });
                     }
                 } catch (error) {
                     console.error("Chart download fail ho gaya:", error.message);
@@ -4726,7 +5421,7 @@ app.post('/reports', async (req, res) => {
                     }]
                 };
 
-                let [responsegithub , responsecodeforces , responsespotify , responsecalender] = await Promise.all([
+                let [responsegithub, responsecodeforces, responsespotify, responsecalender] = await Promise.all([
                     axios.post(geminiurl, requestBodygithub, {
                         headers: { 'Content-Type': 'application/json' }
                     }),
@@ -4740,21 +5435,21 @@ app.post('/reports', async (req, res) => {
                         headers: { 'Content-Type': 'application/json' }
                     })
                 ]);
-                
+
                 let replygithub = responsegithub.data.candidates[0].content.parts[0].text;
-                
+
                 let replycodeforces = responsecodeforces.data.candidates[0].content.parts[0].text;
 
                 let replyspotify = responsespotify.data.candidates[0].content.parts[0].text;
 
                 let replycalender = responsecalender.data.candidates[0].content.parts[0].text;
 
-                
+
                 doc.fontSize(20).font('Helvetica-Bold').fillColor('#000000').text("1. Github", 50, 150, {
                     width: 500,
                     align: 'justify'
                 });
-                
+
                 doc.fontSize(11).font('Helvetica-Bold').fillColor('#000000').text(replygithub, 50, 175, {
                     width: 500,
                     align: 'justify'
@@ -4848,7 +5543,7 @@ app.post('/reports', async (req, res) => {
 
                 writestream.on('finish', () => {
                     res.download(reportFilePath, 'Performance_Report.pdf', (err) => {
-                        if (err){ 
+                        if (err) {
                             console.error(err)
                         };
                         fs.unlink(reportFilePath, (unlinkErr) => {
@@ -4984,8 +5679,8 @@ app.post('/reports', async (req, res) => {
                 let codeforceslanguage = [];
                 let codeforcestime = [];
                 let codeforcessize = [];
-                let cfrating = user.codeforces.currentrating ;
-                let cfrank= user.codeforces.currentrank;
+                let cfrating = user.codeforces.currentrating;
+                let cfrank = user.codeforces.currentrank;
 
                 for (let i = ind2; i >= ind1; i--) {
                     codeforcesname[ind] = user.codeforces.content[i].name;
@@ -5292,23 +5987,23 @@ app.post('/reports', async (req, res) => {
                 let chartconfig = {
                     type: 'bar',
                     data: {
-                        labels: ['No. of Commits','Star earned','Follow increase','Songs listening hours','Songs played','Follow artist'],
+                        labels: ['No. of Commits', 'Star earned', 'Follow increase', 'Songs listening hours', 'Songs played', 'Follow artist'],
                         datasets: [{
                             label: 'Day Insigth',
-                            data: [githubcommit,githubstars,githbufollow,spotifyhours,spotifysong,spotifyartist]
+                            data: [githubcommit, githubstars, githbufollow, spotifyhours, spotifysong, spotifyartist]
                         }]
                     }
                 };
-            
+
                 let commitimage
-            
+
                 try {
                     let chartcommit = await chartmaking(chartconfig);
-                
+
                     commitimage = chartcommit;
-                
+
                     if (chartcommit) {
-                        doc.image(chartcommit, 50, 450, { width: 500 , height : 250 });
+                        doc.image(chartcommit, 50, 450, { width: 500, height: 250 });
                     }
                 } catch (error) {
                     console.error("Chart download fail ho gaya:", error.message);
@@ -5380,9 +6075,9 @@ app.post('/reports', async (req, res) => {
                 };
 
                 let response = await axios.post(geminiurl, requestBody, {
-                  headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' }
                 });
-                
+
                 // Gemini ka response extract karna
                 let reply = response.data.candidates[0].content.parts[0].text;
 
@@ -5397,7 +6092,7 @@ app.post('/reports', async (req, res) => {
 
                 writestream.on('finish', () => {
                     res.download(reportFilePath, 'Performance_Report.pdf', (err) => {
-                        if (err){ 
+                        if (err) {
                             console.error(err)
                         };
                         fs.unlink(reportFilePath, (unlinkErr) => {
@@ -5413,7 +6108,29 @@ app.post('/reports', async (req, res) => {
     } catch (err) {
         console.error(err);
     }
-})
+});
+
+app.post('/settingsnotifications', async (req, res) => {
+    try {
+        console.log('1');
+        const goalreminders = req.body.goalreminders === 'on';
+        const weeklysummary = req.body.weeklysummary === 'on';
+        const productupdates = req.body.productupdates === 'on';
+
+        await newUser.findByIdAndUpdate(req.session.userId, {
+            $set : {
+                'checkbox.goalreminders' : goalreminders ,
+                'checkbox.weeklysummary' : weeklysummary ,
+                'checkbox.productupdates' : productupdates
+            }
+        });
+
+        res.status(200).redirect('/settingsnotifications');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+});
 
 app.post('/settingsprivacy', async (req, res) => {
     let user = '';
