@@ -48,9 +48,11 @@ head
         h2 Dashboard
       .header-right
         .notification-wrapper
-          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
-          span.badge 3
-        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+            button(onclick='window.location.href="/notifications"')
+              img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')            
+            span.badge 3
+        button(onclick='window.location.href="/settingsprofile"')
+          img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
     .content(onclick='moggle()')
       // header
       header.settings-header
@@ -59,10 +61,10 @@ head
           p  Manage your account preferences and application settings. 
       .settings-page
         .settings-bar
-          button.active(onclick="window.location.href='/settingsprofile' ")
+          button(onclick="window.location.href='/settingsprofile' ")
             img(src='/static/photos/settings profile icon.png' alt='')
             span Profile
-          button(onclick="window.location.href='/settingsnotifications' ")
+          button.active(onclick="window.location.href='/settingsnotifications' ")
             img(src='/static/photos/settings notifications icon.png' alt='')
             span Notifications
           button(onclick="window.location.href='/settingstheme' ")
@@ -80,27 +82,50 @@ head
         .notifications-page
           .notifications-heading
             h3 Notifications
-          .items-container
-            .notification-item
-              div
-                h4 Goal Reminders
-                p Get reminders for your goals.
-              label.switch
-                input(type='checkbox' checked='')
-                span.slider
-            .notification-item
-              div
-                h4 Weekly Summary
-                p Receive weekly progress reports.
-              label.switch
-                input(type='checkbox')
-                span.slider
-            .notification-item
-              div
-                h4 Product Updates
-                p Receive updates of new features.
-              label.switch
-                input(type='checkbox' checked='')
-                span.slider
-            button.save-btn Save Changes
+          form(action="/settingsnotifications" method="post")
+            .items-container
+              .notification-item
+                div
+                  h4 Goal Reminders
+                  p Get reminders for your goals.
+                label.switch
+                  input(type='checkbox' name='goalreminders' checked=user.checkbox.goalreminders || '')
+                  span.slider
+              .notification-item
+                div
+                  h4 Weekly Summary
+                  p Receive weekly progress reports.
+                label.switch
+                  input(type='checkbox' name='weeklysummary' checked=user.checkbox.weeklysummary || '')
+                  span.slider
+              .notification-item
+                div
+                  h4 Product Updates
+                  p Receive updates of new features.
+                label.switch
+                  input(type='checkbox' name='productupdates' checked=user.checkbox.productupdates || '')
+                  span.slider
+              button.save-btn(type="submit") Save Changes
+//            .notification-item
+//              div
+//                h4 Goal Reminders
+//                p Get reminders for your goals.
+//              label.switch
+//                input(type='checkbox' checked='')
+//                span.slider
+//            .notification-item
+//              div
+//                h4 Weekly Summary
+//                p Receive weekly progress reports.
+//              label.switch
+//                input(type='checkbox')
+//                span.slider
+//            .notification-item
+//              div
+//                h4 Product Updates
+//                p Receive updates of new features.
+//              label.switch
+//                input(type='checkbox' checked='')
+//                span.slider
+//            button.save-btn Save Changes
 script(src='/static/settingsnotifications.js')
