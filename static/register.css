@@ -15,12 +15,13 @@ body {
     justify-content: center;
     align-items: center;
     margin: auto;
-    background-color: white;
     color: black;
-    min-height: 98vh;
     padding: 20px 0;
-    width: 300px;
     border-radius: 25px;
+    border: 1px solid black;
+    width: 400px;
+    position: relative;
+    top : 25px;
 }
 
 p {
@@ -31,16 +32,19 @@ form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: left;
+    justify-content: center;
     padding: 20px;
-    width: calc(100% - 40px);
+    width: 300px;
+    position: relative;
+    left: 30px;
 }
 
 .btn {
     border-radius: 8px;
-    background-color: rgb(85, 75, 75);
-    width: 100%;
+    background-color: rgb(224 222 222);
+    width: 80%;
     box-sizing: border-box;
+    padding: 3px 7px;
 }
 
 button {
@@ -49,19 +53,35 @@ button {
     background-color: black;
     color: azure;
     cursor: pointer;
-    border-width: 5px;
+    border-width: 2px;
+    border-radius: 20px;
+    position: relative;
+    right: 30px;
+    padding: 5px 20px;
+}
+
+#cancelbtn {
+    margin: 20px 5px;
+    align-self: center;
+    background-color: rgb(242 28 28);
+    color: #000000;
+    cursor: pointer;
+    border-width: 1px;
     border-radius: 10px;
+    position: relative;
+    right: 30px;
+    padding: 5px 15px;
 }
 
 #error_message {
     color: red;
     font-size: 100%;
     width: 100%;
-    text-align: center;
     white-space: normal;
 }
 
 #emailmessage {
+    margin :  0px,0px,0px,0px;
     color: red;
     font-size: 100%;
     width: 100%;

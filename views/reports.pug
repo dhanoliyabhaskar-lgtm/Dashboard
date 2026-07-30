@@ -2,7 +2,7 @@ doctype html
 head
   meta(charset='UTF-8')
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title Project01
+  title Report
   link(rel='stylesheet' href='/static/reports.css')
 .container
   // Sidebar
@@ -47,9 +47,11 @@ head
         h2 Dashboard
       .header-right
         .notification-wrapper
-          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
-          span.badge 3
-        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+            button(onclick='window.location.href="/notifications"')
+              img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')            
+            span.badge 3
+        button(onclick='window.location.href="/settingsprofile"')
+          img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
     .content(onclick='moggle()')
       // header
       header.reports-header
@@ -57,19 +59,18 @@ head
           h2  Reports 
           p  Generate and download your productivity reports. 
       // Filters
-      .report-filters
+      form(action='/reports' method='post')
         .filter-group
           .filter
             label Report Type:
-            select
-              option Weekly
-              option Monthly
-              option Custom
+            select(name='type')
+              option(value='weekly') Weekly
+              option(value='monthly') Monthly
+              option(value='custom') Custom
           .filter
             label Select Starting Date:
-            input(type='date')
-        button.generate-btn
-          | Generate Report
+            input(type='date' name='when' required=true)
+        button.generate-btn(type='submit') Generate Report
       // Available Reports
       .reports-card
         h3 Available Reports In PDF Format

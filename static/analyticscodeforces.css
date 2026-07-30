@@ -250,6 +250,10 @@
     text-overflow: ellipsis;
 }
 
+.verdict {
+    color: red;
+}
+
 .table h4 {
     margin: 5px;
 }
@@ -380,6 +384,18 @@ table td:first-child {
         display: inline-block;
     }
 
+    .notification-wrapper button {
+         cursor: pointer;
+         border: none;
+         background-color: white;
+     }
+
+     .header-right button {
+        background: none;
+        cursor: pointer;
+        border: none;
+     }
+
     .badge {
         position: absolute;
         top: -5px;
@@ -438,7 +454,7 @@ table td:first-child {
         justify-content: center;
     }
 
-     .analytics-cards {
+    .analytics-cards {
         grid-template-columns: repeat(1, 1fr);
     }
 }
@@ -451,10 +467,10 @@ table td:first-child {
 
 /* Mobile */
 @media (max-width: 680px) {
-     .table .scroll-hint {
+    .table .scroll-hint {
         display: flex;
         justify-content: center;
-     }
+    }
 }
 
 

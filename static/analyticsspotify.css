@@ -604,6 +604,18 @@ th:last-child {
         display: inline-block;
     }
 
+     .notification-wrapper button {
+         cursor: pointer;
+         border: none;
+         background-color: white;
+     }
+
+     .header-right button {
+        background: none;
+        cursor: pointer;
+        border: none;
+     }
+
     .badge {
         position: absolute;
         top: -5px;

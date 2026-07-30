@@ -126,7 +126,7 @@
  /* Tabs */
  .goal-tabs {
      display: flex;
-     margin: 25px 0px;
+     margin: 25px 25px;
      width: 100%;
      overflow-x: auto;
      scrollbar-width: none;
@@ -139,7 +139,7 @@
      display: none;
  }
 
- .goal-tabs button{
+ .goal-tabs button {
      border: none;
      background: none;
      cursor: pointer;
@@ -253,7 +253,7 @@
          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
          margin-bottom: 15px;
          position: sticky;
-         top: 10;
+         top: 10px;
          z-index: 15;
      }
 
@@ -308,6 +308,18 @@
          display: inline-block;
      }
 
+     .notification-wrapper button {
+         cursor: pointer;
+         border: none;
+         background-color: white;
+     }
+
+     .header-right button {
+         background: none;
+         cursor: pointer;
+         border: none;
+     }
+
      .badge {
          position: absolute;
          top: -5px;
@@ -322,9 +334,9 @@
  }
 
  /* Tablets */
-@media (max-width: 370px) {
+ @media (max-width: 370px) {
 
-    .main-content {
+     .main-content {
          font-size: 0.75rem;
      }
 
@@ -337,25 +349,26 @@
      }
 
      .goal-card {
-        padding: 13px;
-        gap: 10px;
+         padding: 13px;
+         gap: 10px;
      }
 
      .goal-icon {
-        font-size: 17px;
-        width: 35px;
-        height: 35px;
+         font-size: 17px;
+         width: 35px;
+         height: 35px;
      }
 
-     .goal-bottom p, span{
-        font-size: small;
+     .goal-bottom p,
+     span {
+         font-size: small;
      }
 
      .goal-btn {
          padding: 5px 6px;
      }
 
-}
+ }
 
 
  /* Mobile */
@@ -373,17 +386,18 @@
      }
 
      .goal-card {
-        padding: 15px;
+         padding: 15px;
      }
 
      .goal-icon {
-        font-size: 17px;
-        width: 35px;
-        height: 35px;
+         font-size: 17px;
+         width: 35px;
+         height: 35px;
      }
 
-     .goal-bottom p, span{
-        font-size: small;
+     .goal-bottom p,
+     span {
+         font-size: small;
      }
 
      .goal-btn {
@@ -401,13 +415,14 @@
      }
 
      .goal-icon {
-        font-size: 18px;
-        width: 40px;
-        height: 40px;
+         font-size: 18px;
+         width: 40px;
+         height: 40px;
      }
 
-     .goal-bottom p, span{
-        font-size: small;
+     .goal-bottom p,
+     span {
+         font-size: small;
      }
 
      .goal-btn {

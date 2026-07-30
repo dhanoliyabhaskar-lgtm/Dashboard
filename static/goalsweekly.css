@@ -258,7 +258,7 @@
          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
          margin-bottom: 15px;
          position: sticky;
-         top: 10;
+         top: 10px;
          z-index: 15;
      }
 
@@ -311,6 +311,18 @@
      .notification-wrapper {
          position: relative;
          display: inline-block;
+     }
+
+       .notification-wrapper button {
+         cursor: pointer;
+         border: none;
+         background-color: white;
+     }
+
+     .header-right button {
+         background: none;
+         cursor: pointer;
+         border: none;
      }
 
      .badge {

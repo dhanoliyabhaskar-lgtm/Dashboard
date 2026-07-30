@@ -50,7 +50,9 @@ app.use(passport.session());
 
 //mongoose
 
-mongoose.connect('mongodb://127.0.0.1:27017/soc_project_id');
+//mongoose.connect('mongodb://127.0.0.1:27017/soc_project_id');
+
+mongoose.connect(process.env.db_username);
 
 
 var newuserSchema = new mongoose.Schema({
@@ -140,10 +142,12 @@ var newuserSchema = new mongoose.Schema({
         refreshtoken: { type: String },
 
         totaleventsforweek: {
-            type: Number
+            type: Number,
+            default : 0
         },
         totaleventsforlastweek: {
-            type: Number
+            type: Number,
+            default : 0
         },
         totaleventsforlastweekarr: [{
             type: Number,
@@ -152,9 +156,11 @@ var newuserSchema = new mongoose.Schema({
 
         totalbusytimeforweek: {
             type: Number,
+            default : 0
         },
         totalbusytimeforlastweek: {
-            type: Number
+            type: Number,
+            default : 0
         },
         totalbusytimeforlastweekarr: [{
             type: Number,
@@ -162,17 +168,21 @@ var newuserSchema = new mongoose.Schema({
         }],
 
         totalfreetimeforweek: {
-            type: Number
+            type: Number,
+            default : 0
         },
         totalfreetimeforlastweek: {
-            type: Number
+            type: Number,
+            default : 0
         },
 
         avgeventtimeforweek: {
-            type: Number
+            type: Number,
+            default : 0
         },
         avgeventtimeforlastweek: {
-            type: Number
+            type: Number,
+            default : 0
         },
         avgeventtimeforlastweekarr: [{
             type: Number,
@@ -213,12 +223,12 @@ var newuserSchema = new mongoose.Schema({
 
         todaybusy: {
             free: {
-                hr: { type: Number },
-                min: { type: Number }
+                hr: { type: Number ,default : 0},
+                min: { type: Number ,default : 0}
             },
             busy: {
-                hr: { type: Number },
-                min: { type: Number }
+                hr: { type: Number ,default : 0},
+                min: { type: Number ,default : 0}
             }
         },
 
@@ -255,16 +265,16 @@ var newuserSchema = new mongoose.Schema({
             size: { type: String }
         }],
 
-        totalrepo: { type: Number },
+        totalrepo: { type: Number ,default : 0},
 
-        totalstar: { type: Number },
+        totalstar: { type: Number ,default : 0},
 
-        totalfollow: { type: Number },
+        totalfollow: { type: Number ,default : 0},
 
-        week: { type: Number },
+        week: { type: Number ,default : 0},
 
-        thisweekcommit : {type : Number},
-        lastweekcommit : {type : Number}
+        thisweekcommit: { type: Number ,default : 0},
+        lastweekcommit: { type: Number ,default : 0}
 
     },
 
@@ -277,11 +287,11 @@ var newuserSchema = new mongoose.Schema({
 
         currentrank: { type: String, default: "NEWBIE" },
 
-        followcount: { type: Number },
+        followcount: { type: Number ,default : 0},
 
-        problemsolved: { type: Number },
-        problemsolvedthisweek: { type: Number },
-        problemsolvedlastweek: { type: Number },
+        problemsolved: { type: Number ,default : 0},
+        problemsolvedthisweek: { type: Number ,default : 0},
+        problemsolvedlastweek: { type: Number ,default : 0},
         problemsolvedthisweekarr: [{
             type: Number,
             default: [0, 0, 0, 0, 0, 0, 0]
@@ -324,159 +334,164 @@ var newuserSchema = new mongoose.Schema({
         }]
     },
 
+    aisummary: {
+        type: String,
+        default: 'Connect your App first'
+    },
+
     goal: {
-        weekly : {
-            spotify : {
-                type : [{
+        weekly: {
+            spotify: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F3B5;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F3B5;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
                     {
                         type: 'weekly',
                         goal: 'Listen to Music for 15 Hours',
                         target: 15,
                         deadline: 'aug 9',
-                        icon : '&#x1F3B5;',
+                        icon: '&#x1F3B5;',
                         done: 0
                     }
                 ]
             },
-            github : {
-                type : [{
+            github: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F419;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F419;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
 
                 ]
             },
-            calender : {
-                type : [{
+            calender: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F4C5;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F4C5;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
 
                 ]
             },
-            codeforces : {
-                type : [{
+            codeforces: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F4BB;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F4BB;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
 
                 ]
             }
         },
-        monthly :  {
-            spotify : {
-                type : [{
+        monthly: {
+            spotify: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F3B5;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F3B5;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
 
                 ]
             },
-            github : {
-                type : [{
+            github: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F419;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F419;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
                     {
                         goal: 'Make 50 GitHub Commits',
                         target: 50,
                         deadline: 'sep 2',
-                        icon : '&#x1F419;',
+                        icon: '&#x1F419;',
                         done: 0
                     }
                 ]
             },
-            calender : {
-                type : [{
+            calender: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F4C5;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F4C5;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
 
                 ]
             },
-            codeforces : {
-                type : [{
+            codeforces: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F4BB;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F4BB;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
 
                 ]
             }
         },
-        custom :  {
-            spotify : {
-                type : [{
+        custom: {
+            spotify: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F3B5;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F3B5;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
 
                 ]
             },
-            github : {
-                type : [{
+            github: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F419;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F419;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
 
                 ]
             },
-            calender : {
-                type : [{
+            calender: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F4C5;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F4C5;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
 
                 ]
             },
-            codeforces : {
-                type : [{
+            codeforces: {
+                type: [{
                     goal: { type: String, default: "" },
                     target: { type: Number, default: null },
                     deadline: { type: String, default: null },
-                    icon : {type : String, default : '&#x1F4BB;' },
-                    done: { type: Number, default: 0 } 
-                }],default : [
+                    icon: { type: String, default: '&#x1F4BB;' },
+                    done: { type: Number, default: 0 }
+                }], default: [
                     {
                         goal: 'Solve 100 Codeforces Problems',
                         target: 100,
                         deadline: 'aug 15',
-                        icon : '&#x1F4BB;',
+                        icon: '&#x1F4BB;',
                         done: 0
                     }
                 ]
@@ -485,8 +500,8 @@ var newuserSchema = new mongoose.Schema({
     },
 
     totalnotification: {
-        type: Number ,
-        default : 2
+        type: Number,
+        default: 2
     },
 
     notification: {
@@ -533,7 +548,8 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'The Real Additive',
                 name: 'No. of hours of songs listen on spotify',
                 level: 1,
-                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
+                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [10, 30, 75, 200, 500]
             },
@@ -541,7 +557,8 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'Event Maker',
                 name: 'Hours of Events make',
                 level: 1,
-                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
+                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [10, 50, 100, 500, 2000]
             },
@@ -549,7 +566,8 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'Commit Maker',
                 name: 'Make Commit on Github',
                 level: 1,
-                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
+                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [10, 25, 50, 100, 500]
             },
@@ -557,7 +575,8 @@ var newuserSchema = new mongoose.Schema({
                 topic: "Real Coder",
                 name: 'Make repo on Github',
                 level: 1,
-                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
+                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [1, 5, 10, 25, 50]
             },
@@ -565,7 +584,8 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'The Psyco',
                 name: 'Song played on Spotify',
                 level: 1,
-                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
+                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [25, 100, 250, 1000, 5000]
             },
@@ -573,7 +593,8 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'App Lover',
                 name: 'Connect to the third party apps',
                 level: 1,
-                bgimage: ['/static/photos/level 1.png', '/static/photos/level 2.png', '/static/photos/level 3.png', '/static/photos/level 4.png', '/static/photos/level 5.png'],
+                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [1, 2, 5, 10, 20]
             },
@@ -588,10 +609,10 @@ var newuserSchema = new mongoose.Schema({
         ]
     },
 
-    checkbox : {
-        goalreminders : {type:Boolean , default : true},
-        weeklysummary : {type:Boolean , default : false},
-        productupdates : {type:Boolean , default : true}
+    checkbox: {
+        goalreminders: { type: Boolean, default: true },
+        weeklysummary: { type: Boolean, default: false },
+        productupdates: { type: Boolean, default: true }
     }
 });
 var newUser = mongoose.model('newUser', newuserSchema);
@@ -1420,6 +1441,280 @@ async function problemsort(userId, diff) {
     } catch (err) {
         console.error(err);
     }
+};
+
+// AI Summary
+
+async function ai(userId) {
+    const user = await newUser.findById(userId);
+    try {
+        let dt = user.github.commitsovertime[0].value;
+
+        let realdate = new Date();
+
+        let diff = realdate - dt;
+
+        diff = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        let datearr = [datecalculater(dt)];
+
+        let daybefore = datecalculater(dt - (1000 * 60 * 60 * 24))
+
+        let spotifyhours = 5; //user.spotify.totallisteningtime[0];
+        let spotifysong = 20;//user.spotify.songplayed[0];
+        let spotifyartist = 2;//user.spotify.newartist[0];
+
+        let ind = 0;
+
+        let calenderhours = 4; //user.calender.scheduletime[diff].value;
+        let calendereventsname = [];
+        let calendereventstime = [];
+        let calendereventsdate = [];
+
+        let check = true;
+
+        ind = 0;
+
+        while (check) {
+            if (user.calender.events.length == ind) {
+                break;
+            }
+            if (daybefore == user.calender.events[ind].date) {
+                check = false;
+            }
+            ind++;
+        }
+
+        ind--;
+        ind--;
+
+        check = true;
+
+        let ind1 = 0;
+
+        while (check) {
+            if (user.calender.events.length == ind1) {
+                break;
+            }
+            if (datearr[0] == user.calender.events[ind1].date) {
+                check = false;
+            }
+            ind1++;
+        }
+
+        ind1--;
+
+        let ind2 = ind;
+        ind = 0;
+
+        let eventscount = 0;
+
+        //for (let i = ind2; i >= ind1; i--) {
+        //    calendereventsname[ind] = user.calender.events[i].name;
+        //    calendereventsdate[ind] = user.calender.events[i].date;
+        //    calendereventstime[ind] = user.calender.events[i].time;
+        //    eventscount++;
+        //    ind++;
+        //};
+
+        calendereventsname[0] = 'padai'
+        calendereventsdate[0] = 'Jul 28'
+        calendereventstime[0] = '10:0 AM'
+
+        calendereventsname[1] = 'lunch'
+        calendereventsdate[1] = 'Jul 28'
+        calendereventstime[1] = '1:0 PM'
+
+        calendereventsname[2] = 'GYM'
+        calendereventsdate[2] = 'Jul 28'
+        calendereventstime[2] = "5:0 PM"
+
+        ind1 = 0;
+
+        check = true;
+
+        ind = 0;
+
+        while (check) {
+            if (user.codeforces.content.length == ind) {
+                break;
+            }
+            if (daybefore == user.codeforces.content[ind].date) {
+                check = false;
+            }
+            ind++;
+        }
+
+        ind--;
+        ind--;
+
+        check = true;
+
+        while (check) {
+            if (user.codeforces.content.length == ind1) {
+                break;
+            }
+            if (datearr[0] == user.codeforces.content[ind1].date) {
+                check = false;
+            }
+            ind1++;
+        }
+
+        ind1--;
+
+        ind2 = ind;
+        ind = 0;
+
+        let codeforcesname = [];
+        let codeforcesverdict = [];
+        let codeforceslanguage = [];
+        let codeforcestime = [];
+        let codeforcessize = [];
+        let cfrating = user.codeforces.currentrating;
+        let cfrank = user.codeforces.currentrank;
+
+        for (let i = ind2; i >= ind1; i--) {
+            codeforcesname[ind] = user.codeforces.content[i].name;
+            codeforcesverdict[ind] = user.codeforces.content[i].type;
+            codeforceslanguage[ind] = user.codeforces.content[i].language;
+            codeforcestime[ind] = user.codeforces.content[i].duration;
+            codeforcessize[ind] = user.codeforces.content[i].memory;
+            ind++;
+        };
+
+        ind1 = 0;
+
+        check = true;
+
+        ind = 0;
+
+        while (check) {
+            if (user.github.repolist.length == ind) {
+                break;
+            }
+            if (daybefore == user.github.repolist[ind].createdat) {
+                check = false;
+            }
+            ind++;
+        }
+
+        ind--;
+        ind--;
+
+        check = true;
+
+        while (check) {
+            if (user.github.repolist.length == ind1) {
+                break;
+            }
+            if (datearr[0] == user.github.repolist[ind1].createdat) {
+                check = false;
+            }
+            ind1++;
+        }
+
+        ind1--;
+
+        ind2 = ind;
+        ind = 0;
+
+        let githubcommit;
+        let githubreponame = ['dashboard'];
+        let githubrepostar = [5];
+        let githubrepowatcher = [1];
+        let githubrepolanguage = ['JS'];
+        let githubrepofork = [0];
+        let githubreposize = ['2000 KB'];
+        let githbufollow = user.github.totalstar;
+        let githubstars = user.github.totalfollow;
+
+        //for (let i = ind2; i >= ind1; i--) {
+        //    githubreponame[ind] = user.github.repolist[i].name;
+        //    githubrepostar[ind] = user.github.repolist[i].stars;
+        //    githubrepowatcher[ind] = user.github.repolist[i].watchers;
+        //    githubrepolanguage[ind] = user.github.repolist[i].language;
+        //    githubrepofork[ind] = user.github.repolist[i].forks;
+        //    githubreposize[ind] = user.github.repolist[i].size;
+        //};
+
+        ind = 0;
+
+        let githubforold = '';
+
+        if (diff > 30) {
+            githubforold = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
+        } else {
+            githubcommit = user.github.commitsovertime[diff].value;
+        };
+
+        const geminiurl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+
+        let requestBody = {
+            contents: [{
+                parts: [{
+                    text: `You are an elite productivity strategist, technical mentor, and personal lifestyle analyst. Your task is to generate a comprehensive, long-form Daily Digital Life Wrap-up summarizing a developer's single day of activity.
+
+                                I am providing you with the exact metrics, repository details, competitive programming submissions, and schedule events for this specific day entirely as structured text and parallel arrays.
+
+                                GLOBAL DAILY METRICS FOR ${datearr[0]}:
+                                - GitHub Commits Shipped: ${githubcommit}
+                                - Repository Stars Earned: ${githubstars}
+                                - New GitHub Followers: ${githbufollow}
+                                - Codeforces Current Rating: ${cfrating} (Rank: ${cfrank})
+                                - Total Time Tracked on Tasks: ${calenderhours} minutes
+                                - Total Calendar Events/Tasks Managed: ${calenderhours}
+                                - Spotify Music Listening Duration: ${spotifyhours} hours
+                                - Total Songs Played: ${spotifysong}
+                                - New Music Artists Followed: ${spotifyartist}
+
+                                DAILY COMPONENT DETAILS (Respective Columns Arrays):
+                                1. REPOSITORIES WORKED ON:
+                                   - Names: ${JSON.stringify(githubreponame)} | Primary Languages: ${JSON.stringify(githubrepolanguage)} | Stars: ${JSON.stringify(githubrepostar)} | Forks: ${JSON.stringify(githubrepofork)} | Sizes: ${JSON.stringify(githubreposize)}
+                                2. CODEFORCES SUBMISSIONS:
+                                   - Problem Names: ${JSON.stringify(codeforcesname)} | Verdicts: ${JSON.stringify(codeforcesverdict)} | Languages: ${JSON.stringify(codeforceslanguage)} | Time Take to run: ${JSON.stringify(codeforcestime)} | Memory required : ${JSON.stringify(codeforcessize)}
+                                3. SCHEDULED CALENDAR EVENTS:
+                                   - Event Names: ${JSON.stringify(calendereventsname)} | Timings: ${JSON.stringify(calendereventstime)} 
+
+                                YOUR TASK:
+                                Synthesize these diverse metrics from engineering, algorithm problem-solving, schedule execution, and musical tastes into a deep, highly engaging, cohesive 4-point daily performance evaluation.
+
+                                STRICT LAYOUT & FORMAT CONSTRAINTS :
+                                1. Format: The output MUST be a strict numbered list with EXACTLY 5 points, labeled as 1., 2., 3., 4., 5. 
+                                2. Length Control: Total word count across all points must be STRICTLY between 80-90 words (approx. 13-15 words for point no. 1,2,3,4 and remaing words limit for point 5). Each point must be a long, narrative paragraph to completely fill the lenght of 100 words.                       
+                                3. No Markdown: Do NOT use any bold (**), italics (*), or special markdown symbols.
+                                4. No Intro/Outro: Start directly with "1. " and end with the final word of the 4th point. Do not add headers, titles, or conversational pleasantries.
+                                5. Structure:
+                                   - Point 1 (Software Engineering & Open Source): Analyze their software development impact on this day. Blend the total commits, stars earned, and follower growth with the specific repositories worked on from the arrays, reflecting on code pushing frequency and technical footprint.
+                                   - Point 2 (Competitive Programming & Logic Grind): Evaluate their Codeforces activity on this day. Focus heavily on their rating position, rank status, and deep-dive into the submission arrays to analyze their debugging success rate, logic execution speed, and language choice efficiency.
+                                   - Point 3 (Routine, Time Tracking & Focus Stamina): Discuss their time management and daily calendar execution. Analyze the minutes tracked on tasks and the total events managed, matching it with specific event logs from the calendar arrays to evaluate how effectively they managed context switching and daily responsibilities.
+                                   - Point 4 (Audio Spectrum & Daily Lifestyle Suggestion): Analyze their Spotify consumption metrics. Connect their high-volume music listening patterns with their workload, and wrap up with a highly customized, witty, and actionable suggestion on how they can better balance deep-work focus minutes with lifestyle pacing tomorrow.
+                                   - Point 5 (Suggestion for next day): Analyze the whole data and give suggetion too improve the stats of the user.`
+                }]
+            }]
+        };
+
+        let reply = 'Connect App First';
+
+        try {
+            let response = await axios.post(geminiurl, requestBody, {
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            // Gemini ka response extract karna
+            reply = response.data.candidates[0].content.parts[0].text;
+        }catch(err){
+            connsole.log(err);
+        }
+
+        await newUser.findByIdAndUpdate(userId, {
+            $set: {
+                'aisummary' : reply
+        }
+        });
+
+} catch (err) {
+    console.error(err);
+}
 }
 
 // sorting funtion for achievements and goals
@@ -2450,17 +2745,17 @@ async function fetchdatafromgithub(userId) {
                         obj[`github.commitsovertime.${i}.realdate`] = realdt[i];
                     };
 
-                    
+
 
                     let obj2 = {};
 
                     let total1 = 0;
                     let total2 = 0;
-                    
-                    for (let i=0 ; i<14 ; i++){
-                        if(i<7){
+
+                    for (let i = 0; i < 14; i++) {
+                        if (i < 7) {
                             total1 = total1 + len[i];
-                        }else{
+                        } else {
                             total2 = total2 + len[i];
                         }
                     }
@@ -2510,8 +2805,8 @@ async function fetchdatafromgithub(userId) {
                             'github.totalstar': starcount,
                             'github.totalfollow': followcount,
                             'github.week': weekname,
-                            'github.thisweekcommit' : total1 ,
-                            'github.lastweekcommit' : total2
+                            'github.thisweekcommit': total1,
+                            'github.lastweekcommit': total2
                         }
                     }
                     );
@@ -2864,7 +3159,7 @@ app.get('/goalsmonthly', async (req, res) => {
     if (req.session.userId) {
         const User = await newUser.findById(req.session.userId);
         user = User;
-        //fetchdatafromcalender(req.session.userId);
+        ai(req.session.userId);
         res.status(200).render('goalsmonthly', { user: user });
     } else {
         res.status(500).redirect('/');
@@ -3285,192 +3580,192 @@ app.post('/newgoals', async (req, res) => {
     deadline = datecalculater(deadline);
     try {
         if (req.session.userId) {
-            if(type == 'weekly'){
-                if(goal == 'spotifyhours'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+            if (type === 'weekly') {
+                if (goal == 'spotifyhours') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
                             'goal.weekly.spotify': {
                                 goal: `Listen ${target} Hours on Spotify`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F3B5;',
+                                icon: '&#x1F3B5;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'codeforcesproblem'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'codeforcesproblem') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
                             'goal.weekly.codeforces': {
                                 goal: `Solve ${target} problem on Codeforces`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F4BB;',
+                                icon: '&#x1F4BB;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'addeventcalender'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'addeventcalender') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
                             'goal.weekly.calender': {
                                 goal: `Add ${target} Events on Calendar`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F4C5;',
+                                icon: '&#x1F4C5;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'addcommitgithub'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'addcommitgithub') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
                             'goal.weekly.github': {
                                 goal: `Make ${target} Commits on Github`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F419;',
+                                icon: '&#x1F419;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'leetcodeproblem'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'leetcodeproblem') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
                             'goal.weekly.leetcode': {
                                 goal: `Solve ${target} Problem on Leetcode`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F4BB;',
+                                icon: '&#x1F4BB;',
                                 done: 0
                             }
                         }
-                    }); 
-                } 
-            }else if(type == 'monthly'){
-                if(goal == 'spotifyhours'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                }
+            } else if (type === 'monthly') {
+                if (goal == 'spotifyhours') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.spotify': {
+                            'goal.monthly.spotify': {
                                 goal: `Listen ${target} Hours on Spotify`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F3B5;',
+                                icon: '&#x1F3B5;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'codeforcesproblem'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'codeforcesproblem') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.codeforces': {
+                            'goal.monthly.codeforces': {
                                 goal: `Solve ${target} Problem on Codeforces`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F4BB;',
+                                icon: '&#x1F4BB;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'addeventcalender'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'addeventcalender') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.calender': {
+                            'goal.monthly.calender': {
                                 goal: `Add ${target} Events on Calendar`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F4C5;',
+                                icon: '&#x1F4C5;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'addcommitgithub'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'addcommitgithub') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.github': {
+                            'goal.monthly.github': {
                                 goal: `Make ${target} Commits on Github`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F419;',
+                                icon: '&#x1F419;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'leetcodeproblem'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'leetcodeproblem') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.leetcode': {
+                            'goal.monthly.leetcode': {
                                 goal: `Solve ${target} Problem on Leetcode`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F4BB;',
+                                icon: '&#x1F4BB;',
                                 done: 0
                             }
                         }
-                    }); 
-                } 
-            }else if(type == 'custom'){
-                if(goal == 'spotifyhours'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                }
+            } else if (type === 'custom') {
+                if (goal == 'spotifyhours') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.spotify': {
+                            'goal.custom.spotify': {
                                 goal: `Listen ${target} Hours on Spotify`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F3B5;',
+                                icon: '&#x1F3B5;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'codeforcesproblem'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'codeforcesproblem') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.codeforces': {
+                            'goal.custom.codeforces': {
                                 goal: `Solve ${target} Problem on Codeforces`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F4BB;',
+                                icon: '&#x1F4BB;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'addeventcalender'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'addeventcalender') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.calender': {
+                            'goal.custom.calender': {
                                 goal: `Add ${target} Events on Calendar`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F4C5;',
+                                icon: '&#x1F4C5;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'addcommitgithub'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'addcommitgithub') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.github': {
+                            'goal.custom.github': {
                                 goal: `Make ${target} Commits on Github`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F419;',
+                                icon: '&#x1F419;',
                                 done: 0
                             }
                         }
-                    }); 
-                }else if(goal == 'leetcodeproblem'){
-                   await newUser.findByIdAndUpdate(req.session.userId, {
+                    });
+                } else if (goal == 'leetcodeproblem') {
+                    await newUser.findByIdAndUpdate(req.session.userId, {
                         $push: {
-                            'goal.weekly.leetcode': {
+                            'goal.custom.leetcode': {
                                 goal: `Solve ${target} Problem on Leetcode`,
                                 target: target,
                                 deadline: deadline,
-                                icon : '&#x1F4BB;',
+                                icon: '&#x1F4BB;',
                                 done: 0
                             }
                         }
-                    }); 
-                } 
+                    });
+                }
             }
             res.status(200).redirect('/goals');
         } else {
@@ -3483,10 +3778,11 @@ app.post('/newgoals', async (req, res) => {
 });
 
 app.post('/reports', async (req, res) => {
-    const { type, when } = req.body;
+    let type = req.body.type;
+    let when = req.body.when;
     try {
         if (req.session.userId) {
-            if (type == 'weekly') {
+            if (type === 'weekly') {
                 //making of functionlet dt = when;
                 let dt = new Date(when);
 
@@ -3500,9 +3796,10 @@ app.post('/reports', async (req, res) => {
                     margin: 50
                 });
 
-                const reportFilePath = `./reports/Report_${req.session.userId}_${Date.now()}.pdf`;
-                const writestream = fs.createWriteStream(reportFilePath);
-                doc.pipe(writestream);
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', 'attachment; filename=Performance_Report.pdf');
+
+                doc.pipe(res);
 
                 //doc.rect(45,90,510,75).lineWidth(2).strokeColor('#000000').stroke();
 
@@ -3587,6 +3884,9 @@ app.post('/reports', async (req, res) => {
                 check = true;
 
                 while (check) {
+                    if (user.calender.events.length > ind1) {
+                        break;
+                    }
                     if (datearr[7] == user.calender.events[ind1].date) {
                         check = false;
                     }
@@ -3615,6 +3915,9 @@ app.post('/reports', async (req, res) => {
                 ind = 0;
 
                 while (check) {
+                    if (user.codeforces.content.length > ind) {
+                        break;
+                    }
                     if (daybefore == user.codeforces.content[ind].date) {
                         check = false;
                     }
@@ -3627,6 +3930,9 @@ app.post('/reports', async (req, res) => {
                 check = true;
 
                 while (check) {
+                    if (user.codeforces.content.length > ind1) {
+                        break;
+                    }
                     if (datearr[7] == user.codeforces.content[ind1].date) {
                         check = false;
                     }
@@ -3661,6 +3967,9 @@ app.post('/reports', async (req, res) => {
                 ind = 0;
 
                 while (check) {
+                    if (user.github.repolist.length > ind) {
+                        break;
+                    }
                     if (daybefore == user.github.repolist[ind].createdat) {
                         check = false;
                     }
@@ -3673,6 +3982,9 @@ app.post('/reports', async (req, res) => {
                 check = true;
 
                 while (check) {
+                    if (user.github.repolist.length > ind1) {
+                        break;
+                    }
                     if (datearr[7] == user.github.repolist[ind1].createdat) {
                         check = false;
                     }
@@ -4431,21 +4743,8 @@ app.post('/reports', async (req, res) => {
 
                 doc.end();
 
-                res.setHeader('Content-Type', 'application/pdf');
 
-                writestream.on('finish', () => {
-                    res.download(reportFilePath, 'Performance_Report.pdf', (err) => {
-                        if (err) {
-                            console.error(err)
-                        };
-                        fs.unlink(reportFilePath, (unlinkErr) => {
-                            if (unlinkErr) console.error("Temp file deletion failed:", unlinkErr);
-                        });
-                    });
-                });
-
-
-            } else if (type == 'monthly') {
+            } else if (type === 'monthly') {
                 //making of function
                 let dt = new Date(when);
 
@@ -4459,9 +4758,10 @@ app.post('/reports', async (req, res) => {
                     margin: 50
                 });
 
-                const reportFilePath = `./reports/Report_${req.session.userId}_${Date.now()}.pdf`;
-                const writestream = fs.createWriteStream(reportFilePath);
-                doc.pipe(writestream);
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', 'attachment; filename=Performance_Report.pdf');
+
+                doc.pipe(res);
 
                 //doc.rect(45,90,510,75).lineWidth(2).strokeColor('#000000').stroke();
 
@@ -4536,6 +4836,9 @@ app.post('/reports', async (req, res) => {
                 check = true;
 
                 while (check) {
+                    if (user.calender.events.length == ind1) {
+                        break;
+                    }
                     if (datearr[29] == user.calender.events[ind1].date) {
                         check = false;
                     }
@@ -4564,6 +4867,9 @@ app.post('/reports', async (req, res) => {
                 ind = 0;
 
                 while (check) {
+                    if (user.codeforces.content.length == ind) {
+                        break;
+                    }
                     if (daybefore == user.codeforces.content[ind].date) {
                         check = false;
                     }
@@ -4576,6 +4882,9 @@ app.post('/reports', async (req, res) => {
                 check = true;
 
                 while (check) {
+                    if (user.codeforces.content.length == ind1) {
+                        break;
+                    }
                     if (datearr[29] == user.codeforces.content[ind1].date) {
                         check = false;
                     }
@@ -4611,6 +4920,9 @@ app.post('/reports', async (req, res) => {
                 ind = 0;
 
                 while (check) {
+                    if (user.github.repolist.length == ind) {
+                        break;
+                    }
                     if (daybefore == user.github.repolist[ind].createdat) {
                         check = false;
                     }
@@ -4623,6 +4935,9 @@ app.post('/reports', async (req, res) => {
                 check = true;
 
                 while (check) {
+                    if (user.github.repolist.length == ind1) {
+                        break;
+                    }
                     if (datearr[29] == user.github.repolist[ind1].createdat) {
                         check = false;
                     }
@@ -5539,20 +5854,7 @@ app.post('/reports', async (req, res) => {
 
                 doc.end();
 
-                res.setHeader('Content-Type', 'application/pdf');
-
-                writestream.on('finish', () => {
-                    res.download(reportFilePath, 'Performance_Report.pdf', (err) => {
-                        if (err) {
-                            console.error(err)
-                        };
-                        fs.unlink(reportFilePath, (unlinkErr) => {
-                            if (unlinkErr) console.error("Temp file deletion failed:", unlinkErr);
-                        });
-                    });
-                });
-
-            } else if (type == 'custom') {
+            } else if (type === 'custom') {
                 //making of function
                 let dt = new Date(when);
 
@@ -5566,9 +5868,14 @@ app.post('/reports', async (req, res) => {
                     margin: 50
                 });
 
-                const reportFilePath = `./reports/Report_${req.session.userId}_${Date.now()}.pdf`;
-                const writestream = fs.createWriteStream(reportFilePath);
-                doc.pipe(writestream);
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', 'attachment; filename=Performance_Report.pdf');
+
+                doc.pipe(res);
+
+                //const reportFilePath = path.join(__dirname, 'reports', `Report_${req.session.userId}_${Date.now()}.pdf`);
+                //const writestream = fs.createWriteStream(reportFilePath);
+                //doc.pipe(writestream);
 
                 //doc.rect(45,90,510,75).lineWidth(2).strokeColor('#000000').stroke();
 
@@ -5593,9 +5900,9 @@ app.post('/reports', async (req, res) => {
 
                 let daybefore = datecalculater(dt - (1000 * 60 * 60 * 24))
 
-                let spotifyhours = user.spotify.totallisteningtime[0];;
-                let spotifysong = user.spotify.songplayed[0];
-                let spotifyartist = user.spotify.newartist[0];
+                let spotifyhours = 5; //user.spotify.totallisteningtime[0];
+                let spotifysong = 20;//user.spotify.songplayed[0];
+                let spotifyartist = 2;//user.spotify.newartist[0];
 
                 let ind = 0;
 
@@ -5609,6 +5916,9 @@ app.post('/reports', async (req, res) => {
                 ind = 0;
 
                 while (check) {
+                    if (user.calender.events.length == ind) {
+                        break;
+                    }
                     if (daybefore == user.calender.events[ind].date) {
                         check = false;
                     }
@@ -5623,6 +5933,9 @@ app.post('/reports', async (req, res) => {
                 let ind1 = 0;
 
                 while (check) {
+                    if (user.calender.events.length == ind1) {
+                        break;
+                    }
                     if (datearr[0] == user.calender.events[ind1].date) {
                         check = false;
                     }
@@ -5636,13 +5949,25 @@ app.post('/reports', async (req, res) => {
 
                 let eventscount = 0;
 
-                for (let i = ind2; i >= ind1; i--) {
-                    calendereventsname[ind] = user.calender.events[i].name;
-                    calendereventsdate[ind] = user.calender.events[i].date;
-                    calendereventstime[ind] = user.calender.events[i].time;
-                    eventscount++;
-                    ind++;
-                };
+                //for (let i = ind2; i >= ind1; i--) {
+                //    calendereventsname[ind] = user.calender.events[i].name;
+                //    calendereventsdate[ind] = user.calender.events[i].date;
+                //    calendereventstime[ind] = user.calender.events[i].time;
+                //    eventscount++;
+                //    ind++;
+                //};
+
+                calendereventsname[0] = 'padai'
+                calendereventsdate[0] = 'Jul 28'
+                calendereventstime[0] = '10:0 AM'
+
+                calendereventsname[1] = 'lunch'
+                calendereventsdate[1] = 'Jul 28'
+                calendereventstime[1] = '1:0 PM'
+
+                calendereventsname[2] = 'GYM'
+                calendereventsdate[2] = 'Jul 28'
+                calendereventstime[2] = "5:0 PM"
 
                 ind1 = 0;
 
@@ -5651,6 +5976,9 @@ app.post('/reports', async (req, res) => {
                 ind = 0;
 
                 while (check) {
+                    if (user.codeforces.content.length == ind) {
+                        break;
+                    }
                     if (daybefore == user.codeforces.content[ind].date) {
                         check = false;
                     }
@@ -5663,6 +5991,9 @@ app.post('/reports', async (req, res) => {
                 check = true;
 
                 while (check) {
+                    if (user.codeforces.content.length == ind1) {
+                        break;
+                    }
                     if (datearr[0] == user.codeforces.content[ind1].date) {
                         check = false;
                     }
@@ -5688,6 +6019,7 @@ app.post('/reports', async (req, res) => {
                     codeforceslanguage[ind] = user.codeforces.content[i].language;
                     codeforcestime[ind] = user.codeforces.content[i].duration;
                     codeforcessize[ind] = user.codeforces.content[i].memory;
+                    ind++;
                 };
 
                 ind1 = 0;
@@ -5697,6 +6029,9 @@ app.post('/reports', async (req, res) => {
                 ind = 0;
 
                 while (check) {
+                    if (user.github.repolist.length == ind) {
+                        break;
+                    }
                     if (daybefore == user.github.repolist[ind].createdat) {
                         check = false;
                     }
@@ -5709,6 +6044,9 @@ app.post('/reports', async (req, res) => {
                 check = true;
 
                 while (check) {
+                    if (user.github.repolist.length == ind1) {
+                        break;
+                    }
                     if (datearr[0] == user.github.repolist[ind1].createdat) {
                         check = false;
                     }
@@ -5721,23 +6059,23 @@ app.post('/reports', async (req, res) => {
                 ind = 0;
 
                 let githubcommit;
-                let githubreponame = [];
-                let githubrepostar = [];
-                let githubrepowatcher = [];
-                let githubrepolanguage = [];
-                let githubrepofork = [];
-                let githubreposize = [];
+                let githubreponame = ['dashboard'];
+                let githubrepostar = [5];
+                let githubrepowatcher = [1];
+                let githubrepolanguage = ['JS'];
+                let githubrepofork = [0];
+                let githubreposize = ['2000 KB'];
                 let githbufollow = user.github.totalstar;
                 let githubstars = user.github.totalfollow;
 
-                for (let i = ind2; i >= ind1; i--) {
-                    githubreponame[ind] = user.github.repolist[i].name;
-                    githubrepostar[ind] = user.github.repolist[i].stars;
-                    githubrepowatcher[ind] = user.github.repolist[i].watchers;
-                    githubrepolanguage[ind] = user.github.repolist[i].language;
-                    githubrepofork[ind] = user.github.repolist[i].forks;
-                    githubreposize[ind] = user.github.repolist[i].size;
-                };
+                //for (let i = ind2; i >= ind1; i--) {
+                //    githubreponame[ind] = user.github.repolist[i].name;
+                //    githubrepostar[ind] = user.github.repolist[i].stars;
+                //    githubrepowatcher[ind] = user.github.repolist[i].watchers;
+                //    githubrepolanguage[ind] = user.github.repolist[i].language;
+                //    githubrepofork[ind] = user.github.repolist[i].forks;
+                //    githubreposize[ind] = user.github.repolist[i].size;
+                //};
 
                 ind = 0;
 
@@ -5915,7 +6253,7 @@ app.post('/reports', async (req, res) => {
                 yaxis = 500;
                 xaxis = 50;
 
-                doc.fontSize(13)
+                doc.fontSize(10)
                     .font('Helvetica')
 
                 for (let i = 0; i < Math.min(7, codeforceslanguage.length); i++) {
@@ -6087,26 +6425,15 @@ app.post('/reports', async (req, res) => {
 
 
                 doc.end();
-
-                res.setHeader('Content-Type', 'application/pdf');
-
-                writestream.on('finish', () => {
-                    res.download(reportFilePath, 'Performance_Report.pdf', (err) => {
-                        if (err) {
-                            console.error(err)
-                        };
-                        fs.unlink(reportFilePath, (unlinkErr) => {
-                            if (unlinkErr) console.error("Temp file deletion failed:", unlinkErr);
-                        });
-                    });
-                });
-
             }
         } else {
             res.status(500).redirect('/');
         }
     } catch (err) {
         console.error(err);
+        if (!res.headersSent) {
+            res.status(500).send("Something went wrong while generating report.");
+        }
     }
 });
 
@@ -6118,10 +6445,10 @@ app.post('/settingsnotifications', async (req, res) => {
         const productupdates = req.body.productupdates === 'on';
 
         await newUser.findByIdAndUpdate(req.session.userId, {
-            $set : {
-                'checkbox.goalreminders' : goalreminders ,
-                'checkbox.weeklysummary' : weeklysummary ,
-                'checkbox.productupdates' : productupdates
+            $set: {
+                'checkbox.goalreminders': goalreminders,
+                'checkbox.weeklysummary': weeklysummary,
+                'checkbox.productupdates': productupdates
             }
         });
 
@@ -6160,9 +6487,7 @@ app.post('/settingstheme', async (req, res) => {
             await newUser.findByIdAndUpdate(req.session.userId, {
                 theme: THEME
             });
-            const USER = await newUser.findById(req.session.userId);
-            user = USER;
-            res.status(200).render('settingstheme', { user: user });
+            res.status(200).redirect('/settingstheme');
         } else {
             res.status(401).redirect('/');
         };

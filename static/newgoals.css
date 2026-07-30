@@ -25,7 +25,9 @@
  }
 
  .container h3 {
+     text-align: center;
      font-weight: bold;
+     padding: 15px;
      margin: 20px 0px;
  }
 
@@ -76,4 +78,10 @@
      font-size: 14px;
      margin: 10px 0px;
      background-color: rgb(242 28 28);
+ }
+
+ @media (max-width: 575px) {
+     body {
+         background-color: whitesmoke;
+     }
  }

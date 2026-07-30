@@ -1,3 +1,4 @@
+const user = JSON.parse(document.body.dataset.user);
 
 var options = {
     chart: {
@@ -135,8 +136,96 @@ function roggle() {
 };
 
 function moggle() {
-    let sidebars = document.querySelector('.sidebar');
-    if (sidebars.style.display != 'none') {
-        sidebars.style.display = 'none';
+    if (window.innerWidth <= 1400) {
+        let sidebars = document.querySelector('.sidebar');
+        if (sidebars.style.display != 'none') {
+            sidebars.style.display = 'none';
+        }
     }
 }
+
+
+const languagename = Object.keys(user.github.language);
+const languagevalues = Object.values(user.github.language);
+let newvalues =[];
+
+for (let i=0 ; i<languagevalues.length ; i++){
+    newvalues[i] = Math.floor(languagevalues[i]/(1024));
+}
+
+
+
+var donut = {
+    chart: {
+        type: 'donut',
+        height: '250',
+        toolbar: {
+            show: true,
+        },
+    },
+
+    series: newvalues,
+
+    labels: languagename,
+
+    title: {
+        text: "Most Used Language",
+        align: 'left',
+        style: {
+            fontSize: "15px",
+            color: 'black',
+        }
+    },
+
+    plotOptions: {
+        pie: {
+            donut: {
+                size: '55%',
+                labels: {
+                    show: true,
+                    name: {
+                        show: true,
+                        fontSize: "15px",
+                        fontWeight: 'bold'
+                    },
+                    value: {
+                        show: true,
+                        fontSize: "15px",
+                        fontWeight: 'bold',
+                        formatter: function (val) {
+                            return Math.round(val) + " KB";
+                        }
+                    },
+                }
+            },
+        }
+    },
+
+    legend: {
+        show: true,
+        position: "right",
+        horizontalAlign: "center",
+        fontSize: "14px",
+        offsetY: 70,
+        offsetX: 40,
+    },
+
+    dataLabels: {
+        enabled: true,
+        style: {
+            fontSize: "14px",
+            fontWeight: 600
+        },
+        formatter: function (val) {
+            return Math.round(val) + "%";
+        }
+    },
+
+    tooltip: {
+        enabled: false,
+    },
+}
+
+var chartspace = document.querySelector("#chart");
+var chart2 = new ApexCharts(chartspace, donut);
+chart2.render();

@@ -1,15 +1,26 @@
 const calender = JSON.parse(document.body.dataset.calender);
 
-const hours = calender && calender.scheduletime ? calender.scheduletime : null;
-const maindata = Array.isArray(hours) ? hours[0] : hours; 
+const hoursarr = calender && calender.scheduletime ? calender.scheduletime : null;
+//const maindata = Array.isArray(hours) ? hours[0] : hours; 
+//
+//const hoursarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+//
+//let valuesarray = hoursarray.map(item => item.value); // taking the values of the array in an another array
+//let datesarray = hoursarray.map(item => item.at); // taking the values of the array in an another array
+//
+//let reversevalues = valuesarray.reverse(); //reversing the array 
+//let reverseat = datesarray.reverse(); //reversing the array
 
-const hoursarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+let valuesarray = [];
+let datesarray = [];
 
-let valuesarray = hoursarray.map(item => item.value); // taking the values of the array in an another array
-let datesarray = hoursarray.map(item => item.at); // taking the values of the array in an another array
+for(let i=0 ; i<hoursarr.length ; i++){
+    valuesarray[i] = hoursarr[i].value;
+    datesarray[i] = hoursarr[i].at;
+}
 
 let reversevalues = valuesarray.reverse(); //reversing the array 
-let reverseat = datesarray.reverse(); //reversing the array 
+let reverseat = datesarray.reverse(); //reversing the array
 
 // chart1 css
 var options = {
@@ -101,13 +112,18 @@ var chartElement = document.querySelector("#box-1");
 var chart1 = new ApexCharts(chartElement, options);
 chart1.render();
 
-const busy = calender && calender.scheduletime ? calender.scheduletime : null;
-const Maindata = Array.isArray(busy) ? busy[0] : busy; 
+const busy = calender && calender.mostbusydays ? calender.mostbusydays : null;
+//const Maindata = Array.isArray(busy) ? busy[0] : busy; 
+//
+//const busyarray = Maindata ? Object.values(Maindata) : []; // convert the object into an array 
+//
+//valuesarray = busyarray.map(item => item.value); // taking the values of the array in an another array
+//datesarray = busyarray.map(item => item.at); // taking the values of the array in an another array
 
-const busyarray = Maindata ? Object.values(Maindata) : []; // convert the object into an array 
-
-valuesarray = busyarray.map(item => item.value); // taking the values of the array in an another array
-datesarray = busyarray.map(item => item.at); // taking the values of the array in an another array
+for(let i=0 ; i<busy.length ; i++){
+    valuesarray[i] = busy[i].value;
+    datesarray[i] =busy[i].at;
+}
 
 reversevalues = valuesarray.reverse(); //reversing the array 
 reverseat = datesarray.reverse(); //reversing the array
@@ -177,7 +193,7 @@ var donut = {
         },
     },
 
-    series: [calender.todaybusy.busy.hr + calender.todaybusy.busy.min, calender.todaybusy.free.hr + calender.todaybusy.free.min],
+    series: [(calender.todaybusy.busy.hr)*60 + calender.todaybusy.busy.min, (calender.todaybusy.free.hr)*60 + calender.todaybusy.free.min],
 
     labels: ['Busy Time', 'Free Time'],
 
@@ -231,7 +247,7 @@ var donut = {
             formatter: function (value) {
                 const hours = Math.floor(value / 60);
                 const minutes = value % 60;
-                return minutes + "h " + hours + "m";
+                return hours + "h " + minutes + "m";
             }
         }
     }

@@ -195,9 +195,7 @@
     font-size: 22px;
 }
 
-.card .right span {
-    color: green;
-}
+
 
 
 .chart-section {
@@ -278,7 +276,7 @@
 /* CSS FOR RESPONSIVENESS */
 
 /* Large Tablets */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
 
     .container {
         flex-direction: column;
@@ -347,6 +345,35 @@
         height: 30px;
     }
 
+    .notification-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .notification-wrapper button {
+         cursor: pointer;
+         border: none;
+         background-color: white;
+     }
+
+     .header-right button {
+        background: none;
+        cursor: pointer;
+        border: none;
+     }
+
+    .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
     .analytics-cards {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -392,4 +419,16 @@
         font-size: 0.85rem;
     }
 
+}
+
+.text-success{
+    color : rgb(52, 241, 52);
+}
+
+.text-danger{
+    color : red;
+}
+
+.text-normal{
+    color : black;
 }
