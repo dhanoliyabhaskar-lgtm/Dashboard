@@ -1,3 +1,5 @@
+const achievement = JSON.parse(document.body.dataset.achievement);
+
 const cards = document.querySelector(".cards");
 
 const Card1 = cards.querySelector(".card1").outerHTML;

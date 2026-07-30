@@ -1,19 +1,19 @@
-const wholebody = document.querySelector('body');
+const wholebody = document.querySelector('.main-content');
 const box = document.querySelector('.container');
 
 // HTML ke data attribute se value nikalna
-const currentTheme = wholebody.dataset.theme;
+const currentTheme = JSON.parse(document.body.dataset.theme);
 
 console.log("Current Theme Value from HTML attribute:", currentTheme);
 
-if (currentTheme == '2') { 
-    //wholebody.style.backgroundColor = 'rgb(15, 15, 18)';
-    //if(box) box.style.backgroundColor = 'rgb(28, 30, 36)';
-    //wholebody.style.color = 'rgb(163, 226, 255)';
-} else {
-    //wholebody.style.backgroundColor = 'rgb(219, 237, 245)';
-    //if(box) box.style.backgroundColor = 'rgb(255, 255, 255)';
-    //wholebody.style.color = 'rgb(0, 0, 0)';
+if (currentTheme == 2) { 
+    wholebody.style.backgroundColor = 'rgb(40, 40, 57)';
+    if(box) box.style.backgroundColor = 'rgb(28, 30, 36)';
+    wholebody.style.color = 'rgb(246, 247, 248)';
+} else if (currentTheme == 1){
+    wholebody.style.backgroundColor = 'rgb(219, 237, 245)';
+    if(box) box.style.backgroundColor = 'rgb(255, 255, 255)';
+    wholebody.style.color = 'rgb(0, 0, 0)';
 }
 
 

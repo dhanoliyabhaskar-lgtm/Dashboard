@@ -4,6 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Settings
   link(rel='stylesheet' href='/static/settingstheme.css')
+body(data-theme=user.theme)
 .container
   // Sidebar
   aside.sidebar
@@ -48,9 +49,11 @@ head
         h2 Dashboard
       .header-right
         .notification-wrapper
-          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
-          span.badge 3
-        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+            button(onclick='window.location.href="/notifications"')
+              img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')            
+            span.badge 3
+        button(onclick='window.location.href="/settingsprofile"')
+          img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
     .content(onclick='moggle()')
       // header
       header.settings-header
@@ -59,13 +62,13 @@ head
           p  Manage your account preferences and application settings. 
       .settings-page
         .settings-bar
-          button.active(onclick="window.location.href='/settingsprofile' ")
+          button(onclick="window.location.href='/settingsprofile' ")
             img(src='/static/photos/settings profile icon.png' alt='')
             span Profile
           button(onclick="window.location.href='/settingsnotifications' ")
             img(src='/static/photos/settings notifications icon.png' alt='')
             span Notifications
-          button(onclick="window.location.href='/settingstheme' ")
+          button.active(onclick="window.location.href='/settingstheme' ")
             img(src='/static/photos/settings themes icon.png' alt='' style='size: 0.8em')
             span Themes
           button(onclick="window.location.href='/settingsprivacy' ")
@@ -98,6 +101,6 @@ head
             form.set-theme(action='settingstheme' method='post')
               label(for='current-pass')
                 b Your Colour Theme Number:
-              input#current-pass(type='text' name='theme' placeholder='1' required='')
+              input#current-pass(type='number' name='theme' placeholder=`${user.theme}` required='')
               button(type='submit') Update Theme
 script(src='/static/settingstheme.js')

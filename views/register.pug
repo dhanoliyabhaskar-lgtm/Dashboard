@@ -13,11 +13,11 @@ html(lang="en")
         | *Name: 
         br
         input.btn(type="text", name="name", required=true)
+        br
+        | *Username: 
+        br
+        input.btn(type="text", name="email", required=true)
         p#emailmessage
-        | *Email: 
-        br
-        input.btn(type="email", name="email", required=true)
-        br
         | *D.O.B.: 
         br
         input.btn(type="date", name="dob", required=true)
@@ -31,4 +31,5 @@ html(lang="en")
         input.btn(type="password", name="confirm_password", required=true)
         br
         button#submitbtn(type="submit") Register
+        button#cancelbtn(type="button" onclick='window.location.href="/"') Cancel
     script(src="/static/register.js")

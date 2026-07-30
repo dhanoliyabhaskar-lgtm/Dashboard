@@ -2,8 +2,9 @@ doctype html
 head
   meta(charset='UTF-8')
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title Project01
+  title Home
   link(rel='stylesheet' href='/static/dashboard.css')
+body(data-user=user)
 .container
   // Sidebar
   aside.sidebar
@@ -48,94 +49,88 @@ head
         h2 Dashboard
       .header-right
         .notification-wrapper
-          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
-          span.badge 3
-        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+          button(onclick='window.location.href="/notifications"')
+            img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')          
+          span.badge #{user.totalnotification}
+        button(onclick='window.location.href="/settingsprofile"')
+          img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
     .content(onclick='moggle()')
       // Header
       header.overview-header
         .header-left
-          h2 Hi, Ajeet &#x1F44B;
+          h2 Hi,  #{user.name} &#x1F44B;
           p Here&apos;s your productivity overview.
         .header-right
-          .notification-wrapper
-            img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
-            span.badge 3
-          img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+            .notification-wrapper
+                button(onclick='window.location.href="/notifications"')
+                  img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')            
+                  span.badge #{user.totalnotification}
+            button(onclick='window.location.href="/settingsprofile"')
+              img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
       section.stats-cards
         .card
           h3 GitHub
           p Commits this week
-          .number 42
-          span.growth &#x25B2; 16% vs last week
+          - let week1 = user.github.thisweekcommit
+          - let week2 = user.github.lastweekcommit
+          - let diff = week1 !== 0 ? (((week1-week2)/week1)*100) : 0
+          .number #{week1}
+          if diff > 0
+            span.text-success &uarr; #{diff.toFixed(1)}% vs last week
+          else if diff<0
+            span.text-danger &darr; #{Math.abs(diff).toFixed(1)}% vs last week
+          else if diff==0
+            span.text-normal --
         .card
-          h3 LeetCode
-          p Problems Solved
-          .number 76
-          span.growth &#x25B2; 23% vs last week
+          h3 Codeforces
+          p Problems Solved this week
+          - week1 = user.codeforces.problemsolvedthisweek
+          - week2 = user.codeforces.problemsolvedlastweek
+          - diff = week1 !== 0 ? (((week1-week2)/week1)*100) : 0
+          .number #{week1}
+          if diff > 0
+            span.text-success &uarr; #{diff.toFixed(1)}% vs last week
+          else if diff<0
+            span.text-danger &darr; #{Math.abs(diff).toFixed(1)}% vs last week
+          else if diff==0
+            span.text-normal --
         .card
           h3 Spotify
           p Listening Time
           .number 12.4 hrs
-          span.growth &#x25B2; 8% vs last week
+          span.text-success &uarr; 8% vs last week
         .card
           h3 Calendar
           p Events this week
-          .number 18
-          span.growth &#x25B2; 5% vs last week
+          - week1 = user.calender.totaleventsforweek || 0
+          - const lastweek1 = user.calender.totaleventsforlastweek || 0
+          - const diff1 = week1 !== 0 ? (((week1 - lastweek1) / week1) * 100) : 0
+          .number #{week1}
+          if diff1 > 0
+            span.text-success &uarr; #{diff1.toFixed(1)}% vs last week
+          else if diff1<0
+            span.text-danger &darr; #{Math.abs(diff1).toFixed(1)}% vs last week
+          else if diff1==0
+            span.text-normal --
       section.dashboard-row
         .weekly-activity
-          #activityChart.left  
-          .right
-            .summary
-              .box
-                .left
-                  div &#x1F4C8;
-                .right
-                  div Total Hours
-                  h4 63h 54m
-                  span Across all platforms
-              .box
-                .left
-                  div &#x1F525;
-                .right
-                  div Peak Day
-                  h4 Friday
-                  span Most productive day
-              .box
-                .left
-                  div &#x2B50;
-                .right
-                  div Growth
-                  h4 +15.3%
-                  span Vs last week
-              .box
-                .left
-                  div &#x1F3B5;
-                .right
-                  div Most Active
-                  h4 Spotify
-                  span 38h 18m this week
-        .productivity-score
-          h3 Productivity Score
-          .score-circle
-            span 28 / 100
-          p  Great job! You&apos;re more productive than 76% users.
+          #activityChart
+        .donut
+          #chart
       section.bottom-widgets
         .events
           h3 Upcoming Events
           .event-card
             .date-box
-              div 24
-              div July
+              - const eventsarr = user.calender.eventstoday ? Object.values(user.calender.eventstoday) : []
+              div #{eventsarr[0].date}
             .event-time
-              | 10:00 AM - 12:00 PM
+              | #{eventsarr[0].time}
             .event-details
-              h4 DSA Study Session
-              p Seminar Hall
-            span.status Ongoing
-        .insight
-          h3 Top Insight
-          p You solved 24% more problems compared to last week.
+              h4 #{eventsarr[0].name}
+            span.status Today
+        .aisummary 
+          h3 AI Generated Summary 
+          p #{user.aisummary}
 script(src='https://cdn.jsdelivr.net/npm/apexcharts')
 script(src='/static/dashboard.js')

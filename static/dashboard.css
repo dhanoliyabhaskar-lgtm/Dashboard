@@ -116,20 +116,32 @@
 }
 
 .overview-header .profile-logo {
-    margin-left: -30px;
-    width: 95px;
-    height: 55px;
+    margin-left: 0px;
+    width: 50px;
+    height: 45px;
     border-radius: 50%;
 }
 
 .overview-header .notifications-icon {
-    width: 47px;
-    height: 35px;
+    width: 35px;
+    height: 30px;
 }
 
 .notification-wrapper {
     position: relative;
     display: inline-block;
+}
+
+.notification-wrapper button {
+    cursor: pointer;
+    border: none;
+    background-color: white;
+}
+
+.header-right button {
+    background: none;
+    cursor: pointer;
+    border: none;
 }
 
 .badge {
@@ -170,7 +182,7 @@
 }
 
 .card p {
-    color: rgb(243, 173, 173);
+    color: rgb(59 115 202);
     font-size: 14px;
 }
 
@@ -188,104 +200,32 @@
 /* weekly-activity and Productivity-score css */
 .dashboard-row {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-top: 20px;
 }
 
-.weekly-activity {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+.weekly-activity, .donut {
+    height: fit-content;
     background: white;
     border-radius: 20px;
     padding: 13px 5px;
-    height: auto;
 }
 
-.weekly-activity .left h3 {
-    padding-bottom: 10px;
-}
-
-.summary {
-    margin: 0px 0px 15px 20px;
-}
-
-.box {
-    display: flex;
-    padding: 5px 10px;
-    box-shadow: 0 2px 50px rgba(100, 0, 0, 0.08);
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.box .left {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    font-size: 25px;
-    background-color: #c2bfbf;
-    border: 0.5px solid rgb(159, 158, 158);
-    margin: 5px 18px 5px 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.box .right {
-    font-size: 14px;
-}
-
-.box .right h4 {
-    margin: 3px 0px;
-    font-size: 17px;
-}
-
-.box .right span {
-    color: rgb(41, 149, 41);
-}
-
-.productivity-score {
-    background: white;
-    border-radius: 20px;
-    padding: 20px;
-    text-align: center;
-}
-
-.score-circle {
-    width: 180px;
-    height: 180px;
-    border: 10px solid rgb(202, 184, 248);
-    border-top: 10px solid rgb(105, 105, 230);
-    border-radius: 50%;
-    margin: 30px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
 /* Upcoming events and insights css */
 .bottom-widgets {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-top: 20px;
 }
 
 .events {
+    height: fit-content;
     background: white;
     border-radius: 20px;
     padding: 13px 20px;
-}
-
-.insight {
-    background: white;
-    border-radius: 20px;
-    padding: 17px 20px;
-}
-
-.insight p {
-    margin-top: 15px;
 }
 
 .event-card {
@@ -324,11 +264,27 @@
     font-size: 12px;
 }
 
+.aisummary {
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    height: fit-content;
+    margin-top: -140px;
+}
+
+.aisummary h3 {
+    margin-bottom: 10px;
+}
+
+.aisummary p {
+    white-space: pre-line;
+}
+
 
 /* CSS FOR RESPONSIVENESS */
 
 /* Large Tablets */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
 
     .container {
         flex-direction: column;
@@ -430,9 +386,7 @@
 }
 
 /* Tablets */
-@media (max-width: 1600px) and (min-width: 1200px) {
-   
-}
+@media (max-width: 1600px) and (min-width: 1200px) {}
 
 /* Mobile */
 @media (max-width: 370px) {
@@ -462,4 +416,17 @@
         margin-bottom: 3px;
     }
 
+}
+
+
+.text-success {
+    color: rgb(28, 155, 28);
+}
+
+.text-danger {
+    color: red;
+}
+
+.text-normal {
+    color: black;
 }

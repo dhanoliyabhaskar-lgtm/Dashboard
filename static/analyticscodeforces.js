@@ -4,12 +4,20 @@ const arr = codeforces.wronganswers ? Object.values(codeforces.wronganswers) : [
 console.log(arr);
 
 const history = codeforces && codeforces.ratinghistory ? codeforces.ratinghistory : null;
-let maindata = Array.isArray(history) ? history[0] : history; 
+//let maindata = Array.isArray(history) ? history[0] : history; 
+//
+//const historyarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+//
+//let valuesarray = historyarray.map(item => item.value); // taking the values of the array in an another array
+//let datesarray = historyarray.map(item => item.at); // taking the values of the array in an another array
 
-const historyarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+let valuesarray = [];
+let datesarray = [];
 
-let valuesarray = historyarray.map(item => item.value); // taking the values of the array in an another array
-let datesarray = historyarray.map(item => item.at); // taking the values of the array in an another array
+for(let i=0 ; i<history.length ; i++){
+    valuesarray[i] = history[i].value;
+    datesarray[i] =history[i].at;
+}
 
 let reversevalues = valuesarray.reverse(); //reversing the array 
 let reverseat = datesarray.reverse(); //reversing the array 
@@ -93,16 +101,13 @@ const topic = codeforces && codeforces.topics ? codeforces.topics : {};
 let namesarr = Object.keys(topic);
 let valuesarr = Object.values(topic);
 
-console.log(namesarr);
-console.log(valuesarr);
-
 let count = 0 ;
 
 for(let i=0 ; i<valuesarr.length ; i++){
     count = count + valuesarr[i];
 }
 
-let mincrit = count/20;
+let mincrit = count/17;
 
 console.log(mincrit);
 
@@ -186,12 +191,23 @@ chart2.render();
 
 
 const difficulty = codeforces && codeforces.difficulty ? codeforces.difficulty : null;
-maindata = Array.isArray(difficulty) ? difficulty[0] : difficulty; 
+//maindata = Array.isArray(difficulty) ? difficulty[0] : difficulty; 
+//
+//const difficultyarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+//
+//valuesarray = difficultyarray.map(item => item.value); // taking the values of the array in an another array
+//let namesarray = difficultyarray.map(item => item.name); // taking the values of the array in an another array
 
-const difficultyarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+let namesarray = [];
+let newvaluesarray = [];
 
-valuesarray = difficultyarray.map(item => item.value); // taking the values of the array in an another array
-let namesarray = difficultyarray.map(item => item.name); // taking the values of the array in an another array
+for(let i=0 ; i<difficulty.length ; i++){
+    newvaluesarray[i] = difficulty[i].value;
+    namesarray[i] =difficulty[i].name;
+};
+
+console.log(newvaluesarray);
+console.log(namesarray);
 
 // chart3 css
 
@@ -204,7 +220,7 @@ var option = {
     series: [
         {
             name: 'Problems Solved',
-            data: valuesarray,
+            data: newvaluesarray,
         }
     ],
 

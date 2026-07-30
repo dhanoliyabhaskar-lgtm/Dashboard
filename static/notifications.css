@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: rgb(219, 237, 245);
+    padding: 15px 30px;
+}
+
+header {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-radius: 15px;
+    padding: 10px 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+header button {
+    border: none;
+    background-color: white;
+}
+
+header button img {
+    width: 40px;
+    height: 40px;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 10px 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid rgb(181, 180, 180);
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.heading {
+    display: flex;
+    align-items: center;
+    margin: -10px 0px -5px 0px;
+}
+
+.box .right {
+    display: flex;
+    gap: 10px;
+}
+
+#goalsreminder {
+    background-color: rgb(240, 253, 243);
+}
+
+#goalsreminder .right span {
+    color: rgb(90, 184, 110);
+}
+
+#websiteupdates {
+    background-color: rgb(238, 243, 253);
+}
+
+#websiteupdates .right span {
+    color: rgb(102, 140, 225);
+}
+
+#weeklysummary {
+    background-color: rgb(254, 249, 240);
+}
+
+#weeklysummary .right span {
+    color: rgb(230, 178, 79);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    gap: 15px;
+}
+
+.item .left span {
+    font-weight: bold;
+}
+
+.item .left p {
+    font-size: 14px;
+    color: rgb(126, 126, 126);
+}
+
+.item .right {
+    min-width: 80px;
+    margin-bottom: -8px;
+}
+
+.item .right span {
+    font-size: 20px;
+}
+
+.heading img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 15px;
+    }
+
+    header, .box {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .item .right {
+        margin-right: -20px;
+    }
+}
+
+@media (max-width: 400px) {
+    header {
+        gap: 10px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .heading h2 {
+        font-size: 1.1rem;
+    }
+
+    .item {
+        padding: 5px 5px;
+    }
+
+    .item .left p {
+        font-size: 12.5px;
+    }
+ 
+    header, .box {
+        padding: 5px 8px;
+   }
+
+   .heading img {
+    margin: 0px -5px 0px -10px;
+   }
+}

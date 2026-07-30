@@ -2,12 +2,20 @@
 const github = JSON.parse(document.body.dataset.github);
 
 const commits = github && github.commitsovertime ? github.commitsovertime : null;
-const maindata = Array.isArray(commits) ? commits[0] : commits; 
+//const maindata = Array.isArray(commits) ? commits[0] : commits; 
+//
+//const commitsarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+//
+//const valuesarray = commitsarray.map(item => item.value); // taking the values of the array in an another array
+//const datesarray = commitsarray.map(item => item.at); // taking the values of the array in an another array
 
-const commitsarray = maindata ? Object.values(maindata) : []; // convert the object into an array 
+let valuesarray = [];
+let datesarray = [];
 
-const valuesarray = commitsarray.map(item => item.value); // taking the values of the array in an another array
-const datesarray = commitsarray.map(item => item.at); // taking the values of the array in an another array
+for(let i=0 ; i<commits.length ; i++){
+    valuesarray[i] = commits[i].value;
+    datesarray[i] = commits[i].at;
+};
 
 const reversevalues = valuesarray.reverse(); //reversing the array 
 const reverseat = datesarray.reverse(); //reversing the array 

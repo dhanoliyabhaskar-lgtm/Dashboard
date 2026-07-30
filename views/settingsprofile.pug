@@ -48,9 +48,11 @@ head
         h2 Dashboard
       .header-right
         .notification-wrapper
-          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
-          span.badge 3
-        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+            button(onclick='window.location.href="/notifications"')
+              img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')            
+            span.badge 3
+        button(onclick='window.location.href="/settingsprofile"')
+          img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
     .content(onclick='moggle()')
       // header
       header.settings-header
@@ -96,9 +98,7 @@ head
                     br
                     p.box #{user.email}
                   div
-                    | Bio: 
+                    | Age: 
                     br
-                    p.box About Yourself
-                  .save
-                    button Change 
+                    p.box 21
 script(src='/static/settingsprofile.js')

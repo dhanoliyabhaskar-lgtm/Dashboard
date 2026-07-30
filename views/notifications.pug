@@ -1,0 +1,69 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Notifications
+  link(rel='stylesheet' href='/static/notifications.css')
+.conatiner
+  header
+    button(onclick="window.location.href='/dashboard'")
+      img(src='/static/photos/9923621.png' alt='')
+    .right
+      h1 Notifications
+      p Here&apos;s What&apos;s Happening 
+  main
+    #goalsreminder.box
+      .heading
+        img(src='/static/photos/notifications reminder icon.png' alt='')
+        h2 Goals Reminders
+      .content
+        .item
+          .left
+            span Workout goal is due today
+            p Don&apos;t forget to complete your workout.
+          .right
+            div 2h ago
+            span
+              b &bull;
+        .item
+          .left
+            span Read 20 pages 
+            p You&apos;re 60% there. keep it up! 
+          .right
+            div 1d ago
+            span
+              b &bull;
+    #websiteupdates.box
+      .heading
+        img(src='/static/photos/notifications updates icon.png' alt='')
+        h2 Website Updates
+      .content
+        .item
+          .left
+            span New Feature: Dark Mode
+            p You can now switch between Light and Dark themes in setting.
+          .right
+            div 2d ago
+            span
+              b &bull;
+        .item
+          .left
+            span Improved Dashboard Performance 
+            p We have improved the speed and reliability of the dashboard. 
+          .right
+            div 3d ago
+            span
+              b &bull;
+    #weeklysummary.box
+      .heading
+        img(src='/static/photos/notifications summary icon.png' alt='')
+        h2 Weekly Summary Report
+      .content
+        .item
+          .left
+            span Your weekly summary is ready 
+            p Check out your progress, completed task and time spent.
+          .right
+            div 1d ago
+            span
+              b &bull;

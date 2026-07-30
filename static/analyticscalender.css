@@ -178,10 +178,6 @@
     font-size: 22px;
 }
 
-.card .right span {
-    color: green;
-}
-
 /* top-widgets css */
 
 .top-widgets {
@@ -417,6 +413,18 @@
         display: inline-block;
     }
 
+    .notification-wrapper button {
+         cursor: pointer;
+         border: none;
+         background-color: white;
+     }
+
+     .header-right button {
+        background: none;
+        cursor: pointer;
+        border: none;
+     }
+
     .badge {
         position: absolute;
         top: -5px;
@@ -434,13 +442,14 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .top-widgets, .bottom-widgets {
+    .top-widgets,
+    .bottom-widgets {
         display: flex;
         flex-direction: column;
         gap: 15px;
     }
 
-     .box {
+    .box {
         height: fit-content;
         padding-bottom: 10px;
     }
@@ -452,7 +461,7 @@
         gap: 10px;
         margin: 5px 8px;
     }
-    
+
 }
 
 /* Mobile */
@@ -481,4 +490,16 @@
         font-size: 0.85rem;
     }
 
+}
+
+.text-success {
+    color: rgb(39 194 39);
+}
+
+.text-danger {
+    color: red;
+}
+
+.text-normal {
+    color: black;
 }

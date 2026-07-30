@@ -84,7 +84,7 @@
  /* header */
 
  .responsive-header {
-    display: none;
+     display: none;
  }
 
  .achievements-header {
@@ -115,19 +115,20 @@
  }
 
  .heading {
-    margin: 10px 0px 0px 10px;
-    font-size: 20px;
+     margin: 10px 0px 0px 10px;
+     font-size: 20px;
  }
 
  .cards {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    background-color: white;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-wrap: wrap;
+     background-color: white;
  }
 
- .card1, .card2 {
+ .card1,
+ .card2 {
      height: 265px;
      width: 269px;
      margin: 10px 13px;
@@ -145,6 +146,10 @@
      margin-bottom: 5px;
  }
 
+ .card1 .left {
+     z-index: 1;
+ }
+
  .top .level {
      padding: 10px;
      width: 100px;
@@ -159,38 +164,49 @@
      margin-bottom: 15px;
  }
 
- .top .left div {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+ .text {
+     font-size: 180%;
+     width: 100px;
  }
 
-  .card1 .top .left div h3:first-child {
-    font-size: 35px;
+ .top .left div {
+     display: flex;
+     flex-direction: column;
+     gap: 5px;
+     justify-content: center;
+     align-items: center;
+     margin-top: 20px;
+ }
+
+ .card1 .top .left div h3:first-child {
+     font-size: 35px;
  }
 
  .card1 img {
-    margin-top: -15px;
-    width: 160px;
-    height: 175px;
+     border-radius: 30px;
+     margin: -8px 0px 0px -10px;
+     width: 160px;
+     height: 165px;
+ }
+
+ #darkimg {
+    display: none;
  }
 
  .middle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     text-align: center;
+     margin-bottom: 10px;
  }
 
  .bottom {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
  }
 
  .bottom .dot {
@@ -210,6 +226,7 @@
      display: flex;
      align-items: center;
      gap: 7px;
+     margin-left: 27px;
  }
 
  .progress-bar {
@@ -227,14 +244,14 @@
  }
 
  .card2 .top {
-    display: flex;
-    justify-content: center;
+     display: flex;
+     justify-content: center;
  }
 
  .card2 img {
      width: 190px;
-    height: 190px;
-    margin-top: -25px;
+     height: 190px;
+     margin-top: -25px;
  }
 
 
@@ -267,7 +284,7 @@
          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
          margin-bottom: 15px;
          position: sticky;
-         top: 10;
+         top: 10px;
          z-index: 15;
      }
 
@@ -322,6 +339,18 @@
          display: inline-block;
      }
 
+     .notification-wrapper button {
+         cursor: pointer;
+         border: none;
+         background-color: white;
+     }
+
+     .header-right button {
+         background: none;
+         cursor: pointer;
+         border: none;
+     }
+
      .badge {
          position: absolute;
          top: -5px;
@@ -336,26 +365,22 @@
  }
 
  /* Tablets */
-@media (max-width: 370px) {
-
-}
+ @media (max-width: 370px) {}
 
 
  /* Mobile */
- @media (max-width: 450px) and (min-width: 370px) {
-     
- }
+ @media (max-width: 450px) and (min-width: 370px) {}
 
  @media (max-width: 600px) {
-    .main-content {
-        font-size: 0.9rem;
-    }
+     .main-content {
+         font-size: 0.9rem;
+     }
  }
 
  @media (max-width: 420px) {
-    .main-content {
-        font-size: 0.8rem;
-    }
+     .main-content {
+         font-size: 0.8rem;
+     }
  }
 
  @media (max-width: 500px) {
@@ -367,6 +392,4 @@
 
 
 
- @media (max-width: 550px) and (min-width: 500px) {
-
- }
+ @media (max-width: 550px) and (min-width: 500px) {}

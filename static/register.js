@@ -44,7 +44,7 @@ usernameInput.addEventListener('input', async () => {
             statusMessage.innerHTML = "";
             submitbtn.style.display = 'block' ;
         } else {
-            statusMessage.innerHTML = "This email is already taken!";
+            statusMessage.innerHTML = "This Username exist !";
             submitbtn.style.display = 'none' ;
         }
     } catch (error) {

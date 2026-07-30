@@ -48,9 +48,11 @@ head
         h2 Dashboard
       .header-right
         .notification-wrapper
-          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
-          span.badge 3
-        img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
+            button(onclick='window.location.href="/notifications"')
+              img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')            
+            span.badge 3
+        button(onclick='window.location.href="/settingsprofile"')
+          img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
     .content(onclick='moggle()')
       // header
       header.settings-header
@@ -59,7 +61,7 @@ head
           p  Manage your account preferences and application settings. 
       .settings-page
         .settings-bar
-          button.active(onclick="window.location.href='/settingsprofile' ")
+          button(onclick="window.location.href='/settingsprofile' ")
             img(src='/static/photos/settings profile icon.png' alt='')
             span Profile
           button(onclick="window.location.href='/settingsnotifications' ")
@@ -71,7 +73,7 @@ head
           button(onclick="window.location.href='/settingsprivacy' ")
             img(src='/static/photos/settings privacy&security icon.png' alt='')
             span Privacy &amp; Security
-          button(onclick="window.location.href='/settingshelp' ")
+          button.active(onclick="window.location.href='/settingshelp' ")
             img(src='/static/photos/settings help&feedback icon.png' alt='')
             span Help &amp; Feedback
           button(onclick="window.location.href='/settingslogout' ")
@@ -88,7 +90,7 @@ head
             #contact
               h4  Contact Support 
               p  Can&apos;t find what you need ? Contact our support team.
-              button  Contact Support 
+              button(onclick='window.location.href="/contact"')  Contact Support 
             #feedback
               h4  Send Feedback 
               p  We value your feedback to improve our product.
