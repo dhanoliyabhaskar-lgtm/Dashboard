@@ -35,7 +35,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-        mongoUrl: 'mongodb://localhost:27017/soc_project',
+        mongoUrl: process.env.db_username,
+        //mongoUrl: 'mongodb://localhost:27017/soc_project',
         collectionName: 'sessions'
     }),
     cookie: {
