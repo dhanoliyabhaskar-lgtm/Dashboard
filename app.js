@@ -35,8 +35,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-        // mongoUrl: process.env.db_username,
-        mongoUrl: 'mongodb://localhost:27017/soc_project',
+        mongoUrl: process.env.db_username,
+        //mongoUrl: 'mongodb://localhost:27017/soc_project',
         collectionName: 'sessions'
     }),
     cookie: {
@@ -51,9 +51,9 @@ app.use(passport.session());
 
 //mongoose
 
-mongoose.connect('mongodb://127.0.0.1:27017/soc_project_id');
+//mongoose.connect('mongodb://127.0.0.1:27017/soc_project_id');
 
-//mongoose.connect(process.env.db_username);
+mongoose.connect(process.env.db_username);
 
 
 var newuserSchema = new mongoose.Schema({
