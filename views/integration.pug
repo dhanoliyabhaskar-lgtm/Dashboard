@@ -4,7 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Integration
   link(rel='stylesheet' href='/static/integrations.css')
-body(data-status=JSON.stringify(user.status))
+body(data-user=user)
   .container
     // Sidebar
     aside.sidebar
@@ -14,31 +14,38 @@ body(data-status=JSON.stringify(user.status))
       ul.menu
         li
           a(href='/dashboard')
-            img(src='/static/photos/overview icon.png' alt='')
+            img(src='/static/photos/overview icon.png' alt='' class="black-sidebar-icon")
+            img(src='/static/photos/overview white icon.png' alt='' class="white-sidebar-icon")
             span  Overview 
         li
           a(href='/analyticsgithub')
-            img(src='/static/photos/analytics icon.png' alt='')
+            img(src='/static/photos/analytics icon.png' alt='' class="black-sidebar-icon")
+            img(src='/static/photos/analytics white icon.png' alt='' class="white-sidebar-icon")
             span Analytics
         li
           a(href='/goals')
-            img(src='/static/photos/goals icon.png' alt='')
+            img(src='/static/photos/goals icon.png' alt='' class="black-sidebar-icon")
+            img(src='/static/photos/goals white icon.png' alt='' class="white-sidebar-icon")
             span Goals
         li.active
           a(href='/integration')
-            img(src='/static/photos/integrations icon.png' alt='')
+            img(src='/static/photos/integrations icon.png' alt='' class="black-sidebar-icon")
+            img(src='/static/photos/integrations white icon.png' alt='' class="white-sidebar-icon")
             span Integrations
         li
           a(href='/reports')
-            img(src='/static/photos/reports icon.png' alt='')
+            img(src='/static/photos/reports icon.png' alt='' class="black-sidebar-icon")
+            img(src='/static/photos/reports white icon.png' alt='' class="white-sidebar-icon")
             span Reports
         li
           a(href='/achievements')
-            img(src='/static/photos/achievements icon.png' alt='')
+            img(src='/static/photos/achievements icon.png' alt='' class="black-sidebar-icon")
+            img(src='/static/photos/achievements white icon.png' alt='' class="white-sidebar-icon")
             span Achievements
         li
           a(href='/settingsprofile')
-            img(src='/static/photos/settings icon.png' alt='')
+            img(src='/static/photos/settings icon.png' alt='' class="black-sidebar-icon")
+            img(src='/static/photos/settings white icon.png' alt='' class="white-sidebar-icon")
             span Settings
     .main-content
       // responsive header
@@ -70,7 +77,6 @@ body(data-status=JSON.stringify(user.status))
               button.connect-btn#googlecalendarbtn(onclick="window.location.href='/auth/calender'") Connect 
               span#googlecalendarstatus.status-connected  Connected 
             .right
-              span Last synced 3 mins ago
               button.sync &#x1F5D8;
           .integrations-item
             .left
@@ -80,7 +86,6 @@ body(data-status=JSON.stringify(user.status))
               button.connect-btn#spotifybtn(onclick="window.location.href='/auth/spotify'") Connect
               span#spotifystatus.status-connected  Connected 
             .right
-              span Last synced 1 min ago
               button.sync &#x1F5D8;
           .integrations-item
             .left
@@ -90,17 +95,6 @@ body(data-status=JSON.stringify(user.status))
               button.connect-btn#githubbtn(onclick="window.location.href='/auth/github'") Connect 
               span#githubstatus.status-connected  Connected 
             .right
-              span Last synced 2 mins ago
-              button.sync &#x1F5D8;
-          .integrations-item
-            .left
-              .icon &#x1F4BB;
-              span LeetCode
-            .status-box
-              button.connect-btn#leetcodebtn(onclick="window.location.href='/auth/leetcode'") Connect 
-              span#leetcodestatus.status-connected  Connected 
-            .right
-              span Last synced 5 mins ago
               button.sync &#x1F5D8;
           .integrations-item
             .left
@@ -110,36 +104,5 @@ body(data-status=JSON.stringify(user.status))
               button.connect-btn#codeforcesbtn(onclick="window.location.href='/codeforceslogin'") Connect 
               span.status-connected#codeforcesstatus Connected 
             .right
-              span Last synced 2 mins ago
-              button.sync &#x1F5D8;
-          .integrations-item
-            .left
-              .icon &#x1F431;
-              span Discord
-            .status-box
-              button#discordbtn.connect-btn(onclick='toggle(this)')  Connect 
-              span#discordstatus.status-connected  Connected 
-            .right
-              span Last synced 2 mins ago
-              button.sync &#x1F5D8;
-          .integrations-item
-            .left
-              .icon &#x1F431;
-              span Notion
-            .status-box
-              button#notionbtn.connect-btn(onclick='toggle(this)')  Connect 
-              span#notionstatus.status-connected  Connected 
-            .right
-              span Last synced 2 mins ago
-              button.sync &#x1F5D8;
-          .integrations-item
-            .left
-              .icon &#x1F431;
-              span LinkdIn
-            .status-box
-              button#linkdinbtn.connect-btn(onclick='toggle(this)')  Connect 
-              span#linkdinstatus.status-connected  Connected 
-            .right
-              span Last synced 2 mins ago
               button.sync &#x1F5D8;
   script(src='/static/integrations.js')
