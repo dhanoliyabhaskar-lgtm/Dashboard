@@ -63,16 +63,16 @@ if (currentTheme == 2) {
                 data: [5, 4, 8, 2, 4, 1, 3]
             },
             {
-                name: 'Time Spend On Github (min)',
-                data: [12, 19, 15, 14, 19, 16, 20]
+                name: 'Commits On Github',
+                data: [5,3,9,1,2,7,6]
             },
             {
-                name: 'Time Spend On Leetcode (min)',
-                data: [35, 36, 33, 31, 30, 38, 33]
+                name: 'Problem solved On Leetcode',
+                data: [2,5,6,8,7,1,3]
             },
             {
                 name: 'Songs Played',
-                data: [22, 21, 28, 27, 25, 28, 27]
+                data: [15,12,17,14,16,12,11]
             }
         ],
         xaxis: {
@@ -195,7 +195,7 @@ if (currentTheme == 2) {
         labels: languagename,
 
         title: {
-            text: "Most Used Language",
+            text: "Most Used Language in Github Repos",
             align: 'left',
             style: {
                 fontSize: "15px",
@@ -292,20 +292,20 @@ if (currentTheme == 2) {
                 data: [5, 4, 8, 2, 4, 1, 3]
             },
             {
-                name: 'Time Spend On Github (min)',
-                data: [12, 19, 15, 14, 19, 16, 20]
+                name: 'Commits On Github',
+                data: [5,3,9,1,2,7,6]
             },
             {
-                name: 'Time Spend On Leetcode (min)',
-                data: [35, 36, 33, 31, 30, 38, 33]
+                name: 'Problem solved On Leetcode',
+                data: [2,5,6,8,7,1,3]
             },
             {
                 name: 'Songs Played',
-                data: [22, 21, 28, 27, 25, 28, 27]
+                data: [15,12,17,14,16,12,11]
             }
         ],
         xaxis: {
-            categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+            categories: ['24 Jul','25 jul','26 Jul','27 Jul','28 Jul','29 Jul','30 Jul',]
         },
         title: {
             text: "Weekly Activity Overview",
@@ -406,7 +406,7 @@ if (currentTheme == 2) {
         labels: languagename,
 
         title: {
-            text: "Most Used Language",
+            text: "Most Used Language in Github Repos",
             align: 'left',
             style: {
                 fontSize: "15px",

@@ -105,7 +105,7 @@ var newuserSchema = new mongoose.Schema({
             song: { type: String },
             time: { type: String },
             duration: { type: Number },
-            icon:{type : String}
+            icon: { type: String }
         }],
 
         recentlyplayedtime: [{
@@ -145,11 +145,11 @@ var newuserSchema = new mongoose.Schema({
 
         totaleventsforweek: {
             type: Number,
-            default : 0
+            default: 0
         },
         totaleventsforlastweek: {
             type: Number,
-            default : 0
+            default: 0
         },
         totaleventsforlastweekarr: [{
             type: Number,
@@ -158,11 +158,11 @@ var newuserSchema = new mongoose.Schema({
 
         totalbusytimeforweek: {
             type: Number,
-            default : 0
+            default: 0
         },
         totalbusytimeforlastweek: {
             type: Number,
-            default : 0
+            default: 0
         },
         totalbusytimeforlastweekarr: [{
             type: Number,
@@ -171,20 +171,20 @@ var newuserSchema = new mongoose.Schema({
 
         totalfreetimeforweek: {
             type: Number,
-            default : 0
+            default: 0
         },
         totalfreetimeforlastweek: {
             type: Number,
-            default : 0
+            default: 0
         },
 
         avgeventtimeforweek: {
             type: Number,
-            default : 0
+            default: 0
         },
         avgeventtimeforlastweek: {
             type: Number,
-            default : 0
+            default: 0
         },
         avgeventtimeforlastweekarr: [{
             type: Number,
@@ -225,12 +225,12 @@ var newuserSchema = new mongoose.Schema({
 
         todaybusy: {
             free: {
-                hr: { type: Number ,default : 0},
-                min: { type: Number ,default : 0}
+                hr: { type: Number, default: 0 },
+                min: { type: Number, default: 0 }
             },
             busy: {
-                hr: { type: Number ,default : 0},
-                min: { type: Number ,default : 0}
+                hr: { type: Number, default: 0 },
+                min: { type: Number, default: 0 }
             }
         },
 
@@ -267,16 +267,16 @@ var newuserSchema = new mongoose.Schema({
             size: { type: String }
         }],
 
-        totalrepo: { type: Number ,default : 0},
+        totalrepo: { type: Number, default: 0 },
 
-        totalstar: { type: Number ,default : 0},
+        totalstar: { type: Number, default: 0 },
 
-        totalfollow: { type: Number ,default : 0},
+        totalfollow: { type: Number, default: 0 },
 
-        week: { type: Number ,default : 0},
+        week: { type: Number, default: 0 },
 
-        thisweekcommit: { type: Number ,default : 0},
-        lastweekcommit: { type: Number ,default : 0}
+        thisweekcommit: { type: Number, default: 0 },
+        lastweekcommit: { type: Number, default: 0 }
 
     },
 
@@ -289,11 +289,11 @@ var newuserSchema = new mongoose.Schema({
 
         currentrank: { type: String, default: "NEWBIE" },
 
-        followcount: { type: Number ,default : 0},
+        followcount: { type: Number, default: 0 },
 
-        problemsolved: { type: Number ,default : 0},
-        problemsolvedthisweek: { type: Number ,default : 0},
-        problemsolvedlastweek: { type: Number ,default : 0},
+        problemsolved: { type: Number, default: 0 },
+        problemsolvedthisweek: { type: Number, default: 0 },
+        problemsolvedlastweek: { type: Number, default: 0 },
         problemsolvedthisweekarr: [{
             type: Number,
             default: [0, 0, 0, 0, 0, 0, 0]
@@ -550,7 +550,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'The Real Additive',
                 name: 'No. of hours of songs listen on spotify',
                 level: 1,
-                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagelight: ['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
                 bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [10, 30, 75, 200, 500]
@@ -559,7 +559,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'Event Maker',
                 name: 'Hours of Events make',
                 level: 1,
-                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagelight: ['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
                 bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [10, 50, 100, 500, 2000]
@@ -568,7 +568,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'Commit Maker',
                 name: 'Make Commit on Github',
                 level: 1,
-                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagelight: ['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
                 bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [10, 25, 50, 100, 500]
@@ -577,7 +577,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: "Real Coder",
                 name: 'Make repo on Github',
                 level: 1,
-                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagelight: ['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
                 bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [1, 5, 10, 25, 50]
@@ -586,7 +586,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'The Psyco',
                 name: 'Song played on Spotify',
                 level: 1,
-                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagelight: ['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
                 bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [25, 100, 250, 1000, 5000]
@@ -595,7 +595,7 @@ var newuserSchema = new mongoose.Schema({
                 topic: 'App Lover',
                 name: 'Connect to the third party apps',
                 level: 1,
-                bgimagelight:['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
+                bgimagelight: ['/static/photos/level 1 light.png', '/static/photos/level 2 light.png', '/static/photos/level 3 light.png', '/static/photos/level 4 light.png', '/static/photos/level 5 light.png'],
                 bgimagedark: ['/static/photos/level 1 dark.png', '/static/photos/level 2 dark.png', '/static/photos/level 3 dark.png', '/static/photos/level 4 dark.png', '/static/photos/level 5 dark.png'],
                 progress: 0,
                 target: [1, 2, 5, 10, 20]
@@ -890,22 +890,6 @@ function gettime(time) {
     }
 };
 
-async function gettimeago(userId) {
-    const user = await newUser.findById(userId);
-
-    let timeago = [];
-
-    for (let i = 0; i < 50; i++) {
-        timeago[i] = gettime(user.spotify.recentlyplayed[i].time)
-    }
-
-    await newUser.findByIdAndUpdate(userId, {
-        $set: {
-            [`spotify.recentlyplayedtime`]: timeago
-        }
-    },)
-
-};
 
 //Daily
 
@@ -1411,19 +1395,19 @@ async function avgeventtimeforweek(userId) {
 async function problemsort(userId, diff) {
     const user = await newUser.findById(userId);
     try {
-        let arr1 = [0, 5, 2, 1, 6, 0, 4];
-        let arr2 = [9, 6, 11, 7, 5, 1, 3];
+        let arr1 = [0, 0, 0, 0, 0, 0, 0];
+        let arr2 = [0, 0, 0, 0, 0, 0, 0];
         let count1 = 0;
         let count2 = 0;
-        //arr1[0] = diff;
-        //arr2[0] = //user.codeforces.problemsolvedthisweekarr[6];
+        arr1[0] = diff;
+        arr2[0] = user.codeforces.problemsolvedthisweekarr[6];
 
-        //if (user.codeforces.problemsolvedthisweekarr.length > 0) {
-        //    for (let i = 0; i < 6; i++) {
-        //        arr1[i + 1] = user.codeforces.problemsolvedthisweekarr[i];
-        //        arr2[i + 1] = user.codeforces.problemsolvedlastweekarr[i];
-        //    }
-        //}
+        if (user.codeforces.problemsolvedthisweekarr.length > 0) {
+            for (let i = 0; i < 6; i++) {
+                arr1[i + 1] = user.codeforces.problemsolvedthisweekarr[i];
+                arr2[i + 1] = user.codeforces.problemsolvedlastweekarr[i];
+            }
+        };
 
 
         for (let i = 0; i < 7; i++) {
@@ -1450,9 +1434,9 @@ async function problemsort(userId, diff) {
 async function ai(userId) {
     const user = await newUser.findById(userId);
     try {
-        let dt = user.github.commitsovertime[0].value;
+        let dt = datecalculater(new Date());
 
-        let realdate = new Date();
+        let realdate = new Date(new Date() - 86400000);
 
         let diff = realdate - dt;
 
@@ -1460,15 +1444,20 @@ async function ai(userId) {
 
         let datearr = [datecalculater(dt)];
 
-        let daybefore = datecalculater(dt - (1000 * 60 * 60 * 24))
+        let daybefore = datecalculater(dt - (1000 * 60 * 60 * 24));
 
-        let spotifyhours = 5; //user.spotify.totallisteningtime[0];
-        let spotifysong = 20;//user.spotify.songplayed[0];
-        let spotifyartist = 2;//user.spotify.newartist[0];
+        let spotifyhours = 0;
+        let spotifysong = 0;
+        let spotifyartist = 0;
+        if (user.status.spotify == 'yes') {
+            spotifyhours = user.spotify.totallisteningtime[0];
+            spotifysong = user.spotify.songplayed[0];
+            spotifyartist = user.spotify.newartist[0];
+        };
 
         let ind = 0;
 
-        let calenderhours = 4; //user.calender.scheduletime[diff].value;
+        let calenderhours = user.calender.scheduletime[diff].value || 0;
         let calendereventsname = [];
         let calendereventstime = [];
         let calendereventsdate = [];
@@ -1476,114 +1465,120 @@ async function ai(userId) {
         let check = true;
 
         ind = 0;
-
-        while (check) {
-            if (user.calender.events.length == ind) {
-                break;
-            }
-            if (daybefore == user.calender.events[ind].date) {
-                check = false;
-            }
-            ind++;
-        }
-
-        ind--;
-        ind--;
-
-        check = true;
-
-        let ind1 = 0;
-
-        while (check) {
-            if (user.calender.events.length == ind1) {
-                break;
-            }
-            if (datearr[0] == user.calender.events[ind1].date) {
-                check = false;
-            }
-            ind1++;
-        }
-
-        ind1--;
-
-        let ind2 = ind;
-        ind = 0;
+        let ind2 = 0;
 
         let eventscount = 0;
-
-        //for (let i = ind2; i >= ind1; i--) {
-        //    calendereventsname[ind] = user.calender.events[i].name;
-        //    calendereventsdate[ind] = user.calender.events[i].date;
-        //    calendereventstime[ind] = user.calender.events[i].time;
-        //    eventscount++;
-        //    ind++;
-        //};
-
-        calendereventsname[0] = 'padai'
-        calendereventsdate[0] = 'Jul 28'
-        calendereventstime[0] = '10:0 AM'
-
-        calendereventsname[1] = 'lunch'
-        calendereventsdate[1] = 'Jul 28'
-        calendereventstime[1] = '1:0 PM'
-
-        calendereventsname[2] = 'GYM'
-        calendereventsdate[2] = 'Jul 28'
-        calendereventstime[2] = "5:0 PM"
-
-        ind1 = 0;
-
-        check = true;
-
-        ind = 0;
-
-        while (check) {
-            if (user.codeforces.content.length == ind) {
-                break;
+        if (user.status.calender == 'yes') {
+            while (check) {
+                if (user.calender.events.length == ind) {
+                    break;
+                }
+                if (daybefore == user.calender.events[ind].date) {
+                    check = false;
+                }
+                ind++;
             }
-            if (daybefore == user.codeforces.content[ind].date) {
-                check = false;
+
+            ind--;
+            ind--;
+
+            check = true;
+
+            let ind1 = 0;
+
+            while (check) {
+                if (user.calender.events.length == ind1) {
+                    break;
+                }
+                if (datearr[0] == user.calender.events[ind1].date) {
+                    check = false;
+                }
+                ind1++;
             }
-            ind++;
+
+            ind1--;
+
+            ind2 = ind;
+            ind = 0;
+
+            eventscount = 0;
+
+            for (let i = ind2; i >= ind1; i--) {
+                calendereventsname[ind] = user.calender.events[i].name;
+                calendereventsdate[ind] = user.calender.events[i].date;
+                calendereventstime[ind] = user.calender.events[i].time;
+                eventscount++;
+                ind++;
+            };
+
+            // calendereventsname[0] = 'padai'
+            // calendereventsdate[0] = 'Jul 28'
+            // calendereventstime[0] = '10:0 AM'
+
+            // calendereventsname[1] = 'lunch'
+            // calendereventsdate[1] = 'Jul 28'
+            // calendereventstime[1] = '1:0 PM'
+
+            // calendereventsname[2] = 'GYM'
+            // calendereventsdate[2] = 'Jul 28'
+            // calendereventstime[2] = "5:0 PM"
         }
-
-        ind--;
-        ind--;
-
-        check = true;
-
-        while (check) {
-            if (user.codeforces.content.length == ind1) {
-                break;
-            }
-            if (datearr[0] == user.codeforces.content[ind1].date) {
-                check = false;
-            }
-            ind1++;
-        }
-
-        ind1--;
-
-        ind2 = ind;
-        ind = 0;
 
         let codeforcesname = [];
         let codeforcesverdict = [];
         let codeforceslanguage = [];
         let codeforcestime = [];
         let codeforcessize = [];
-        let cfrating = user.codeforces.currentrating;
-        let cfrank = user.codeforces.currentrank;
+        let cfrating = user.codeforces.currentrating || 0;
+        let cfrank = user.codeforces.currentrank || 'newbie';
 
-        for (let i = ind2; i >= ind1; i--) {
-            codeforcesname[ind] = user.codeforces.content[i].name;
-            codeforcesverdict[ind] = user.codeforces.content[i].type;
-            codeforceslanguage[ind] = user.codeforces.content[i].language;
-            codeforcestime[ind] = user.codeforces.content[i].duration;
-            codeforcessize[ind] = user.codeforces.content[i].memory;
-            ind++;
-        };
+        if (user.status.codeforces == 'yes') {
+            ind1 = 0;
 
+            check = true;
+
+            ind = 0;
+
+            while (check) {
+                if (user.codeforces.content.length == ind) {
+                    break;
+                }
+                if (daybefore == user.codeforces.content[ind].date) {
+                    check = false;
+                }
+                ind++;
+            }
+
+            ind--;
+            ind--;
+
+            check = true;
+
+            while (check) {
+                if (user.codeforces.content.length == ind1) {
+                    break;
+                }
+                if (datearr[0] == user.codeforces.content[ind1].date) {
+                    check = false;
+                }
+                ind1++;
+            }
+
+            ind1--;
+
+            ind2 = ind;
+            ind = 0;
+
+            for (let i = ind2; i >= ind1; i--) {
+                codeforcesname[ind] = user.codeforces.content[i].name;
+                codeforcesverdict[ind] = user.codeforces.content[i].type;
+                codeforceslanguage[ind] = user.codeforces.content[i].language;
+                codeforcestime[ind] = user.codeforces.content[i].duration;
+                codeforcessize[ind] = user.codeforces.content[i].memory;
+                ind++;
+            };
+
+        }
         ind1 = 0;
 
         check = true;
@@ -1621,34 +1616,35 @@ async function ai(userId) {
         ind = 0;
 
         let githubcommit;
-        let githubreponame = ['dashboard'];
-        let githubrepostar = [5];
-        let githubrepowatcher = [1];
-        let githubrepolanguage = ['JS'];
-        let githubrepofork = [0];
-        let githubreposize = ['2000 KB'];
-        let githbufollow = user.github.totalstar;
-        let githubstars = user.github.totalfollow;
-
-        //for (let i = ind2; i >= ind1; i--) {
-        //    githubreponame[ind] = user.github.repolist[i].name;
-        //    githubrepostar[ind] = user.github.repolist[i].stars;
-        //    githubrepowatcher[ind] = user.github.repolist[i].watchers;
-        //    githubrepolanguage[ind] = user.github.repolist[i].language;
-        //    githubrepofork[ind] = user.github.repolist[i].forks;
-        //    githubreposize[ind] = user.github.repolist[i].size;
-        //};
-
-        ind = 0;
-
+        let githubreponame = [];
+        let githubrepostar = [];
+        let githubrepowatcher = [];
+        let githubrepolanguage = [];
+        let githubrepofork = [];
+        let githubreposize = [];
+        let githbufollow = user.github.totalstar || 0;
+        let githubstars = user.github.totalfollow || 0;
         let githubforold = '';
 
-        if (diff > 30) {
-            githubforold = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
-        } else {
-            githubcommit = user.github.commitsovertime[diff].value;
-        };
 
+        if (user.status.github == 'yes') {
+            for (let i = ind2; i >= ind1; i--) {
+                githubreponame[ind] = user.github.repolist[i].name;
+                githubrepostar[ind] = user.github.repolist[i].stars;
+                githubrepowatcher[ind] = user.github.repolist[i].watchers;
+                githubrepolanguage[ind] = user.github.repolist[i].language;
+                githubrepofork[ind] = user.github.repolist[i].forks;
+                githubreposize[ind] = user.github.repolist[i].size;
+            };
+
+            ind = 0;
+
+            if (diff > 30) {
+                githubforold = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
+            } else {
+                githubcommit = user.github.commitsovertime[diff].value;
+            };
+        }
         const geminiurl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
         let requestBody = {
@@ -1704,19 +1700,19 @@ async function ai(userId) {
 
             // Gemini ka response extract karna
             reply = response.data.candidates[0].content.parts[0].text;
-        }catch(err){
+        } catch (err) {
             connsole.log(err);
         }
 
         await newUser.findByIdAndUpdate(userId, {
             $set: {
-                'aisummary' : reply
-        }
+                'aisummary': reply
+            }
         });
 
-} catch (err) {
-    console.error(err);
-}
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 // sorting funtion for achievements and goals
@@ -2853,174 +2849,92 @@ async function fetchdatafromgithub(userId) {
 
 // Node Cron (for live fetching)
 
-//nodecron.schedule('1 0 * * *', async() => { // 12:01
-//    try {
-//        const users = await newUser.find({ 'status.calender': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromcalender(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//
-//    try {
-//        const users = await newUser.find({ 'status.github': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromgithub(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//
-//    try {
-//        const users = await newUser.find({ 'status.spotify': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromspotify(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//
-//    try {
-//        const users = await newUser.find({ 'status.codeforces': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromcodeforces(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//});
-//
-//nodecron.schedule('1 4 * * *', async() => { // rat ke 4 baje
-//    try {
-//        const users = await newUser.find({ 'status.spotify': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromspotify(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//});
-//
-//nodecron.schedule('1 8 * * *', async() => { // subh ke 8 baje
-//    try {
-//        const users = await newUser.find({ 'status.spotify': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromspotify(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//});
-//
-//nodecron.schedule('1 12 * * *', async() => { // din ke 12 baje
-//    try {
-//        const users = await newUser.find({ 'status.spotify': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromspotify(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//});
-//
-//nodecron.schedule('1 16 * * *', async() => { // din ke 4 baje
-//    try {
-//        const users = await newUser.find({ 'status.spotify': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromspotify(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//});
-//
-//nodecron.schedule('1 20 * * *', async() => { // rat ke 8 baje
-//    try {
-//        const users = await newUser.find({ 'status.spotify': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromspotify(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//});
-//
-//nodecron.schedule('50 23 * * *', async() => { // 23:50 (for saving the previous day data)
-//    try {
-//        const users = await newUser.find({ 'status.github': "yes" });
-//        for (let user of users) {
-//            await commits(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//
-//    try {
-//        const users = await newUser.find({ 'status.spotify': "yes" });
-//        for (let user of users) {
-//            await listeninghourtime(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//
-//    try {
-//        const users = await newUser.find({ 'status.calender': "yes" });
-//        for (let user of users) {
-//            await hoursschedule(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//    try {
-//        const users = await newUser.find({'login' : 'yes});
-//        for (let user of users) {
-//            await achievementsort(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//});
-//
-//nodecron.schedule('45 23 * * *' , async() =>{ //consecutive day ke liye
-//    try {
-//        const users = await newUser.find({'login' : 'yes});
-//        for (let user of users) {
-//            await consecutivelogin(user._id);
-//        }
-//    }catch(err){
-//        console.error(err);
-//    };
-//});
-//nodecron.schedule('* */4 * * *' , async() =>{ //har 4 ghante vale
-//    try{
-//       const users = await newUser.find({ 'status.spotify': "yes" });
-//        for (let user of users) {
-//            await fetchdatafromspotify(user._id);
-//        } 
-//    }catch(err){
-//        console.error(err);
-//    }
-//});
-//
-//nodecron.schedule('* * * * *' , async() =>{ // per minute
-//    try{
-//       const users = await newUser.find({ 'status.spotify': "yes" });
-//        for (let user of users) {
-//            await gettimeago(user._id);
-//        }
-//              // socket.io ka logic likhna hai 
-//
-//
-//
-//2. CRITICAL STEP: Database update hone ke baad frontend ko data phenko
-//'updatedData' mein tumhara naya time data hoga (jaise "1 min ago")
-//io.emit('spotify-time-update', updatedData);
-//    }catch(err){
-//        console.error(err);
-//    }
-//});
+nodecron.schedule('1 0 * * *', async () => { // 12:01
+    try {
+        const users = await newUser.find({ 'status.calender': "yes" });
+        for (let user of users) {
+            await fetchdatafromcalender(user._id);
+        }
+    } catch (err) {
+        console.error(err);
+    };
+
+    try {
+        const users = await newUser.find({ 'status.github': "yes" });
+        for (let user of users) {
+            await fetchdatafromgithub(user._id);
+        }
+    } catch (err) {
+        console.error(err);
+    };
+
+    try {
+        const users = await newUser.find({ 'status.spotify': "yes" });
+        for (let user of users) {
+            await fetchdatafromspotify(user._id);
+        }
+    } catch (err) {
+        console.error(err);
+    };
+
+    try {
+        const users = await newUser.find({ 'status.codeforces': "yes" });
+        for (let user of users) {
+            await fetchdatafromcodeforces(user._id);
+        }
+    } catch (err) {
+        console.error(err);
+    };
+
+    try {
+        const users = await newUser.find({});
+        for (let user of users) {
+            await ai(user._id);
+        }
+    } catch (err) {
+        console.error(err);
+    };
+});
+
+nodecron.schedule('50 23 * * *', async () => { // 23:50 (for saving the previous day data)
+    try {
+        const users = await newUser.find({ 'status.github': "yes" });
+        for (let user of users) {
+            await commits(user._id);
+        }
+    } catch (err) {
+        console.error(err);
+    };
+
+    try {
+        const users = await newUser.find({ 'status.spotify': "yes" });
+        for (let user of users) {
+            await listeninghourtime(user._id);
+        }
+    } catch (err) {
+        console.error(err);
+    };
+
+    try {
+        const users = await newUser.find({ 'status.calender': "yes" });
+        for (let user of users) {
+            await hoursschedule(user._id);
+        }
+    } catch (err) {
+        console.error(err);
+    };
+});
+
+nodecron.schedule('* */4 * * *', async () => { //har 4 ghante vale
+    try {
+        const users = await newUser.find({ 'status.spotify': "yes" });
+        for (let user of users) {
+            await fetchdatafromspotify(user._id);
+        }
+    } catch (err) {
+        console.error(err);
+    }
+});
 
 // Setinterval (live sync)
 
@@ -3162,9 +3076,6 @@ app.get('/goalsmonthly', async (req, res) => {
         const User = await newUser.findById(req.session.userId);
         user = User;
         //ai(req.session.userId);
-        fetchdatafromcalender(req.session.userId);
-        fetchdatafromcodeforces(req.session.userId);
-        fetchdatafromgithub(req.session.userId);
         res.status(200).render('goalsmonthly', { user: user });
     } else {
         res.status(500).redirect('/');
@@ -3851,13 +3762,14 @@ app.post('/reports', async (req, res) => {
                 let spotifyartist = [];
 
                 let ind = 0;
-
-                for (let i = diff; i > Math.min(diff - 7, -1); i--) {
-                    spotifyhours[ind] = (user.spotify.totallisteningtime && user.spotify.totallisteningtime[i] !== undefined) ? user.spotify.totallisteningtime[i] : 0;
-                    spotifysong[ind] = (user.spotify.songplayed && user.spotify.songplayed[i] !== undefined) ? user.spotify.songplayed[i] : 0;
-                    spotifyartist[ind] = (user.spotify.newartist && user.spotify.newartist[i] !== undefined) ? user.spotify.newartist[i] : 0;
-                    ind++;
-                };
+                if (user.status.spotify = 'yes') {
+                    for (let i = diff; i > Math.min(diff - 7, -1); i--) {
+                        spotifyhours[ind] = (user.spotify.totallisteningtime && user.spotify.totallisteningtime[i] !== undefined) ? user.spotify.totallisteningtime[i] : 0;
+                        spotifysong[ind] = (user.spotify.songplayed && user.spotify.songplayed[i] !== undefined) ? user.spotify.songplayed[i] : 0;
+                        spotifyartist[ind] = (user.spotify.newartist && user.spotify.newartist[i] !== undefined) ? user.spotify.newartist[i] : 0;
+                        ind++;
+                    };
+                }
 
                 let totalhours = 0;
                 let totalsongs = 0;
@@ -3874,88 +3786,91 @@ app.post('/reports', async (req, res) => {
                 let calendereventstime = [];
                 let calendereventsdate = [];
                 ind = 0;
-                let ind1 = 0;
-
-                for (let i = diff; i > Math.min(diff - 7, -1); i--) {
-                    calenderhours[ind] = user.calender.scheduletime[i].value;
-                    ind++;
-                };
-
-                let check = true;
-
-                ind = 0;
-
-                while (check && ind < user.calender.events.length) {
-                    if (user.calender.events.length > ind) {
-                        break;
-                    }
-                    if (daybefore == user.calender.events[ind].date) {
-                        check = false;
-                    }
-                    ind++;
-                }
-
-                ind--;
-                ind--;
-
-                check = true;
-
-                while (check) {
-                    if (user.calender.events.length > ind1) {
-                        break;
-                    }
-                    if (datearr[7] == user.calender.events[ind1].date) {
-                        check = false;
-                    }
-                    ind1++;
-                }
-
-                ind1--;
-
-                let ind2 = ind;
-                ind = 0;
-
                 let eventscount = 0;
+                let ind2 = 0;
+                let ind1 = 0;
+                if (user.status.calender = 'yes') {
 
-                for (let i = ind2; i >= ind1; i--) {
-                    calendereventsname[ind] = user.calender.events[i].name;
-                    calendereventsdate[ind] = user.calender.events[i].date;
-                    calendereventstime[ind] = user.calender.events[i].time;
-                    eventscount++;
-                    ind++;
-                };
+                    for (let i = diff; i > Math.min(diff - 7, -1); i--) {
+                        calenderhours[ind] = user.calender.scheduletime[i].value;
+                        ind++;
+                    };
 
+                    let check = true;
+
+                    ind = 0;
+
+                    while (check && ind < user.calender.events.length) {
+                        if (user.calender.events.length > ind) {
+                            break;
+                        }
+                        if (daybefore == user.calender.events[ind].date) {
+                            check = false;
+                        }
+                        ind++;
+                    }
+
+                    ind--;
+                    ind--;
+
+                    check = true;
+
+                    while (check) {
+                        if (user.calender.events.length > ind1) {
+                            break;
+                        }
+                        if (datearr[7] == user.calender.events[ind1].date) {
+                            check = false;
+                        }
+                        ind1++;
+                    }
+
+                    ind1--;
+
+                    ind2 = ind;
+                    ind = 0;
+
+                    eventscount = 0;
+
+                    for (let i = ind2; i >= ind1; i--) {
+                        calendereventsname[ind] = user.calender.events[i].name;
+                        calendereventsdate[ind] = user.calender.events[i].date;
+                        calendereventstime[ind] = user.calender.events[i].time;
+                        eventscount++;
+                        ind++;
+                    };
+                }
                 ind1 = 0;
 
                 check = true;
 
                 ind = 0;
+                if (user.status.codeforces = 'yes') {
+                    while (check) {
+                        if (user.codeforces.content.length > ind) {
+                            break;
+                        }
+                        if (daybefore == user.codeforces.content[ind].date) {
+                            check = false;
+                        }
+                        ind++;
+                    }
 
-                while (check) {
-                    if (user.codeforces.content.length > ind) {
-                        break;
+                    ind--;
+                    ind--;
+
+                    check = true;
+
+                    while (check) {
+                        if (user.codeforces.content.length > ind1) {
+                            break;
+                        }
+                        if (datearr[7] == user.codeforces.content[ind1].date) {
+                            check = false;
+                        }
+                        ind1++;
                     }
-                    if (daybefore == user.codeforces.content[ind].date) {
-                        check = false;
-                    }
-                    ind++;
                 }
-
-                ind--;
-                ind--;
-
-                check = true;
-
-                while (check) {
-                    if (user.codeforces.content.length > ind1) {
-                        break;
-                    }
-                    if (datearr[7] == user.codeforces.content[ind1].date) {
-                        check = false;
-                    }
-                    ind1++;
-                }
-
                 ind1--;
 
                 ind2 = ind;
@@ -3966,48 +3881,48 @@ app.post('/reports', async (req, res) => {
                 let codeforceslanguage = [];
                 let codeforcestime = [];
                 let codeforcessize = [];
-                let cfrating = user.codeforces.currentrating;
-                let cfrank = user.codeforces.currentrank;
-
-                for (let i = ind2; i >= ind1; i--) {
-                    codeforcesname[ind] = user.codeforces.content[i].name;
-                    codeforcesverdict[ind] = user.codeforces.content[i].type;
-                    codeforceslanguage[ind] = user.codeforces.content[i].language;
-                    codeforcestime[ind] = user.codeforces.content[i].duration;
-                    codeforcessize[ind] = user.codeforces.content[i].memory;
-                };
-
+                let cfrating = user.codeforces.currentrating || 0;
+                let cfrank = user.codeforces.currentrank || 'newbie';
+                if (user.status.calender = 'yes') {
+                    for (let i = ind2; i >= ind1; i--) {
+                        codeforcesname[ind] = user.codeforces.content[i].name;
+                        codeforcesverdict[ind] = user.codeforces.content[i].type;
+                        codeforceslanguage[ind] = user.codeforces.content[i].language;
+                        codeforcestime[ind] = user.codeforces.content[i].duration;
+                        codeforcessize[ind] = user.codeforces.content[i].memory;
+                    };
+                }
                 ind1 = 0;
 
                 check = true;
 
                 ind = 0;
+                if (user.status.github = 'yes') {
+                    while (check) {
+                        if (user.github.repolist.length > ind) {
+                            break;
+                        }
+                        if (daybefore == user.github.repolist[ind].createdat) {
+                            check = false;
+                        }
+                        ind++;
+                    }
 
-                while (check) {
-                    if (user.github.repolist.length > ind) {
-                        break;
+                    ind--;
+                    ind--;
+
+                    check = true;
+
+                    while (check) {
+                        if (user.github.repolist.length > ind1) {
+                            break;
+                        }
+                        if (datearr[7] == user.github.repolist[ind1].createdat) {
+                            check = false;
+                        }
+                        ind1++;
                     }
-                    if (daybefore == user.github.repolist[ind].createdat) {
-                        check = false;
-                    }
-                    ind++;
                 }
-
-                ind--;
-                ind--;
-
-                check = true;
-
-                while (check) {
-                    if (user.github.repolist.length > ind1) {
-                        break;
-                    }
-                    if (datearr[7] == user.github.repolist[ind1].createdat) {
-                        check = false;
-                    }
-                    ind1++;
-                }
-
                 ind1--;
 
                 ind2 = ind;
@@ -4020,40 +3935,40 @@ app.post('/reports', async (req, res) => {
                 let githubrepolanguage = [];
                 let githubrepofork = [];
                 let githubreposize = [];
-                let githbufollow = user.github.totalstar;
-                let githubstars = user.github.totalfollow;
-
-                for (let i = ind2; i >= ind1; i--) {
-                    githubreponame[ind] = user.github.repolist[i].name;
-                    githubrepostar[ind] = user.github.repolist[i].stars;
-                    githubrepowatcher[ind] = user.github.repolist[i].watchers;
-                    githubrepolanguage[ind] = user.github.repolist[i].language;
-                    githubrepofork[ind] = user.github.repolist[i].forks;
-                    githubreposize[ind] = user.github.repolist[i].size;
-                };
-
+                let githbufollow = user.github.totalstar || 0;
+                let githubstars = user.github.totalfollow || 0;
+                if (user.status.github = 'yes') {
+                    for (let i = ind2; i >= ind1; i--) {
+                        githubreponame[ind] = user.github.repolist[i].name;
+                        githubrepostar[ind] = user.github.repolist[i].stars;
+                        githubrepowatcher[ind] = user.github.repolist[i].watchers;
+                        githubrepolanguage[ind] = user.github.repolist[i].language;
+                        githubrepofork[ind] = user.github.repolist[i].forks;
+                        githubreposize[ind] = user.github.repolist[i].size;
+                    };
+                }
                 ind = 0;
 
                 let githubforold = '';
-
-                if (diff > 30) {
-                    githubforold = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
-                } else {
-                    for (let i = diff; i > Math.min(diff - 7, -1); i--) {
-                        githubcommit[ind] = user.github.commitsovertime[i].value;
-                        ind++;
+                if (user.status.github = 'yes') {
+                    if (diff > 30) {
+                        githubforold = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
+                    } else {
+                        for (let i = diff; i > Math.min(diff - 7, -1); i--) {
+                            githubcommit[ind] = user.github.commitsovertime[i].value;
+                            ind++;
+                        };
                     };
-                };
 
-                let totalcommit = 0;
-                if (diff > 30) {
+                    let totalcommit = 0;
+                    if (diff > 30) {
 
-                } else {
-                    for (let i = 0; i < githubcommit.length; i++) {
-                        totalcommit = totalcommit + githubcommit[i];
-                    }
-                };
-
+                    } else {
+                        for (let i = 0; i < githubcommit.length; i++) {
+                            totalcommit = totalcommit + githubcommit[i];
+                        }
+                    };
+                }
                 doc.rect(45, 230, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
                 doc.rect(45, 310, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
                 doc.rect(45, 390, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
@@ -4806,109 +4721,109 @@ app.post('/reports', async (req, res) => {
                 let spotifyartist = [];
 
                 let ind = 0;
-
-                for (let i = diff; i > Math.min(diff - 30, -1); i--) {
-                    spotifyhours[ind] = (user.spotify.totallisteningtime && user.spotify.totallisteningtime[i] !== undefined) ? user.spotify.totallisteningtime[i] : 0;
-                    spotifysong[ind] = (user.spotify.songplayed && user.spotify.songplayed[i] !== undefined) ? user.spotify.songplayed[i] : 0;
-                    spotifyartist[ind] = (user.spotify.newartist && user.spotify.newartist[i] !== undefined) ? user.spotify.newartist[i] : 0;
-                    ind++;
-                };
-
+                if (user.status.spotify = 'yes') {
+                    for (let i = diff; i > Math.min(diff - 30, -1); i--) {
+                        spotifyhours[ind] = (user.spotify.totallisteningtime && user.spotify.totallisteningtime[i] !== undefined) ? user.spotify.totallisteningtime[i] : 0;
+                        spotifysong[ind] = (user.spotify.songplayed && user.spotify.songplayed[i] !== undefined) ? user.spotify.songplayed[i] : 0;
+                        spotifyartist[ind] = (user.spotify.newartist && user.spotify.newartist[i] !== undefined) ? user.spotify.newartist[i] : 0;
+                        ind++;
+                    };
+                }
                 let totalhours = 0;
                 let totalsongs = 0;
                 let taotalartist = 0;
-
-                for (let i = 0; i < spotifyhours.length; i++) {
-                    totalhours = totalhours + spotifyhours[i];
-                    totalsongs = totalsongs + spotifysong[i];
-                    totalartist = totalartist[i];
+                if (user.status.spotify = 'yes') {
+                    for (let i = 0; i < spotifyhours.length; i++) {
+                        totalhours = totalhours + spotifyhours[i];
+                        totalsongs = totalsongs + spotifysong[i];
+                        totalartist = totalartist[i];
+                    }
                 }
-
                 let calenderhours = [];
                 let calendereventsname = [];
                 let calendereventstime = [];
                 let calendereventsdate = [];
                 ind = 0;
                 let ind1 = 0;
+                if (user.status.calender = 'yes') {
+                    for (let i = diff; i > Math.min(diff - 30, -1); i--) {
+                        calenderhours[ind] = user.calender.scheduletime[i].value;
+                        ind++;
+                    };
 
-                for (let i = diff; i > Math.min(diff - 30, -1); i--) {
-                    calenderhours[ind] = user.calender.scheduletime[i].value;
-                    ind++;
-                };
+                    let check = true;
 
-                let check = true;
+                    ind = 0;
 
-                ind = 0;
-
-                while (check && ind < user.calender.events.length) {
-                    if (daybefore == user.calender.events[ind].date) {
-                        check = false;
+                    while (check && ind < user.calender.events.length) {
+                        if (daybefore == user.calender.events[ind].date) {
+                            check = false;
+                        }
+                        ind++;
                     }
-                    ind++;
+
+                    ind--;
+                    ind--;
+
+                    check = true;
+
+                    while (check) {
+                        if (user.calender.events.length == ind1) {
+                            break;
+                        }
+                        if (datearr[29] == user.calender.events[ind1].date) {
+                            check = false;
+                        }
+                        ind1++;
+                    }
                 }
-
-                ind--;
-                ind--;
-
-                check = true;
-
-                while (check) {
-                    if (user.calender.events.length == ind1) {
-                        break;
-                    }
-                    if (datearr[29] == user.calender.events[ind1].date) {
-                        check = false;
-                    }
-                    ind1++;
-                }
-
                 ind1--;
 
                 let ind2 = ind;
                 ind = 0;
 
                 let eventscount = 0;
-
-                for (let i = ind2; i >= ind1; i--) {
-                    calendereventsname[ind] = user.calender.events[i].name;
-                    calendereventsdate[ind] = user.calender.events[i].date;
-                    calendereventstime[ind] = user.calender.events[i].time;
-                    eventscount++;
-                    ind++;
-                };
-
+                if (user.status.calender = 'yes') {
+                    for (let i = ind2; i >= ind1; i--) {
+                        calendereventsname[ind] = user.calender.events[i].name;
+                        calendereventsdate[ind] = user.calender.events[i].date;
+                        calendereventstime[ind] = user.calender.events[i].time;
+                        eventscount++;
+                        ind++;
+                    };
+                }
                 ind1 = 0;
 
                 check = true;
 
                 ind = 0;
+                if (user.status.coderforces = 'yes') {
+                    while (check) {
+                        if (user.codeforces.content.length == ind) {
+                            break;
+                        }
+                        if (daybefore == user.codeforces.content[ind].date) {
+                            check = false;
+                        }
+                        ind++;
+                    }
 
-                while (check) {
-                    if (user.codeforces.content.length == ind) {
-                        break;
+                    ind--;
+                    ind--;
+
+                    check = true;
+
+                    while (check) {
+                        if (user.codeforces.content.length == ind1) {
+                            break;
+                        }
+                        if (datearr[29] == user.codeforces.content[ind1].date) {
+                            check = false;
+                        }
+
+                        ind1++;
                     }
-                    if (daybefore == user.codeforces.content[ind].date) {
-                        check = false;
-                    }
-                    ind++;
                 }
-
-                ind--;
-                ind--;
-
-                check = true;
-
-                while (check) {
-                    if (user.codeforces.content.length == ind1) {
-                        break;
-                    }
-                    if (datearr[29] == user.codeforces.content[ind1].date) {
-                        check = false;
-                    }
-
-                    ind1++;
-                }
-
                 ind1--;
 
                 ind2 = ind;
@@ -4919,48 +4834,48 @@ app.post('/reports', async (req, res) => {
                 let codeforceslanguage = [];
                 let codeforcestime = [];
                 let codeforcessize = [];
-                let cfrating = user.codeforces.currentrating;
-                let cfrank = user.codeforces.currentrank;
-
-                for (let i = ind2; i >= ind1; i--) {
-                    codeforcesname[ind] = user.codeforces.content[i].name;
-                    codeforcesverdict[ind] = user.codeforces.content[i].type;
-                    codeforceslanguage[ind] = user.codeforces.content[i].language;
-                    codeforcestime[ind] = user.codeforces.content[i].duration;
-                    codeforcessize[ind] = user.codeforces.content[i].memory;
-                };
-
+                let cfrating = user.codeforces.currentrating || 0;
+                let cfrank = user.codeforces.currentrank || 'newbie';
+                if (user.status.codeforces = 'yes') {
+                    for (let i = ind2; i >= ind1; i--) {
+                        codeforcesname[ind] = user.codeforces.content[i].name;
+                        codeforcesverdict[ind] = user.codeforces.content[i].type;
+                        codeforceslanguage[ind] = user.codeforces.content[i].language;
+                        codeforcestime[ind] = user.codeforces.content[i].duration;
+                        codeforcessize[ind] = user.codeforces.content[i].memory;
+                    };
+                }
                 ind1 = 0;
 
                 check = true;
 
                 ind = 0;
+                if (user.status.github = 'yes') {
+                    while (check) {
+                        if (user.github.repolist.length == ind) {
+                            break;
+                        }
+                        if (daybefore == user.github.repolist[ind].createdat) {
+                            check = false;
+                        }
+                        ind++;
+                    }
 
-                while (check) {
-                    if (user.github.repolist.length == ind) {
-                        break;
+                    ind--;
+                    ind--;
+
+                    check = true;
+
+                    while (check) {
+                        if (user.github.repolist.length == ind1) {
+                            break;
+                        }
+                        if (datearr[29] == user.github.repolist[ind1].createdat) {
+                            check = false;
+                        }
+                        ind1++;
                     }
-                    if (daybefore == user.github.repolist[ind].createdat) {
-                        check = false;
-                    }
-                    ind++;
                 }
-
-                ind--;
-                ind--;
-
-                check = true;
-
-                while (check) {
-                    if (user.github.repolist.length == ind1) {
-                        break;
-                    }
-                    if (datearr[29] == user.github.repolist[ind1].createdat) {
-                        check = false;
-                    }
-                    ind1++;
-                }
-
                 ind1--;
 
                 ind2 = ind;
@@ -4973,40 +4888,40 @@ app.post('/reports', async (req, res) => {
                 let githubrepolanguage = [];
                 let githubrepofork = [];
                 let githubreposize = [];
-                let githbufollow = user.github.totalstar;
-                let githubstars = user.github.totalfollow;
-
-                for (let i = ind2; i >= ind1; i--) {
-                    githubreponame[ind] = user.github.repolist[i].name;
-                    githubrepostar[ind] = user.github.repolist[i].stars;
-                    githubrepowatcher[ind] = user.github.repolist[i].watchers;
-                    githubrepolanguage[ind] = user.github.repolist[i].language;
-                    githubrepofork[ind] = user.github.repolist[i].forks;
-                    githubreposize[ind] = user.github.repolist[i].size;
-                };
-
+                let githbufollow = user.github.totalstar || 0;
+                let githubstars = user.github.totalfollow || 0;
+                if (user.status.github = 'yes') {
+                    for (let i = ind2; i >= ind1; i--) {
+                        githubreponame[ind] = user.github.repolist[i].name;
+                        githubrepostar[ind] = user.github.repolist[i].stars;
+                        githubrepowatcher[ind] = user.github.repolist[i].watchers;
+                        githubrepolanguage[ind] = user.github.repolist[i].language;
+                        githubrepofork[ind] = user.github.repolist[i].forks;
+                        githubreposize[ind] = user.github.repolist[i].size;
+                    };
+                }
                 ind = 0;
 
                 let githubforold = '';
-
-                if (diff > 30) {
-                    githubforold = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
-                } else {
-                    for (let i = diff; i > Math.min(diff - 30, -1); i--) {
-                        githubcommit[ind] = user.github.commitsovertime[i].value;
-                        ind++;
+                if (user.status.github = 'yes') {
+                    if (diff > 30) {
+                        githubforold = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
+                    } else {
+                        for (let i = diff; i > Math.min(diff - 30, -1); i--) {
+                            githubcommit[ind] = user.github.commitsovertime[i].value;
+                            ind++;
+                        };
                     };
-                };
 
-                let totalcommit = 0;
-                if (diff > 30) {
+                    let totalcommit = 0;
+                    if (diff > 30) {
 
-                } else {
-                    for (let i = 0; i < githubcommit.length; i++) {
-                        totalcommit = totalcommit + githubcommit[i];
-                    }
-                };
-
+                    } else {
+                        for (let i = 0; i < githubcommit.length; i++) {
+                            totalcommit = totalcommit + githubcommit[i];
+                        }
+                    };
+                }
                 doc.fontSize(10)
                     .text(`Page 1 of 10`, 50, 750, {
                         align: 'center'
@@ -5913,13 +5828,13 @@ app.post('/reports', async (req, res) => {
 
                 let daybefore = datecalculater(dt - (1000 * 60 * 60 * 24))
 
-                let spotifyhours = user.spotify.totallisteningtime[0];
-                let spotifysong = user.spotify.songplayed[0];
-                let spotifyartist = user.spotify.newartist[0];
+                let spotifyhours = user.spotify.totallisteningtime[0] || 0;
+                let spotifysong = user.spotify.songplayed[0] || 0;
+                let spotifyartist = user.spotify.newartist[0] || 0;
 
                 let ind = 0;
 
-                let calenderhours = user.calender.scheduletime[diff].value;
+                let calenderhours = user.calender.scheduletime[diff].value || 0;
                 let calendereventsname = [];
                 let calendereventstime = [];
                 let calendereventsdate = [];
@@ -5927,49 +5842,51 @@ app.post('/reports', async (req, res) => {
                 let check = true;
 
                 ind = 0;
-
-                while (check) {
-                    if (user.calender.events.length == ind) {
-                        break;
-                    }
-                    if (daybefore == user.calender.events[ind].date) {
-                        check = false;
-                    }
-                    ind++;
-                }
-
-                ind--;
-                ind--;
-
-                check = true;
-
                 let ind1 = 0;
+                let ind2 = 0;
+                if (user.status.calender = 'yes') {
+                    while (check) {
+                        if (user.calender.events.length == ind) {
+                            break;
+                        }
+                        if (daybefore == user.calender.events[ind].date) {
+                            check = false;
+                        }
+                        ind++;
+                    }
 
-                while (check) {
-                    if (user.calender.events.length == ind1) {
-                        break;
+                    ind--;
+                    ind--;
+
+                    check = true;
+
+                    ind1 = 0;
+
+                    while (check) {
+                        if (user.calender.events.length == ind1) {
+                            break;
+                        }
+                        if (datearr[0] == user.calender.events[ind1].date) {
+                            check = false;
+                        }
+                        ind1++;
                     }
-                    if (datearr[0] == user.calender.events[ind1].date) {
-                        check = false;
-                    }
-                    ind1++;
                 }
-
                 ind1--;
 
-                let ind2 = ind;
+                ind2 = ind;
                 ind = 0;
 
                 let eventscount = 0;
-
-                for (let i = ind2; i >= ind1; i--) {
-                   calendereventsname[ind] = user.calender.events[i].name;
-                   calendereventsdate[ind] = user.calender.events[i].date;
-                   calendereventstime[ind] = user.calender.events[i].time;
-                   eventscount++;
-                   ind++;
-                };
-
+                if (user.status.calender = 'yes') {
+                    for (let i = ind2; i >= ind1; i--) {
+                        calendereventsname[ind] = user.calender.events[i].name;
+                        calendereventsdate[ind] = user.calender.events[i].date;
+                        calendereventstime[ind] = user.calender.events[i].time;
+                        eventscount++;
+                        ind++;
+                    };
+                }
                 // calendereventsname[0] = 'padai'
                 // calendereventsdate[0] = 'Jul 28'
                 // calendereventstime[0] = '10:0 AM'
@@ -5987,32 +5904,32 @@ app.post('/reports', async (req, res) => {
                 check = true;
 
                 ind = 0;
+                if (user.status.codefores = 'yes') {
+                    while (check) {
+                        if (user.codeforces.content.length == ind) {
+                            break;
+                        }
+                        if (daybefore == user.codeforces.content[ind].date) {
+                            check = false;
+                        }
+                        ind++;
+                    }
 
-                while (check) {
-                    if (user.codeforces.content.length == ind) {
-                        break;
+                    ind--;
+                    ind--;
+
+                    check = true;
+
+                    while (check) {
+                        if (user.codeforces.content.length == ind1) {
+                            break;
+                        }
+                        if (datearr[0] == user.codeforces.content[ind1].date) {
+                            check = false;
+                        }
+                        ind1++;
                     }
-                    if (daybefore == user.codeforces.content[ind].date) {
-                        check = false;
-                    }
-                    ind++;
                 }
-
-                ind--;
-                ind--;
-
-                check = true;
-
-                while (check) {
-                    if (user.codeforces.content.length == ind1) {
-                        break;
-                    }
-                    if (datearr[0] == user.codeforces.content[ind1].date) {
-                        check = false;
-                    }
-                    ind1++;
-                }
-
                 ind1--;
 
                 ind2 = ind;
@@ -6023,49 +5940,49 @@ app.post('/reports', async (req, res) => {
                 let codeforceslanguage = [];
                 let codeforcestime = [];
                 let codeforcessize = [];
-                let cfrating = user.codeforces.currentrating;
-                let cfrank = user.codeforces.currentrank;
+                let cfrating = user.codeforces.currentrating || 0;
+                let cfrank = user.codeforces.currentrank || 'newbie';
+                if (user.status.codeforces = 'yes') {
+                    for (let i = ind2; i >= ind1; i--) {
+                        codeforcesname[ind] = user.codeforces.content[i].name;
+                        codeforcesverdict[ind] = user.codeforces.content[i].type;
+                        codeforceslanguage[ind] = user.codeforces.content[i].language;
+                        codeforcestime[ind] = user.codeforces.content[i].duration;
+                        codeforcessize[ind] = user.codeforces.content[i].memory;
+                        ind++;
+                    };
 
-                for (let i = ind2; i >= ind1; i--) {
-                    codeforcesname[ind] = user.codeforces.content[i].name;
-                    codeforcesverdict[ind] = user.codeforces.content[i].type;
-                    codeforceslanguage[ind] = user.codeforces.content[i].language;
-                    codeforcestime[ind] = user.codeforces.content[i].duration;
-                    codeforcessize[ind] = user.codeforces.content[i].memory;
-                    ind++;
-                };
+                    ind1 = 0;
 
-                ind1 = 0;
+                    check = true;
 
-                check = true;
-
-                ind = 0;
-
-                while (check) {
-                    if (user.github.repolist.length == ind) {
-                        break;
+                    ind = 0;
+                    if (user.status.github = 'yes') {
+                        while (check) {
+                            if (user.github.repolist.length == ind) {
+                                break;
+                            }
+                            if (daybefore == user.github.repolist[ind].createdat) {
+                                check = false;
+                            }
+                            ind++;
+                        }
                     }
-                    if (daybefore == user.github.repolist[ind].createdat) {
-                        check = false;
+                    ind--;
+                    ind--;
+
+                    check = true;
+
+                    while (check) {
+                        if (user.github.repolist.length == ind1) {
+                            break;
+                        }
+                        if (datearr[0] == user.github.repolist[ind1].createdat) {
+                            check = false;
+                        }
+                        ind1++;
                     }
-                    ind++;
                 }
-
-                ind--;
-                ind--;
-
-                check = true;
-
-                while (check) {
-                    if (user.github.repolist.length == ind1) {
-                        break;
-                    }
-                    if (datearr[0] == user.github.repolist[ind1].createdat) {
-                        check = false;
-                    }
-                    ind1++;
-                }
-
                 ind1--;
 
                 ind2 = ind;
@@ -6080,26 +5997,26 @@ app.post('/reports', async (req, res) => {
                 let githubreposize = [];
                 let githbufollow = user.github.totalstar;
                 let githubstars = user.github.totalfollow;
-
-                for (let i = ind2; i >= ind1; i--) {
-                   githubreponame[ind] = user.github.repolist[i].name;
-                   githubrepostar[ind] = user.github.repolist[i].stars;
-                   githubrepowatcher[ind] = user.github.repolist[i].watchers;
-                   githubrepolanguage[ind] = user.github.repolist[i].language;
-                   githubrepofork[ind] = user.github.repolist[i].forks;
-                   githubreposize[ind] = user.github.repolist[i].size;
-                };
-
+                if (user.status.github = 'yes') {
+                    for (let i = ind2; i >= ind1; i--) {
+                        githubreponame[ind] = user.github.repolist[i].name;
+                        githubrepostar[ind] = user.github.repolist[i].stars;
+                        githubrepowatcher[ind] = user.github.repolist[i].watchers;
+                        githubrepolanguage[ind] = user.github.repolist[i].language;
+                        githubrepofork[ind] = user.github.repolist[i].forks;
+                        githubreposize[ind] = user.github.repolist[i].size;
+                    };
+                }
                 ind = 0;
 
                 let githubforold = '';
-
-                if (diff > 30) {
-                    githubforold = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
-                } else {
-                    githubcommit = user.github.commitsovertime[diff].value;
-                };
-
+                if (user.status.github = 'yes') {
+                    if (diff > 30) {
+                        githubforold = 'Your date is very older for over saved data , Plaese select a date within 30 days range for using this feature.'
+                    } else {
+                        githubcommit = user.github.commitsovertime[diff].value;
+                    };
+                }
                 doc.rect(45, 230, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
                 doc.rect(45, 310, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();
                 doc.rect(45, 390, 510, 75).lineWidth(1.5).strokeColor('#000000').stroke();

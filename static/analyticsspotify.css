@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .container {
@@ -167,7 +169,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: #c5bfbf;
+    background-color: #d5d6f9;
 }
 
 .card .right div {
@@ -243,7 +245,6 @@
 
 .recentsongs td {
     padding: 2px;
-    border-top: 1px solid #eee;
 }
 
 .recentsongs td:last-child,
@@ -308,7 +309,6 @@ th:last-child {
 
 .artists td {
     padding: 2px;
-    border-top: 1px solid #eee;
 }
 
 .artists td:last-child,
@@ -369,7 +369,6 @@ th:last-child {
 
 .tracks td {
     padding: 2px;
-    border-top: 1px solid #eee;
 }
 
 .tracks td span {
@@ -438,7 +437,6 @@ th:last-child {
 
 .playlists td {
     padding: 2px;
-    border-top: 1px solid #eee;
 }
 
 .playlists td:last-child,

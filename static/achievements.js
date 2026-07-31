@@ -1,15 +1,89 @@
-const achievement = JSON.parse(document.body.dataset.achievement);
+const wholebody = document.querySelector('.main-content');
+const sidebar = document.querySelector('.sidebar')
+const sidebarbutton = document.querySelectorAll('.sidebar ul li a')
+const activesidebarbutton = document.querySelector('.sidebar ul li.active a')
+const blackicon = document.querySelectorAll('.black-sidebar-icon')
+const whiteicon = document.querySelectorAll('.white-sidebar-icon')
+const box = document.querySelector('.container');
+const achievementsheader = document.querySelector('.achievements-header')
+const achievementsheaderp = document.querySelector('.achievements-header p')
+const achievementspage = document.querySelector('.achievements-cards')
+const cardscont = document.querySelector('.cards')
+const card1 = document.querySelectorAll('.card1')
+const darkimg = document.querySelectorAll('#darkimg')
+const lightimg = document.querySelectorAll('#lightimg')
 
-const cards = document.querySelector(".cards");
+// HTML ke data attribute se value nikalna
 
-const Card1 = cards.querySelector(".card1").outerHTML;
-for ( let i=0; i<4; i++ ) {
-    cards.insertAdjacentHTML("beforeend", Card1);
-}
+const user = JSON.parse(document.body.dataset.user);
 
-const Card2 = cards.querySelector(".card2").outerHTML;
-for (let i=0; i<2; i++ ) {
-    cards.insertAdjacentHTML("beforeend", Card2 );
+const currentTheme = user.theme;
+
+console.log("Current Theme Value from HTML attribute:", currentTheme);
+
+if (currentTheme == 2) {
+    wholebody.style.backgroundColor = 'rgb(40, 40, 57)';
+    box.style.backgroundColor = 'rgb(28, 30, 36)';
+    wholebody.style.color = 'white';
+    sidebar.style.backgroundColor = 'rgb(40, 40, 57)';
+    sidebarbutton.forEach(button => {
+        button.style.backgroundColor = "rgb(28, 30, 36)";
+        button.style.color = "white";
+    });
+    whiteicon.forEach(icon => {
+        icon.style.display = "block";
+    });
+    blackicon.forEach(icon => {
+        icon.style.display = "none";
+    });
+    activesidebarbutton.style.backgroundColor = '#3a4ccd';
+    activesidebarbutton.style.color = 'white';
+    achievementsheader.style.backgroundColor = 'rgb(28, 30, 36)';
+    achievementsheader.style.color = 'white';
+    achievementsheaderp.style.color = 'rgb(219, 216, 216)';
+    achievementspage.style.backgroundColor = 'rgb(28, 30, 36)';
+    cardscont.style.backgroundColor = 'rgb(28, 30, 36)';
+    card1.forEach(card => {
+        card.style.backgroundColor = 'black';
+    });
+    darkimg.forEach(img => {
+        img.style.display = "block";
+    });
+    lightimg.forEach(img => {
+        img.style.display = "none";
+    });
+
+} else {
+    wholebody.style.backgroundColor = 'rgb(219, 237, 245)';
+    box.style.backgroundColor = 'rgb(255, 255, 255)';
+    wholebody.style.color = 'rgb(0, 0, 0)';
+    sidebar.style.backgroundColor = 'white';
+    sidebarbutton.forEach(button => {
+        button.style.backgroundColor = "white";
+        button.style.color = "rgb(28, 30, 36)";
+    });
+    whiteicon.forEach(icon => {
+        icon.style.display = "none";
+    });
+    blackicon.forEach(icon => {
+        icon.style.display = "block";
+    });
+    activesidebarbutton.style.backgroundColor = '#3a4ccd';
+    activesidebarbutton.style.color = 'white';
+    achievementsheader.style.backgroundColor = 'white';
+    achievementsheader.style.color = 'rgb(28, 30, 36)';
+    achievementsheaderp.style.color = '#777';
+    achievementspage.style.backgroundColor = 'white';
+    cardscont.style.backgroundColor = 'white';
+    card1.forEach(card => {
+        card.style.backgroundColor = 'white';
+    });
+    darkimg.forEach(img => {
+        img.style.display = "none";
+    });
+    lightimg.forEach(img => {
+        img.style.display = "block";
+    });
 }
 
 

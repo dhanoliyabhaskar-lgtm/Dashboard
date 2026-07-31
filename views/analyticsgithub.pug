@@ -4,7 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Analytics
   link(rel='stylesheet' href='/static/analyticsgithub.css')
-body(data-github=user.github)
+body(data-user=user)
 .container
   aside.sidebar
     .logo
@@ -13,31 +13,38 @@ body(data-github=user.github)
     ul.menu
       li
         a(href='/dashboard')
-          img(src='/static/photos/overview icon.png' alt='')
+          img(src='/static/photos/overview icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/overview white icon.png' alt='' class="white-sidebar-icon")
           span  Overview 
       li.active
         a(href='/analyticsgithub')
-          img(src='/static/photos/analytics icon.png' alt='')
+          img(src='/static/photos/analytics icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/analytics white icon.png' alt='' class="white-sidebar-icon")
           span Analytics
       li
         a(href='/goals')
-          img(src='/static/photos/goals icon.png' alt='')
+          img(src='/static/photos/goals icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/goals white icon.png' alt='' class="white-sidebar-icon")
           span Goals
       li
         a(href='/integration')
-          img(src='/static/photos/integrations icon.png' alt='')
+          img(src='/static/photos/integrations icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/integrations white icon.png' alt='' class="white-sidebar-icon")
           span Integrations
       li
         a(href='/reports')
-          img(src='/static/photos/reports icon.png' alt='')
+          img(src='/static/photos/reports icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/reports white icon.png' alt='' class="white-sidebar-icon")
           span Reports
       li
         a(href='/achievements')
-          img(src='/static/photos/achievements icon.png' alt='')
+          img(src='/static/photos/achievements icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/achievements white icon.png' alt='' class="white-sidebar-icon")
           span Achievements
       li
         a(href='/settingsprofile')
-          img(src='/static/photos/settings icon.png' alt='')
+          img(src='/static/photos/settings icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/settings white icon.png' alt='' class="white-sidebar-icon")
           span Settings
   .main-content
     // responsive header
@@ -48,7 +55,7 @@ body(data-github=user.github)
       .header-right
         .notification-wrapper
             button(onclick='window.location.href="/notifications"')
-              img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')            
+              img.notifications-icon(src='/static/photos/notifications icon.png' alt='notification')            
             span.badge 3
         button(onclick='window.location.href="/settingsprofile"')
           img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
@@ -65,7 +72,7 @@ body(data-github=user.github)
         button(onclick="window.location.href='/analyticscalender'") Calendar
       section.analytics-cards
         .card
-          .left &#x1F525;
+          .left(style="background-color: #f4b89a;") &#x1F525;
           .right
             h4 Today&apos;s Commits
             - const rawCommits = user && user.github && user.github.commitsovertime ? user.github.commitsovertime : null
@@ -82,19 +89,19 @@ body(data-github=user.github)
             else if diff==0
               span.text-normal --
         .card
-          .left &#x2708;&#xFE0F;
+          .left(style="background-color: #d5f1f2;") &#x2708;&#xFE0F;
           .right
             h4 Total Public Repos
             div
               b #{user.github.totalrepo  || 0}
         .card
-          .left &#x2B50;
+          .left(style="background-color: #fbfbce;") &#x2B50;
           .right
             h4 Total Stars Earned
             div
               b #{user.github.taotalstar  || 0}
         .card
-          .left &#x1F465;
+          .left(style="background-color: #e2d4f1;") &#x1F465;
           .right
             h4 Followers
             div

@@ -1,0 +1,24 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title CodeForces Login
+  link(rel='stylesheet' href='/static/codeforceslogin.css')
+.container
+  .header
+    img(src='/static/photos/codeforces logo.png' alt='')
+    p#heading Sign in with CodeForces
+  hr
+  .content
+    .left
+      h1.leftitems Sign in 
+      p.leftitems
+        | to continue with 
+        b CodeForces
+    .right
+      form(action='/codeforceslogin' method='post')
+        p.rightitemsheading Enter Your CodeForces Handle
+        input.rightitems(type='text' name='name' placeholder='Handle')
+        .buttons
+          button#cancel(type='button' onclick='window.location.href="/integrations"') Cancel
+          button#submit(type='submit') Next
