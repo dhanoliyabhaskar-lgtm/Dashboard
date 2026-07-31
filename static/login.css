@@ -5,7 +5,7 @@
 }
 
 body {
-    background-image: url(photos/background.png);
+    background-image: url(/static/photos/background.png);
 
 }
 
@@ -14,12 +14,13 @@ body {
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
-    margin: 66px auto;
-    background-color: white;
+    margin: 100px auto;
     color: black;
-    height: 80vh;
-    width: 250px;
+    height: 70vh;
+    width: 350px;
     border-radius: 25px;
+    border: 1px solid black;
+    align-items: center;
 }
 
 form {
@@ -37,7 +38,8 @@ form {
 
 .inputform {
     border-radius: 8px;
-    background-color: rgb(85, 75, 75);
+    background-color: rgb(224 222 222);
+    padding: 3px 7px;
 }
 
 button {
@@ -46,7 +48,7 @@ button {
     color: azure;
     cursor: pointer;
     border-radius: 20px;
-    padding : 5px 25px ;
+    padding: 5px 25px;
     font-weight: 600;
 }
 
@@ -56,7 +58,7 @@ button:hover {
 }
 
 a {
-    color: rgb(5,78,176);
+    color: rgb(5, 78, 176);
 }
 
 a:hover {

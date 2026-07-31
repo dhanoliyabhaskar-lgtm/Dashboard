@@ -122,7 +122,8 @@
     border-radius: 50%;
 }
 
-.overview-header .notifications-icon {
+.notifications-black-icon,
+.notifications-white-icon {
     width: 35px;
     height: 30px;
 }
@@ -205,7 +206,8 @@
     margin-top: 20px;
 }
 
-.weekly-activity, .donut {
+.weekly-activity,
+.donut {
     height: fit-content;
     background: white;
     border-radius: 20px;

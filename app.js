@@ -16,7 +16,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 const io = new Server(server, {
     cors: { origin: "*" }
@@ -35,8 +35,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-        mongoUrl: process.env.db_username,
-        //mongoUrl: 'mongodb://localhost:27017/soc_project',
+        // mongoUrl: process.env.db_username,
+        mongoUrl: 'mongodb://localhost:27017/soc_project',
         collectionName: 'sessions'
     }),
     cookie: {
@@ -51,9 +51,9 @@ app.use(passport.session());
 
 //mongoose
 
-//mongoose.connect('mongodb://127.0.0.1:27017/soc_project_id');
+mongoose.connect('mongodb://127.0.0.1:27017/soc_project_id');
 
-mongoose.connect(process.env.db_username);
+//mongoose.connect(process.env.db_username);
 
 
 var newuserSchema = new mongoose.Schema({
@@ -103,8 +103,9 @@ var newuserSchema = new mongoose.Schema({
 
         recentlyplayed: [{
             song: { type: String },
-            time: { type: Date },
-            duration: { type: Number }
+            time: { type: String },
+            duration: { type: Number },
+            icon:{type : String}
         }],
 
         recentlyplayedtime: [{
@@ -1414,15 +1415,15 @@ async function problemsort(userId, diff) {
         let arr2 = [9, 6, 11, 7, 5, 1, 3];
         let count1 = 0;
         let count2 = 0;
-        arr1[0] = diff;
-        arr2[0] = user.codeforces.problemsolvedthisweekarr[6];
+        //arr1[0] = diff;
+        //arr2[0] = //user.codeforces.problemsolvedthisweekarr[6];
 
-        if (user.codeforces.problemsolvedthisweekarr.length > 0) {
-            for (let i = 0; i < 6; i++) {
-                arr1[i + 1] = user.codeforces.problemsolvedthisweekarr[i];
-                arr2[i + 1] = user.codeforces.problemsolvedlastweekarr[i];
-            }
-        }
+        //if (user.codeforces.problemsolvedthisweekarr.length > 0) {
+        //    for (let i = 0; i < 6; i++) {
+        //        arr1[i + 1] = user.codeforces.problemsolvedthisweekarr[i];
+        //        arr2[i + 1] = user.codeforces.problemsolvedlastweekarr[i];
+        //    }
+        //}
 
 
         for (let i = 0; i < 7; i++) {
@@ -3160,7 +3161,10 @@ app.get('/goalsmonthly', async (req, res) => {
     if (req.session.userId) {
         const User = await newUser.findById(req.session.userId);
         user = User;
-        ai(req.session.userId);
+        //ai(req.session.userId);
+        fetchdatafromcalender(req.session.userId);
+        fetchdatafromcodeforces(req.session.userId);
+        fetchdatafromgithub(req.session.userId);
         res.status(200).render('goalsmonthly', { user: user });
     } else {
         res.status(500).redirect('/');
@@ -3236,8 +3240,11 @@ app.get('/settingsprofile', async (req, res) => {
 });
 
 app.get('/settingsprivacy', async (req, res) => {
+    let user = "";
     if (req.session.userId) {
-        res.status(200).render('settingsprivacy');
+        const User = await newUser.findById(req.session.userId);
+        user = User;
+        res.status(200).render('settingsprivacy', { user: user });
     } else {
         res.status(500).redirect('/');
     }
@@ -3255,16 +3262,22 @@ app.get('/settingsnotifications', async (req, res) => {
 });
 
 app.get('/settingslogout', async (req, res) => {
+    let user = "";
     if (req.session.userId) {
-        res.status(200).render('settingslogout');
+        const User = await newUser.findById(req.session.userId);
+        user = User;
+        res.status(200).render('settingslogout', { user: user });
     } else {
         res.status(500).redirect('/');
     }
 });
 
 app.get('/settingshelp', async (req, res) => {
+    let user = "";
     if (req.session.userId) {
-        res.status(200).render('settingshelp');
+        const User = await newUser.findById(req.session.userId);
+        user = User;
+        res.status(200).render('settingshelp', { user: user });
     } else {
         res.status(500).redirect('/');
     }
@@ -3339,7 +3352,7 @@ app.get('/auth/spotify', (req, res) => {
     const spotifyLoginUrl = 'https://accounts.spotify.com/authorize?' +
         'client_id=' + process.env.SPOTIFY_CLIENT_ID +
         '&response_type=code' +
-        '&redirect_uri=' + encodeURIComponent('http://127.0.0.1:3000/spotifycallback') +
+        '&redirect_uri=' + encodeURIComponent(process.env.SPOTIFY_CALLBACK_URL) +
         `&scope=` + encodeURIComponent(scope) +
         `&show_dialog=true`;
     res.redirect(spotifyLoginUrl);
@@ -3559,7 +3572,7 @@ app.post('/codeforceslogin', async (req, res) => {
                         'status.codeforces': 'yes'
                     }
                 });
-
+                fetchdatafromcodeforces(req.session.userId);
                 res.status(200).redirect('/integration');
             }
         } catch (err) {
@@ -3873,6 +3886,9 @@ app.post('/reports', async (req, res) => {
                 ind = 0;
 
                 while (check && ind < user.calender.events.length) {
+                    if (user.calender.events.length > ind) {
+                        break;
+                    }
                     if (daybefore == user.calender.events[ind].date) {
                         check = false;
                     }
@@ -5874,10 +5890,6 @@ app.post('/reports', async (req, res) => {
 
                 doc.pipe(res);
 
-                //const reportFilePath = path.join(__dirname, 'reports', `Report_${req.session.userId}_${Date.now()}.pdf`);
-                //const writestream = fs.createWriteStream(reportFilePath);
-                //doc.pipe(writestream);
-
                 //doc.rect(45,90,510,75).lineWidth(2).strokeColor('#000000').stroke();
 
                 doc.fontSize(40).font('Helvetica-Bold').fillColor('#000000').text("PRODUCTIVITY & DIGITAL LIFE REPORT", 50, 100, {
@@ -5901,9 +5913,9 @@ app.post('/reports', async (req, res) => {
 
                 let daybefore = datecalculater(dt - (1000 * 60 * 60 * 24))
 
-                let spotifyhours = 5; //user.spotify.totallisteningtime[0];
-                let spotifysong = 20;//user.spotify.songplayed[0];
-                let spotifyartist = 2;//user.spotify.newartist[0];
+                let spotifyhours = user.spotify.totallisteningtime[0];
+                let spotifysong = user.spotify.songplayed[0];
+                let spotifyartist = user.spotify.newartist[0];
 
                 let ind = 0;
 
@@ -5950,25 +5962,25 @@ app.post('/reports', async (req, res) => {
 
                 let eventscount = 0;
 
-                //for (let i = ind2; i >= ind1; i--) {
-                //    calendereventsname[ind] = user.calender.events[i].name;
-                //    calendereventsdate[ind] = user.calender.events[i].date;
-                //    calendereventstime[ind] = user.calender.events[i].time;
-                //    eventscount++;
-                //    ind++;
-                //};
+                for (let i = ind2; i >= ind1; i--) {
+                   calendereventsname[ind] = user.calender.events[i].name;
+                   calendereventsdate[ind] = user.calender.events[i].date;
+                   calendereventstime[ind] = user.calender.events[i].time;
+                   eventscount++;
+                   ind++;
+                };
 
-                calendereventsname[0] = 'padai'
-                calendereventsdate[0] = 'Jul 28'
-                calendereventstime[0] = '10:0 AM'
+                // calendereventsname[0] = 'padai'
+                // calendereventsdate[0] = 'Jul 28'
+                // calendereventstime[0] = '10:0 AM'
 
-                calendereventsname[1] = 'lunch'
-                calendereventsdate[1] = 'Jul 28'
-                calendereventstime[1] = '1:0 PM'
+                // calendereventsname[1] = 'lunch'
+                // calendereventsdate[1] = 'Jul 28'
+                // calendereventstime[1] = '1:0 PM'
 
-                calendereventsname[2] = 'GYM'
-                calendereventsdate[2] = 'Jul 28'
-                calendereventstime[2] = "5:0 PM"
+                // calendereventsname[2] = 'GYM'
+                // calendereventsdate[2] = 'Jul 28'
+                // calendereventstime[2] = "5:0 PM"
 
                 ind1 = 0;
 
@@ -6059,24 +6071,24 @@ app.post('/reports', async (req, res) => {
                 ind2 = ind;
                 ind = 0;
 
-                let githubcommit;
-                let githubreponame = ['dashboard'];
-                let githubrepostar = [5];
-                let githubrepowatcher = [1];
-                let githubrepolanguage = ['JS'];
-                let githubrepofork = [0];
-                let githubreposize = ['2000 KB'];
+                let githubcommit = user.github.commitsovertime[diff].value;
+                let githubreponame = [];
+                let githubrepostar = [];
+                let githubrepowatcher = [];
+                let githubrepolanguage = [];
+                let githubrepofork = [];
+                let githubreposize = [];
                 let githbufollow = user.github.totalstar;
                 let githubstars = user.github.totalfollow;
 
-                //for (let i = ind2; i >= ind1; i--) {
-                //    githubreponame[ind] = user.github.repolist[i].name;
-                //    githubrepostar[ind] = user.github.repolist[i].stars;
-                //    githubrepowatcher[ind] = user.github.repolist[i].watchers;
-                //    githubrepolanguage[ind] = user.github.repolist[i].language;
-                //    githubrepofork[ind] = user.github.repolist[i].forks;
-                //    githubreposize[ind] = user.github.repolist[i].size;
-                //};
+                for (let i = ind2; i >= ind1; i--) {
+                   githubreponame[ind] = user.github.repolist[i].name;
+                   githubrepostar[ind] = user.github.repolist[i].stars;
+                   githubrepowatcher[ind] = user.github.repolist[i].watchers;
+                   githubrepolanguage[ind] = user.github.repolist[i].language;
+                   githubrepofork[ind] = user.github.repolist[i].forks;
+                   githubreposize[ind] = user.github.repolist[i].size;
+                };
 
                 ind = 0;
 
@@ -6501,10 +6513,6 @@ app.post('/settingstheme', async (req, res) => {
 //server
 
 
-//server.listen(port, () => {
-//    console.log(`Server is running on http://127.0.0.1:${port}`);
-//});
-
-server.listen(port, '0.0.0.0', () => {
-    console.log(`Server is running on port ${port}`);
+server.listen(PORT, () => {
+    console.log(`Server is running on http://127.0.0.1:${PORT}`);
 });

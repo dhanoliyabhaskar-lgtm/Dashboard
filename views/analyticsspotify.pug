@@ -4,6 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Analytics
   link(rel='stylesheet' href='/static/analyticsspotify.css')
+body(data-user=user)
 .container
   aside.sidebar
     .logo
@@ -12,31 +13,38 @@ head
     ul.menu
       li
         a(href='/dashboard')
-          img(src='/static/photos/overview icon.png' alt='')
+          img(src='/static/photos/overview icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/overview white icon.png' alt='' class="white-sidebar-icon")
           span  Overview 
       li.active
         a(href='/analyticsgithub')
-          img(src='/static/photos/analytics icon.png' alt='')
+          img(src='/static/photos/analytics icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/analytics white icon.png' alt='' class="white-sidebar-icon")
           span Analytics
       li
         a(href='/goals')
-          img(src='/static/photos/goals icon.png' alt='')
+          img(src='/static/photos/goals icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/goals white icon.png' alt='' class="white-sidebar-icon")
           span Goals
       li
         a(href='/integration')
-          img(src='/static/photos/integrations icon.png' alt='')
+          img(src='/static/photos/integrations icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/integrations white icon.png' alt='' class="white-sidebar-icon")
           span Integrations
       li
         a(href='/reports')
-          img(src='/static/photos/reports icon.png' alt='')
+          img(src='/static/photos/reports icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/reports white icon.png' alt='' class="white-sidebar-icon")
           span Reports
       li
         a(href='/achievements')
-          img(src='/static/photos/achievements icon.png' alt='')
+          img(src='/static/photos/achievements icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/achievements white icon.png' alt='' class="white-sidebar-icon")
           span Achievements
       li
         a(href='/settingsprofile')
-          img(src='/static/photos/settings icon.png' alt='')
+          img(src='/static/photos/settings icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/settings white icon.png' alt='' class="white-sidebar-icon")
           span Settings
   .main-content
     // responsive header
@@ -46,9 +54,11 @@ head
         h2 Dashboard
       .header-right
         .notification-wrapper
-          img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')
-          span.badge 3
-        img.profile-logo(src='static/photos/profile logo.png' alt='profile photo')
+            button(onclick='window.location.href="/notifications"')
+              img.notifications-icon(src='/static/photos/notifications icon.jpeg' alt='notification')            
+            span.badge 3
+        button(onclick='window.location.href="/settingsprofile"')
+          img.profile-logo(src='/static/photos/profile logo.png' alt='profile photo')
     .content(onclick='moggle()')
       // Header
       header.analytics-header
@@ -60,78 +70,99 @@ head
         button(onclick="window.location.href='/analyticscodeforces'") Codeforeces
         button(onclick="window.location.href='/analyticsspotify'"  class="active") Spotify
         button(onclick="window.location.href='/analyticscalender'") Calendar
+      - const totallisteningtime = user && user.totallisteningtime ? user.totallisteningtime : []
+      - const songplayed = user && user.songplayed ? user.songplayed : []
+      - const newartist = user && user.newartist ? user.newartist : []
+      - const recentlyplayedtime = user && user.recentlyplayedtime ? user.recentlyplayedtime : []
+      - const recentlyplayed = user && user.recentlyplayed ? user.recentlyplayed : []
+      - const topartist = user && user.topartist ? user.topartist : []
+      - const toptrack = user && user.toptrack ? user.toptrack : []
+      - const topplaylist = user && user.topplaylist ? user.topplaylist : []
       section.analytics-cards
         .card
           .left &#x1F3B5;
           .right
             h4 Total Listening Time
-            div
-              b 18h 42m
-            span &uarr; 22% vs last 7 days 
+            if totallisteningtime.length>0
+              div
+                b #{totallisteningtime[0]} h
+              - const diff = totallisteningtime[0] - totallisteningtimeforweek[0]
+              if diff > 0
+                span.text-success &uarr; #{diff.toFixed(1)}% vs last week
+              else if diff<0
+                span.text-danger &darr; #{Math.abs(diff).toFixed(1)}% vs last week
+              else if diff==0
+                span.text-normal -- 
         .card
           .left &#x1F3B5;
           .right
             h4 Songs Played
-            div
-              b 230
-            span &uarr; 15% vs last 7 days 
+            if songplayed.length>0
+              div
+                b #{songplayed[0]} h
+              - const diff1 = songplayed[0] - songplayed[7]
+              if diff1 > 0
+                span.text-success &uarr; #{diff1.toFixed(1)}% vs last week
+              else if diff1<0
+                span.text-danger &darr; #{Math.abs(diff1).toFixed(1)}% vs last week
+              else if diff1==0
+                span.text-normal --
         .card
           .left &#x1F3B5;
           .right
             h4 Unique Artists
-            div
-              b 27
-            span &uarr; 12% vs last 7 days 
+            if newartist.length>0
+              div
+                b #{newartist[0]} h
+              - const diff3 = newartist[0] - newartist[7]
+              if diff3 > 0
+                span.text-success &uarr; #{diff3.toFixed(1)}% vs last week
+              else if diff3<0
+                span.text-danger &darr; #{Math.abs(diff3).toFixed(1)}% vs last week
+              else if diff3==0
+                span.text-normal -- 
         .card
           .left &#x1F3B5;
           .right
             h4 Avg. Track Duration
-            div
-              b 3m 40s
-            span &darr; 4% vs last 7 days 
+            if recentlyplayedtime.length>0
+              div
+                b #{recentlyplayedtime[0]} h
+              - const diff4 = recentlyplayedtime[0] - recentlyplayedtime[7]
+              if diff > 0
+                span.text-success &uarr; #{diff4.toFixed(1)}% vs last week
+              else if diff4<0
+                span.text-danger &darr; #{Math.abs(diff4).toFixed(1)}% vs last week
+              else if diff4==0
+                span.text-normal --
       section.top-widgets
         #chart1
         #recentsongs.widget
           p.scroll-hint &larr; Swipe horizontally to view all &rarr;
           .header
             h4  Recently Played 
-            a(href='#') View All &gt; 
           table.recentsongs
             thead
               tr
                 th Songs
                 th Last Played
             tbody
-              tr
-                td.recent
-                  img(src='/static/photos/1st rank icon.jpg' alt='')
-                  span  Shape of You anvnadjklvkadgbjka 
-                td 3 min ago
-              tr
-                td.recent
-                  img(src='/static/photos/2nd rank icon.jpg' alt='')
-                  span  Dil Diyan Gallan 
-                td 8 min ago
-              tr
-                td.recent
-                  img(src='/static/photos/3rd rank icon.jpg' alt='')
-                  span  Sapphire 
-                td 12 min ago
-              tr
-                td.recent
-                  img(src='/static/photos/4th rank icon.jpg' alt='')
-                  span  Channa Mereya 
-                td 23 min ago
-              tr
-                td.recent
-                  img(src='/static/photos/5th rank icon.jpg' alt='')
-                  span  O Maahi 
-                td 28 min ago
+              //tr
+              //  td.recent
+              //    img(src='/static/photos/1st rank icon.jpg' alt='')
+              //    span  Shape of You anvnadjklvkadgbjka 
+              //  td 3 min ago
+              if recentlyplayed.length>0
+                each song in recentlyplayed
+                  tr 
+                    td.recent 
+                      img(src=`${song.icon}`)
+                      span #{song.song}
+                    td #{song.time}
         #artists.widget
           p.scroll-hint &larr; Swipe horizontally to view all &rarr;
           .header
-            h4  Top Artists
-            a(href='#') View All &gt;
+            h4  Top Artists 
           table.artists
             thead
               tr
@@ -139,42 +170,21 @@ head
                 th Artists
                 th Worldwide Popularity
             tbody
-              tr
-                td 1
-                td.singer
-                  img(src='/static/photos/artist logo.jpg' alt='')
-                  span  Arijit Singhdfhdgjdg 
-                td 90/100
-              tr
-                td 2
-                td.singer
-                  img(src='/static/photos/artist logo.jpg' alt='')
-                  span Atif Aslam
-                td 90/100
-              tr
-                td 3
-                td.singer
-                  img(src='/static/photos/artist logo.jpg' alt='')
-                  span  Ed Sheeran 
-                td 90/100
-              tr
-                td 4
-                td.singer
-                  img(src='/static/photos/artist logo.jpg' alt='')
-                  span  Rahat F. Ali Khan 
-                td 90/100
-              tr
-                td 5
-                td.singer
-                  img(src='/static/photos/artist logo.jpg' alt='')
-                  span  Shreya Ghosal 
-                td 90/100
+              if topartist.length>0
+                - let count = 1
+                each artist in topartist
+                  tr 
+                    td #{count}
+                    td.singer 
+                      image(src=`${artist.logo}`)
+                      span #{artist.name}
+                    td #{artist.popularity}/100
+                    - count++
       section.bottom-widgets
         #tracks.widget
           p.scroll-hint &larr; Swipe horizontally to view all &rarr;
           .header
             h4  Top Tracks 
-            a(href='#') View All &gt; 
           table.tracks
             thead
               tr
@@ -182,41 +192,20 @@ head
                 th Track
                 th Artists
             tbody
-              tr
-                td 1
-                td.song
-                  img(src='/static/photos/album logo.jpg' alt='logo')
-                  span Sapphire
-                td Ed Sheeran
-              tr
-                td 2
-                td.song
-                  img(src='/static/photos/album logo.jpg' alt='logo')
-                  span Ik vari aa
-                td Arijit singh
-              tr
-                td 3
-                td.song
-                  img(src='/static/photos/album logo.jpg' alt='logo')
-                  span Besabariyaan
-                td Arijit Singh
-              tr
-                td 4
-                td.song
-                  img(src='/static/photos/album logo.jpg' alt='logo')
-                  span Dil Diyan Gallan
-                td Atif Aslam
-              tr
-                td 5
-                td.song
-                  img(src='/static/photos/album logo.jpg' alt='logo')
-                  span Afreen Afreen
-                td Rahat F.Ali khan
+              if toptrack.length>0
+                - let count = 1
+                each track in toptrack
+                  tr
+                    td #{count}
+                    td.song 
+                      img(src=`${track.logo}`)
+                      span #{track.name}
+                    td #{track.artist}
+                  - count++
         #playlists.widget
           p.scroll-hint &larr; Swipe horizontally to view all &rarr;
           .header
             h4  Top Playlists 
-            a(href='#') View All &gt; 
           table.playlists
             thead
               tr
@@ -224,58 +213,41 @@ head
                 th Playlists
                 th No. of Songs
             tbody
-              tr
-                td 1
-                td.playlist
-                  img(src='/static/photos/playlist icon.png' alt='')
-                  span Chill Vibesdshdtrhrs
-                td 26
-              tr
-                td 2
-                td.playlist
-                  img(src='/static/photos/playlist icon.png' alt='')
-                  span Lofi Version
-                td 22
-              tr
-                td 3
-                td.playlist
-                  img(src='/static/photos/playlist icon.png' alt='')
-                  span Road Trip
-                td 14
-              tr
-                td 4
-                td.playlist
-                  img(src='/static/photos/playlist icon.png' alt='')
-                  span Happy Hits
-                td 18
-              tr
-                td 5
-                td.playlist
-                  img(src='/static/photos/playlist icon.png' alt='')
-                  span Party Songs
-                td 19
+              if topplaylist.length>0
+                - let count = 1
+                each playlist in topplaylist
+                  tr
+                    td #{count}
+                    td.playlist 
+                      img(src=`${playlist.logo}`)
+                      span #{playlist.name}
+                    td #{playlist.track}
+                    - count++
         #insights.widget
           h4  Insights 
           .items
             .left &#x1F3B5;
             .right
-              p
-                b Arijit Singh
-                |  is your top Artist.
-              p You are listening to Arijit Singh the most.
+              if topartist.length>0
+                p
+                  b #{topartist[0].name}
+                  |  is your top Artist.
+                p You are listening to Arijit Singh the most.
           .items
             .left &#x2B50;
             .right
-              p
-                b Sapphire
-                |  is your top track.
-              p You listened this track most this week.
+              if toptrack.length>0
+                p
+                  b #{toptrack[0].name}
+                  |  is your top track.
+                p You listened this track most this week.
           .items
             .left &#x1F525;
             .right
-              p
-                b Chill Vibes
-                |  tops your playlist rankings.
-              p It&apos;s your most-played playlist this week. 
+              if topplaylist.length>0
+                p
+                  b #{topplaylist.name}
+                  |  tops your playlist rankings.
+                p It&apos;s your most-played playlist this week. 
 script(src='https://cdn.jsdelivr.net/npm/apexcharts')
 script(src='/static/analyticsspotify.js')
