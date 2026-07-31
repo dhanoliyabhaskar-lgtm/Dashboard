@@ -1,9 +1,11 @@
 /* css lalyout */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .container {
@@ -31,7 +33,7 @@
 }
 
 .sidebar ul li.active a {
-    background: #3a4ccd;
+    background-color: #3a4ccd;
     color: white;
     font-weight: 600;
 }
@@ -67,9 +69,11 @@
     height: 40px;
 }
 
+
+
 .menu a:hover {
     border-radius: 50px;
-    background: hsl(234, 100%, 69%);
+    background-color: hsl(234, 100%, 69%);
     color: white;
     font-weight: 600;
 }

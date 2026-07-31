@@ -4,6 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Settings
   link(rel='stylesheet' href='/static/settingshelp.css')
+body(data-theme=user.theme)
 .container
   // Sidebar
   aside.sidebar
@@ -13,31 +14,38 @@ head
     ul.menu
       li
         a(href='/dashboard')
-          img(src='/static/photos/overview icon.png' alt='')
+          img(src='/static/photos/overview icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/overview white icon.png' alt='' class="white-sidebar-icon")
           span  Overview 
       li
         a(href='/analyticsgithub')
-          img(src='/static/photos/analytics icon.png' alt='')
+          img(src='/static/photos/analytics icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/analytics white icon.png' alt='' class="white-sidebar-icon")
           span Analytics
       li
         a(href='/goals')
-          img(src='/static/photos/goals icon.png' alt='')
+          img(src='/static/photos/goals icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/goals white icon.png' alt='' class="white-sidebar-icon")
           span Goals
       li
         a(href='/integration')
-          img(src='/static/photos/integrations icon.png' alt='')
+          img(src='/static/photos/integrations icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/integrations white icon.png' alt='' class="white-sidebar-icon")
           span Integrations
       li
         a(href='/reports')
-          img(src='/static/photos/reports icon.png' alt='')
+          img(src='/static/photos/reports icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/reports white icon.png' alt='' class="white-sidebar-icon")
           span Reports
       li
         a(href='/achievements')
-          img(src='/static/photos/achievements icon.png' alt='')
+          img(src='/static/photos/achievements icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/achievements white icon.png' alt='' class="white-sidebar-icon")
           span Achievements
       li.active
         a(href='/settingsprofile')
-          img(src='/static/photos/settings icon.png' alt='')
+          img(src='/static/photos/settings icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/settings white icon.png' alt='' class="white-sidebar-icon")
           span Settings
   // Main Content
   .main-content
@@ -94,5 +102,5 @@ head
             #feedback
               h4  Send Feedback 
               p  We value your feedback to improve our product.
-              button  Send Feedback 
+              button(onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdIErRo_O2hic3XwvhtZ5gXNAyV3TmTP5-9UMZG60KoiZaBTw/viewform', '_blank')")  Send Feedback 
 script(src='/static/settingshelp.js')

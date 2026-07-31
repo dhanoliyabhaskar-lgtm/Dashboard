@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 body{
@@ -58,6 +60,16 @@ button{
     position: relative;
     left: 150px;
     margin: 10px 2px;
+}
+
+.whatsapp{
+    display: none;
+    margin-right: 200px;
+}
+
+.email{
+    display: none;
+    margin-right: 115px;
 }
 
 #email{

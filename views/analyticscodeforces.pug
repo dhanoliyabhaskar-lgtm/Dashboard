@@ -72,25 +72,25 @@ body(data-user=user)
         button(onclick="window.location.href='/analyticscalender'") Calendar
       section.analytics-cards
         .card
-          .left &#x2B50;
+          .left(style="background-color: #fbfbce;") &#x2B50;
           .right
             h4 Current Rating
             div
               b #{user.codeforces.currentrating}
         .card
-          .left &#x1F525;
+          .left(style="background-color: #f4b89a;") &#x1F525;
           .right
             h4 Max Rank
             div
               b #{user.codeforces.maxrank}
         .card
-          .left &#x2708;&#xFE0F;
+          .left(style="background-color: #d5f1f2;") &#x2708;&#xFE0F;
           .right
             h4 Problem Solved
             div
               b #{user.codeforces.problemsolved}
         .card
-          .left &#x1F465;
+          .left(style="background-color: #e2d4f1;") &#x1F465;
           .right
             h4 Friends
             div

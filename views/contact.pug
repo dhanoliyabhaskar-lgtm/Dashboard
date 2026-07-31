@@ -11,17 +11,17 @@ html(lang="en")
             p#other Please select the most appropriate for your purpose.
             div.variable
                 p.inline For Whatsapp Contact 
-                button Click 
+                button(onclick='roggle()') Click 
+            div.whatsapp Contact no.: 8103186853
                 br
             div.variable
                 p.inline For Instagram Contact 
-                button(onclick='window.location.href="https://www.instagram.com/bhaskar__dhakad/"') Click
+                button(onclick="window.open('https://www.instagram.com/bhaskar__dhakad/', '_blank')") Click
                 br
             div.variable
                 p.inline For Email Contact
-                button#email Click
+                button#email(onclick='toggle()') Click
+            div.email Email: dhanoliyabhaskar@gmail.com
                 br
-            div.variable
-                p.inline For Facebook Contact
-                button Click
             button#back(onclick="window.location.href='/settingshelp'") Back
+    script(src='/static/contact.js')

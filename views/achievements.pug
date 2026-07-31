@@ -4,7 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Achievement
   link(rel='stylesheet' href='/static/achievements.css')
-body(data-user=user.achievementlevel)
+body(data-user=user)
 .container
   // Sidebar
   aside.sidebar
@@ -14,31 +14,38 @@ body(data-user=user.achievementlevel)
     ul.menu
       li
         a(href='/dashboard')
-          img(src='/static/photos/overview icon.png' alt='')
+          img(src='/static/photos/overview icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/overview white icon.png' alt='' class="white-sidebar-icon")
           span  Overview 
       li
         a(href='/analyticsgithub')
-          img(src='/static/photos/analytics icon.png' alt='')
+          img(src='/static/photos/analytics icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/analytics white icon.png' alt='' class="white-sidebar-icon")
           span Analytics
       li
         a(href='/goals')
-          img(src='/static/photos/goals icon.png' alt='')
+          img(src='/static/photos/goals icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/goals white icon.png' alt='' class="white-sidebar-icon")
           span Goals
       li
         a(href='/integration')
-          img(src='/static/photos/integrations icon.png' alt='')
+          img(src='/static/photos/integrations icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/integrations white icon.png' alt='' class="white-sidebar-icon")
           span Integrations
       li
         a(href='/reports')
-          img(src='/static/photos/reports icon.png' alt='')
+          img(src='/static/photos/reports icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/reports white icon.png' alt='' class="white-sidebar-icon")
           span Reports
       li.active
         a(href='/achievements')
-          img(src='/static/photos/achievements icon.png' alt='')
+          img(src='/static/photos/achievements icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/achievements white icon.png' alt='' class="white-sidebar-icon")
           span Achievements
       li
         a(href='/settingsprofile')
-          img(src='/static/photos/settings icon.png' alt='')
+          img(src='/static/photos/settings icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/settings white icon.png' alt='' class="white-sidebar-icon")
           span Settings
   // main-content
   .main-content
@@ -75,29 +82,13 @@ body(data-user=user.achievementlevel)
                     div 
                       h4.text #{ach.topic}
                   .right 
-                    img(src=`/static/photos/level 5 light.jpeg`)#lightimg
-                    img(src="/static/photos/level 1 dark.jpeg" )#darkimg
+                    img#lightimg(src=`/static/photos/level 1 light.png`)
+                    img#darkimg(src='/static/photos/level 1 dark.png')
                 .middle 
                   p #{ach.name}
                 .bottom 
-                  .level-dots 
-                    #dot-1.dot
-                    #dot-2.dot
-                    #dot-3.dot
-                    #dot-4.dot
-                    #dot-5.dot
                   .bottom-progress
                     .progress-bar
                       .progress(style=`width:${(ach.progress/ach.target[lev])*100}%`)
                     span #{ach.progress} / #{ach.target[lev]}
-          //.card2
-          //  .top
-          //    h4
-          //      b  100 
-          //      |  PROBLEMS SOLVED
-          //  .middle
-          //    img(src='/static/photos/level 2.png' alt='')
-          //  .bottom
-          //    p  You&apos;re on fire! 
-          //    p  Solved 100 leetcode problems 
 script(src='/static/achievements.js')

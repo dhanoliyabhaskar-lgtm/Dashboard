@@ -4,7 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Analytics
   link(rel='stylesheet' href='/static/analyticscalender.css')
-body(data-calender=user.calender)
+body(data-user=user)
 .container
   aside.sidebar
     .logo
@@ -13,31 +13,38 @@ body(data-calender=user.calender)
     ul.menu
       li
         a(href='/dashboard')
-          img(src='/static/photos/overview icon.png' alt='')
+          img(src='/static/photos/overview icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/overview white icon.png' alt='' class="white-sidebar-icon")
           span  Overview 
       li.active
         a(href='/analyticsgithub')
-          img(src='/static/photos/analytics icon.png' alt='')
+          img(src='/static/photos/analytics icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/analytics white icon.png' alt='' class="white-sidebar-icon")
           span Analytics
       li
         a(href='/goals')
-          img(src='/static/photos/goals icon.png' alt='')
+          img(src='/static/photos/goals icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/goals white icon.png' alt='' class="white-sidebar-icon")
           span Goals
       li
         a(href='/integration')
-          img(src='/static/photos/integrations icon.png' alt='')
+          img(src='/static/photos/integrations icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/integrations white icon.png' alt='' class="white-sidebar-icon")
           span Integrations
       li
         a(href='/reports')
-          img(src='/static/photos/reports icon.png' alt='')
+          img(src='/static/photos/reports icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/reports white icon.png' alt='' class="white-sidebar-icon")
           span Reports
       li
         a(href='/achievements')
-          img(src='/static/photos/achievements icon.png' alt='')
+          img(src='/static/photos/achievements icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/achievements white icon.png' alt='' class="white-sidebar-icon")
           span Achievements
       li
         a(href='/settingsprofile')
-          img(src='/static/photos/settings icon.png' alt='')
+          img(src='/static/photos/settings icon.png' alt='' class="black-sidebar-icon")
+          img(src='/static/photos/settings white icon.png' alt='' class="white-sidebar-icon")
           span Settings
   .main-content
     // responsive header
@@ -131,9 +138,12 @@ body(data-calender=user.calender)
             - const eventsarr = user.calender.eventstoday ? Object.values(user.calender.eventstoday) : []
             div
               h4 Today&apos;s Schedule
-              p
-                b #{eventsarr[0].date}
-            button.btn View Full Day &gt;
+              if eventsarr.length>0
+                p
+                  b #{eventsarr[0].date}
+              else 
+                p 
+                  b 
           -const schedulearr = user.calender.todayschedule ? Object.values(user.calender.todayschedule) : []
           if schedulearr.length > 0
             each schedule in schedulearr.slice(0,6)
@@ -147,10 +157,9 @@ body(data-calender=user.calender)
         #box-3.box
           .heading
             h4 Upcoming Events
-            button.btn View All &gt;
           .events
             if eventsarr.length>0
-              each event in eventsarr.slice(0,5)
+              each event in eventsarr.slice(0,4)
                 .event 
                   .left &bull;
                   .eventname 
